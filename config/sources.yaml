@@ -1,0 +1,152 @@
+# Fuentes de titulares (Fase 1: ingesta).
+# Este fichero es la fuente de verdad: en cada ejecución se sincroniza con la tabla `fuentes`
+# de Supabase (por `nombre`). Para desactivar una fuente basta con poner `activa: false`.
+#
+# Campos de cada fuente:
+#   nombre        nombre único (clave de sincronización con la tabla `fuentes`)
+#   clave         identificador corto para la CLI (--solo <clave>)
+#   tipo_fuente   medio | portal | comunidad
+#   tipo_acceso   rss | html  (cómo se accede mayoritariamente)
+#   url           web de referencia de la sección
+#   idioma        es
+#   activa        true | false
+#   motivo        (opcional) por qué está desactivada o notas de viabilidad
+#   listados      lista de listados a recorrer, cada uno con:
+#       url           URL de la primera página
+#       url_pagina    (opcional) plantilla para páginas 2..N, con {n}
+#       parser        rss | sitemap_news | html_enlaces | tradingview_json | rankia_foro
+#       seccion       etiqueta que se guarda en articulos.seccion
+#       corte         url (para al encontrar una URL ya guardada; por defecto)
+#                     fecha (para listados ordenados por actividad: para al pasar la última ejecución)
+#       detecta_hueco true por defecto; false en listados complementarios de una sola página
+#       selector / patron_url   solo para html_enlaces
+
+defaults:
+  max_paginas: 10
+  timeout_s: 20
+  intervalo_dominio_s: 1.0
+  user_agent: "BolsaSentimentBot/0.1 (proyecto personal de seguimiento de titulares; contacto: aranaz.enrique@gmail.com)"
+
+fuentes:
+  # ------------------------------------------------------------------ medios
+  - nombre: El Economista
+    clave: eleconomista
+    tipo_fuente: medio
+    tipo_acceso: html
+    url: https://www.eleconomista.es/mercados-cotizaciones/
+    idioma: es
+    activa: false
+    motivo: "Akamai devuelve 403 'Access Denied' a cualquier petición automatizada (incluido robots.txt y el RSS)."
+    listados:
+      - url: https://www.eleconomista.es/rss/rss-mercados.php
+        parser: rss
+        seccion: mercados
+
+  - nombre: Expansión
+    clave: expansion
+    tipo_fuente: medio
+    tipo_acceso: rss
+    url: https://www.expansion.com/mercados.html
+    idioma: es
+    activa: true
+    motivo: "RSS oficial de Mercados (~50 entradas, ~3 días). Solo titular y entradilla pública; nunca se abre el artículo."
+    listados:
+      - url: https://e00-expansion.uecdn.es/rss/mercados.xml
+        parser: rss
+        seccion: mercados
+
+  - nombre: Cinco Días
+    clave: cincodias
+    tipo_fuente: medio
+    tipo_acceso: rss
+    url: https://cincodias.elpais.com/mercados-financieros/
+    idioma: es
+    activa: true
+    motivo: "El HTML devuelve 403 a bots; se usa el feed oficial de PRISA (feeds.elpais.com), ~28 entradas, ~3 días."
+    listados:
+      - url: https://feeds.elpais.com/mrss-s/pages/ep/site/cincodias.elpais.com/section/mercados-financieros/portada
+        parser: rss
+        seccion: mercados-financieros
+
+  # ------------------------------------------------------------------ portales
+  - nombre: Bolsamanía
+    clave: bolsamania
+    tipo_fuente: portal
+    tipo_acceso: html
+    url: https://www.bolsamania.com/ultimas/index.html
+    idioma: es
+    activa: true
+    motivo: "El RSS solo trae 20 entradas (~5 h). Se usa el sitemap de noticias (fecha exacta) + listados HTML de Últimas, Mercados, Empresas e Internacional (sin fecha: fecha_estimada=true). Los listados no tienen paginación hacia atrás."
+    listados:
+      - url: https://www.bolsamania.com/sitemap.xml
+        parser: sitemap_news
+        seccion: sitemap
+      - url: https://www.bolsamania.com/ultimas/index.html
+        parser: html_enlaces
+        seccion: ultimas
+        detecta_hueco: false
+        selector: "article h1 a, article h2 a, article h3 a, article h4 a"
+        patron_url: '^https://www\.bolsamania\.com/noticias/[^?#]+--\d+\.html$'
+      - url: https://www.bolsamania.com/mercados/index.html
+        parser: html_enlaces
+        seccion: mercados
+        detecta_hueco: false
+        selector: "article h1 a, article h2 a, article h3 a, article h4 a"
+        patron_url: '^https://www\.bolsamania\.com/noticias/[^?#]+--\d+\.html$'
+      - url: https://www.bolsamania.com/empresas/index.html
+        parser: html_enlaces
+        seccion: empresas
+        detecta_hueco: false
+        selector: "article h1 a, article h2 a, article h3 a, article h4 a"
+        patron_url: '^https://www\.bolsamania\.com/noticias/[^?#]+--\d+\.html$'
+      - url: https://www.bolsamania.com/internacional/index.html
+        parser: html_enlaces
+        seccion: internacional
+        detecta_hueco: false
+        selector: "article h1 a, article h2 a, article h3 a, article h4 a"
+        patron_url: '^https://www\.bolsamania\.com/noticias/[^?#]+--\d+\.html$'
+
+  - nombre: Investing.com
+    clave: investing
+    tipo_fuente: portal
+    tipo_acceso: rss
+    url: https://es.investing.com/news/stock-market-news
+    idioma: es
+    activa: false
+    motivo: "Cloudflare devuelve 403 al HTML y a robots.txt (no se puede verificar). El RSS responde pero solo trae 10 entradas (~40 min), inútil para un hueco de 15 h."
+    listados:
+      - url: https://es.investing.com/rss/news_25.rss
+        parser: rss
+        seccion: stock-market-news
+
+  - nombre: TradingView
+    clave: tradingview
+    tipo_fuente: portal
+    tipo_acceso: html
+    url: https://es.tradingview.com/news/
+    idioma: es
+    activa: true
+    motivo: "El HTML incluye (renderizado en servidor) un JSON con las últimas noticias (~110 entradas en varios bloques). 'Cargar más' requiere JavaScript, así que no hay paginación. La página de Reuters se probó y no aportaba URLs nuevas."
+    listados:
+      - url: https://es.tradingview.com/news/
+        parser: tradingview_json
+        seccion: news
+
+  # ------------------------------------------------------------------ comunidad
+  - nombre: Rankia
+    clave: rankia
+    tipo_fuente: comunidad
+    tipo_acceso: html
+    url: https://www.rankia.com/foros/bolsa
+    idioma: es
+    activa: true
+    motivo: "Foro de Bolsa por HTML (ordenado por última actividad: corte por fecha) + RSS de titulares (posts de blogs). Sin usuarios ni datos personales."
+    listados:
+      - url: https://www.rankia.com/foros/bolsa/temas
+        url_pagina: https://www.rankia.com/foros/bolsa/temas?page={n}
+        parser: rankia_foro
+        seccion: foro-bolsa
+        corte: fecha
+      - url: https://www.rankia.com/titulares/feed.rss
+        parser: rss
+        seccion: blogs

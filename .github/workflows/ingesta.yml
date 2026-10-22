@@ -1,0 +1,52 @@
+name: Ingesta de titulares
+
+on:
+  schedule:
+    - cron: '30 9 * * *'
+      timezone: 'Europe/Madrid'
+    - cron: '0 18 * * *'
+      timezone: 'Europe/Madrid'
+  workflow_dispatch:
+
+# Evita dos ingestas simultáneas (p. ej. una manual solapada con una programada).
+concurrency:
+  group: ingesta
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  ingesta:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+
+      - name: Instalar dependencias
+        run: pip install -r requirements.txt
+
+      - name: Determinar franja
+        id: franja
+        env:
+          SCHEDULE: ${{ github.event.schedule }}
+        run: |
+          case "$SCHEDULE" in
+            "30 9 * * *") franja=apertura ;;
+            "0 18 * * *") franja=cierre ;;
+            *)            franja=manual ;;
+          esac
+          echo "franja=$franja" >> "$GITHUB_OUTPUT"
+          echo "Franja: $franja (schedule='$SCHEDULE')"
+
+      - name: Ingesta
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          PYTHONIOENCODING: utf-8
+        run: python -m ingesta --franja "${{ steps.franja.outputs.franja }}"
