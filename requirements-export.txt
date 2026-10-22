@@ -1,0 +1,3 @@
+# Dependencias extra de exportar_snapshot.py (no las necesita la ingesta ni el workflow).
+-r requirements.txt
+openpyxl>=3.1

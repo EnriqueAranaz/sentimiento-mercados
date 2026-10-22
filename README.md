@@ -19,6 +19,7 @@ ingesta/
   modelos.py                 Item, fechas (Europe/Madrid -> UTC), normalización de URLs
 .github/workflows/ingesta.yml  programación en GitHub Actions
 tests/                       tests de robots.txt y fechas
+exportar_snapshot.py         exporta todas las tablas de Supabase a un Excel (exports/, no se sube a GitHub)
 ```
 
 ## Puesta en marcha
@@ -43,6 +44,22 @@ tests/                       tests de robots.txt y fechas
 | `--solo expansion rankia` | Procesa solo esas fuentes (por `clave`) |
 | `--dry-run` | No toca Supabase: guarda en `data/dry_run.json` (útil para probar una fuente nueva) |
 | `--muestras N` | Nº de titulares de ejemplo por fuente en el resumen (5 por defecto) |
+
+## Exportar una foto de la base de datos a Excel
+
+```bash
+.venv/Scripts/pip install -r requirements-export.txt   # solo la primera vez (añade openpyxl)
+.venv/Scripts/python exportar_snapshot.py
+```
+
+Genera `exports/snapshot_AAAA-MM-DD_HHMM.xlsx` (hora de Madrid) con:
+
+- **resumen**: filas por tabla, artículos por fuente y día (día de publicación en hora de Madrid) y las últimas 10 ejecuciones.
+- **una hoja por tabla** del esquema `public` (`articulos`, `ejecuciones`, `fuentes`, `rankia_actividad`...). Las tablas se
+  descubren solas: si se añade una tabla nueva, aparece sin tocar el script.
+
+Las fechas salen en hora de Madrid como fechas de Excel (`dd/mm/aaaa hh:mm:ss`), y los tickers (`simbolos`) separados por comas.
+Usa las credenciales de `.env`. La carpeta `exports/` está en `.gitignore`: los Excel no se suben a GitHub.
 
 ## Cómo añadir una fuente
 
