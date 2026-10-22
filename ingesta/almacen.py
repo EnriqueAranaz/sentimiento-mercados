@@ -51,8 +51,29 @@ class AlmacenSupabase:
             nuevos += len(res.data)
         return nuevos
 
-    def registrar_ejecucion(self, fila: dict) -> None:
-        self.db.table("ejecuciones").insert(fila).execute()
+    def registrar_ejecucion(self, fila: dict) -> int:
+        return self.db.table("ejecuciones").insert(fila).execute().data[0]["id"]
+
+    def actualizar_ejecucion(self, ejecucion_id: int, campos: dict) -> None:
+        self.db.table("ejecuciones").update(campos).eq("id", ejecucion_id).execute()
+
+    def ultimos_estados(self, fuente_id: int, n: int) -> list[str]:
+        res = (
+            self.db.table("ejecuciones").select("estado")
+            .eq("fuente_id", fuente_id).order("inicio", desc=True).limit(n).execute()
+        )
+        return [r["estado"] for r in res.data]
+
+    def ids_articulos(self, urls: list[str]) -> dict[str, int]:
+        ids: dict[str, int] = {}
+        for i in range(0, len(urls), _LOTE):
+            res = self.db.table("articulos").select("id,url").in_("url", urls[i:i + _LOTE]).execute()
+            ids.update({r["url"]: r["id"] for r in res.data})
+        return ids
+
+    def insertar_actividad(self, filas: list[dict]) -> None:
+        for i in range(0, len(filas), _LOTE):
+            self.db.table("rankia_actividad").insert(filas[i:i + _LOTE]).execute()
 
 
 class AlmacenLocal:
@@ -95,8 +116,27 @@ class AlmacenLocal:
         self._guardar()
         return nuevos
 
-    def registrar_ejecucion(self, fila: dict) -> None:
+    def registrar_ejecucion(self, fila: dict) -> int:
+        fila = {**fila, "id": len(self.datos["ejecuciones"]) + 1}
         self.datos["ejecuciones"].append(fila)
+        self._guardar()
+        return fila["id"]
+
+    def actualizar_ejecucion(self, ejecucion_id: int, campos: dict) -> None:
+        self.datos["ejecuciones"][ejecucion_id - 1].update(campos)
+        self._guardar()
+
+    def ultimos_estados(self, fuente_id: int, n: int) -> list[str]:
+        propias = sorted((e for e in self.datos["ejecuciones"] if e["fuente_id"] == fuente_id),
+                         key=lambda e: e["inicio"], reverse=True)
+        return [e["estado"] for e in propias[:n]]
+
+    def ids_articulos(self, urls: list[str]) -> dict[str, int]:
+        claves = list(self.datos["articulos"])
+        return {u: claves.index(u) + 1 for u in urls if u in self.datos["articulos"]}
+
+    def insertar_actividad(self, filas: list[dict]) -> None:
+        self.datos.setdefault("rankia_actividad", []).extend(filas)
         self._guardar()
 
 

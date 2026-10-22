@@ -9,6 +9,7 @@ comunidad financiera en español y los guarda en Supabase. No hay análisis de s
 ```
 config/sources.yaml          fuentes y listados (fuente de verdad, se sincroniza con la tabla `fuentes`)
 sql/001_schema.sql           tablas fuentes / articulos / ejecuciones, índices y RLS
+sql/002_ampliacion.sql       articulos.simbolos (tickers de TradingView) y tabla rankia_actividad
 ingesta/
   __main__.py                orquestador y CLI (python -m ingesta)
   http.py                    cliente educado: User-Agent, timeout, 1 pet/s por dominio, robots.txt, detección de bloqueos
@@ -22,7 +23,7 @@ tests/                       tests de robots.txt y fechas
 
 ## Puesta en marcha
 
-1. Crear un proyecto Supabase dedicado y ejecutar `sql/001_schema.sql` en el SQL Editor.
+1. Crear un proyecto Supabase dedicado y ejecutar en el SQL Editor, en orden, `sql/001_schema.sql` y `sql/002_ampliacion.sql`.
 2. Local:
    ```bash
    python -m venv .venv
@@ -93,12 +94,29 @@ se conservan. No se borra nada de la base de datos.
 
 La primera ejecución de cada fuente no tiene referencia previa: queda `ok` con un aviso en `error_msg`.
 
+## Códigos de salida y alerta
+
+Se procesan siempre todas las fuentes; el código de salida se decide al final:
+
+- `0` — normal (aunque alguna fuente haya quedado `parcial` o `error` puntualmente).
+- `1` — todas las fuentes activas han terminado en `error` en esta ejecución.
+- `2` — **alerta**: alguna fuente acumula 3 ejecuciones seguidas (incluida la actual) con estado `error`.
+  Se registra en el log como `ALERTA · ...` y el workflow de GitHub aparece en rojo (GitHub avisa por email).
+  La fuente **no** se desactiva: hay que revisarla y, si procede, poner `activa: false` a mano.
+
+## Datos adicionales
+
+- `articulos.simbolos` (`text[]`): tickers que TradingView asocia a la noticia (p. ej. `{NASDAQ:AAPL}`). Nulo en el resto de fuentes.
+- `rankia_actividad`: en cada ejecución, una fila por cada hilo del foro visto (`articulo_id`, `ejecucion_id`, `n_respuestas`,
+  `capturado_en`), aunque el hilo ya existiera. `articulos.n_respuestas` conserva el valor de la primera captura; la evolución
+  está aquí. Rankia abrevia las cifras grandes ("3,93K"), así que en hilos muy largos el valor es aproximado.
+
 ## Fuentes actuales (octubre 2026)
 
 | Fuente | Estado | Acceso | Notas |
 |---|---|---|---|
-| Expansión | activa | RSS `e00-expansion.uecdn.es/rss/mercados.xml` | ~50 entradas (~3 días). Titular + entradilla pública |
-| Cinco Días | activa | RSS `feeds.elpais.com` (mercados-financieros) | El HTML da 403 a bots; el feed oficial sí responde. ~28 entradas (~3 días) |
+| Expansión | activa | RSS `e00-expansion.uecdn.es/rss/` `mercados.xml` y `empresas.xml` | ~50 + ~50 entradas. Titular + entradilla pública. `seccion`: mercados / empresas |
+| Cinco Días | activa | RSS `feeds.elpais.com` (mercados-financieros y companias) | El HTML da 403 a bots; los feeds oficiales sí responden. ~28 + ~30 entradas. `seccion`: mercados-financieros / empresas |
 | Bolsamanía | activa | sitemap de noticias + HTML | RSS de solo 20 entradas (~5 h): se usa el sitemap (fecha exacta) + listados Últimas/Mercados/Empresas/Internacional (sin fecha) |
 | TradingView | activa | HTML (JSON incrustado) | ~110 noticias por lectura (~1 día); sin paginación porque "cargar más" requiere JS |
 | Rankia | activa | HTML (foro) + RSS (blogs) | Foro de Bolsa con corte por fecha. Solo título, URL, fecha de último mensaje y nº de respuestas |

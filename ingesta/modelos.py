@@ -21,6 +21,7 @@ class Item:
     seccion: str | None = None
     n_respuestas: int | None = None
     fecha_estimada: bool = False  # True si publicado_en no es la fecha real de publicación
+    simbolos: list[str] | None = None  # tickers relacionados (solo TradingView)
 
 
 def a_utc(fecha: datetime) -> datetime:

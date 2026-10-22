@@ -90,11 +90,13 @@ def tradingview_json(contenido: bytes, base_url: str, cfg: dict) -> list[Item]:
                 continue
             publicado = n.get("published")
             proveedor = (n.get("provider") or {}).get("name")
+            simbolos = [s["symbol"] for s in n.get("relatedSymbols") or [] if isinstance(s, dict) and s.get("symbol")]
             vistos[url] = Item(
                 url=url,
                 titulo=limpiar_texto(n["title"]),
                 publicado_en=datetime.fromtimestamp(publicado, tz=timezone.utc) if publicado else None,
                 seccion=f"{cfg.get('seccion')}/{proveedor}" if proveedor else cfg.get("seccion"),
+                simbolos=list(dict.fromkeys(simbolos)) or None,
             )
     return list(vistos.values())
 
@@ -104,7 +106,9 @@ _NUM_ABREV = re.compile(r"^(\d+(?:[.,]\d+)?)\s*([KkMm]?)$")
 
 
 def _numero_abreviado(texto: str) -> int | None:
-    """'52' -> 52, '3,93K' -> 3930, '346K' -> 346000 (Rankia abrevia: valor aproximado)."""
+    """'52' -> 52, '3,93K' -> 3930, '346K' -> 346000 (Rankia abrevia: valor aproximado), '-' -> 0."""
+    if texto.strip() == "-":  # hilo sin respuestas
+        return 0
     m = _NUM_ABREV.match(texto.strip())
     if not m:
         return None

@@ -29,6 +29,7 @@ log = logging.getLogger("ingesta")
 class Resultado:
     nombre: str
     tipo_acceso: str
+    fuente_id: int
     estado: str = "ok"
     paginas: int = 0
     leidos: int = 0
@@ -75,11 +76,12 @@ def recorrer_listado(listado: dict, cliente: ClienteEducado, almacen, max_pagina
 
 def procesar_fuente(fuente: dict, fuente_id: int, cliente: ClienteEducado, almacen, franja: str,
                     max_paginas: int, n_muestras: int) -> Resultado:
-    res = Resultado(fuente["nombre"], fuente["tipo_acceso"])
+    res = Resultado(fuente["nombre"], fuente["tipo_acceso"], fuente_id)
     inicio = ahora()
     ultima = almacen.ultima_ejecucion(fuente_id)
     primera = not almacen.tiene_articulos(fuente_id)
     vistos: dict[str, Item] = {}
+    hilos: dict[str, int | None] = {}  # hilos de foro vistos en esta ejecución -> nº de respuestas
     fallos = 0
 
     for listado in fuente["listados"]:
@@ -104,6 +106,8 @@ def procesar_fuente(fuente: dict, fuente_id: int, cliente: ClienteEducado, almac
             continue
 
         res.paginas += pags
+        if listado["parser"] == "rankia_foro":
+            hilos.update({it.url: it.n_respuestas for it in items})
         log.info("%s · %s · páginas=%d leídos=%d frontera=%s", fuente["nombre"], etiqueta, pags, len(items), frontera)
 
         if not frontera and listado.get("detecta_hueco", True):
@@ -133,6 +137,7 @@ def procesar_fuente(fuente: dict, fuente_id: int, cliente: ClienteEducado, almac
             "n_respuestas": it.n_respuestas,
             "publicado_en": (it.publicado_en or inicio).isoformat(),
             "fecha_estimada": it.publicado_en is None or it.fecha_estimada,
+            "simbolos": it.simbolos,
         }
         for it in vistos.values()
     ]
@@ -148,7 +153,7 @@ def procesar_fuente(fuente: dict, fuente_id: int, cliente: ClienteEducado, almac
             res.avisos.append(f"error guardando artículos: {e}")
             log.exception("%s · error guardando", fuente["nombre"])
 
-    almacen.registrar_ejecucion({
+    ejecucion_id = almacen.registrar_ejecucion({
         "inicio": inicio.isoformat(),
         "fin": ahora().isoformat(),
         "franja": franja,
@@ -159,6 +164,23 @@ def procesar_fuente(fuente: dict, fuente_id: int, cliente: ClienteEducado, almac
         "paginas_leidas": res.paginas,
         "error_msg": "; ".join(res.avisos)[:2000] or None,
     })
+
+    if hilos:
+        # Una fila por hilo visto, exista o no de antes: es la serie temporal de actividad.
+        try:
+            ids = almacen.ids_articulos(list(hilos))
+            almacen.insertar_actividad([
+                {"articulo_id": ids[url], "ejecucion_id": ejecucion_id, "n_respuestas": n}
+                for url, n in hilos.items() if url in ids
+            ])
+            log.info("%s · actividad registrada para %d hilos", res.nombre, len(ids))
+        except Exception as e:  # noqa: BLE001
+            res.avisos.append(f"error registrando rankia_actividad: {e}")
+            if res.estado == "ok":
+                res.estado = "parcial"
+            almacen.actualizar_ejecucion(ejecucion_id, {"estado": res.estado, "error_msg": "; ".join(res.avisos)[:2000]})
+            log.exception("%s · error registrando actividad", res.nombre)
+
     log.info("%s · estado=%s páginas=%d leídos=%d nuevos=%d", res.nombre, res.estado, res.paginas, res.leidos, res.nuevos)
     return res
 
@@ -221,7 +243,27 @@ def main(argv: list[str] | None = None) -> int:
         cliente.close()
 
     imprimir_resumen(resultados, inactivas)
-    return 1 if resultados and all(r.estado == "error" for r in resultados) else 0
+
+    alertas = fuentes_con_errores_seguidos(resultados, almacen)
+    for nombre in alertas:
+        log.error("ALERTA · %s acumula %d ejecuciones seguidas con estado 'error' (la fuente sigue activa)",
+                  nombre, ERRORES_SEGUIDOS_ALERTA)
+    if resultados and all(r.estado == "error" for r in resultados):
+        return 1
+    return 2 if alertas else 0
+
+
+ERRORES_SEGUIDOS_ALERTA = 3
+
+
+def fuentes_con_errores_seguidos(resultados: list[Resultado], almacen) -> list[str]:
+    """Fuentes cuyas últimas N ejecuciones (incluida la actual) son todas 'error'. No las desactiva."""
+    alertas = []
+    for r in resultados:
+        estados = almacen.ultimos_estados(r.fuente_id, ERRORES_SEGUIDOS_ALERTA)
+        if len(estados) == ERRORES_SEGUIDOS_ALERTA and all(e == "error" for e in estados):
+            alertas.append(r.nombre)
+    return alertas
 
 
 if __name__ == "__main__":

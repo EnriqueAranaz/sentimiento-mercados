@@ -49,11 +49,14 @@ fuentes:
     url: https://www.expansion.com/mercados.html
     idioma: es
     activa: true
-    motivo: "RSS oficial de Mercados (~50 entradas, ~3 días). Solo titular y entradilla pública; nunca se abre el artículo."
+    motivo: "RSS oficiales de Mercados (~50 entradas, ~3 días) y Empresas (~50, ~1 día). Solo titular y entradilla pública; nunca se abre el artículo."
     listados:
       - url: https://e00-expansion.uecdn.es/rss/mercados.xml
         parser: rss
         seccion: mercados
+      - url: https://e00-expansion.uecdn.es/rss/empresas.xml
+        parser: rss
+        seccion: empresas
 
   - nombre: Cinco Días
     clave: cincodias
@@ -62,11 +65,15 @@ fuentes:
     url: https://cincodias.elpais.com/mercados-financieros/
     idioma: es
     activa: true
-    motivo: "El HTML devuelve 403 a bots; se usa el feed oficial de PRISA (feeds.elpais.com), ~28 entradas, ~3 días."
+    motivo: "El HTML devuelve 403 a bots; se usan los feeds oficiales de PRISA (feeds.elpais.com): Mercados financieros (~28 entradas, ~3 días) y Empresas (~30, ~1,5 días)."
     listados:
       - url: https://feeds.elpais.com/mrss-s/pages/ep/site/cincodias.elpais.com/section/mercados-financieros/portada
         parser: rss
         seccion: mercados-financieros
+      # La sección "Empresas" de Cinco Días tiene la ruta /companias/ (el feed /empresas/ no existe).
+      - url: https://feeds.elpais.com/mrss-s/pages/ep/site/cincodias.elpais.com/section/companias/portada
+        parser: rss
+        seccion: empresas
 
   # ------------------------------------------------------------------ portales
   - nombre: Bolsamanía

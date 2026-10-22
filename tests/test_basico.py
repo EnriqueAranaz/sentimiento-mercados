@@ -57,7 +57,41 @@ def test_numero_abreviado_rankia():
     assert _numero_abreviado("3,93K") == 3930
     assert _numero_abreviado("346K") == 346000
     assert _numero_abreviado("1,2M") == 1200000
+    assert _numero_abreviado("-") == 0
     assert _numero_abreviado("") is None
+
+
+def test_tradingview_extrae_simbolos():
+    from ingesta.parsers import tradingview_json
+
+    html = (
+        '<script>x = {"items":[{"id":"a","title":"Santander sube","storyPath":"/news/a/","published":1792699440,'
+        '"relatedSymbols":[{"symbol":"BME:SAN"},{"symbol":"NYSE:SAN"},{"symbol":"BME:SAN"}],'
+        '"provider":{"name":"Reuters"}},'
+        '{"id":"b","title":"Sin tickers","storyPath":"/news/b/","published":1792699440,"provider":{"name":"TradingView"}}]};'
+        "</script>"
+    ).encode()
+    items = {it.titulo: it for it in tradingview_json(html, "https://es.tradingview.com/news/", {"seccion": "news"})}
+    assert items["Santander sube"].simbolos == ["BME:SAN", "NYSE:SAN"]
+    assert items["Santander sube"].seccion == "news/Reuters"
+    assert items["Sin tickers"].simbolos is None
+
+
+def test_alerta_tres_errores_seguidos(tmp_path):
+    from ingesta.__main__ import Resultado, fuentes_con_errores_seguidos
+    from ingesta.almacen import AlmacenLocal
+
+    almacen = AlmacenLocal(tmp_path / "db.json")
+    ids = almacen.sincronizar_fuentes([
+        {"nombre": n, "tipo_acceso": "rss", "tipo_fuente": "medio", "url": "u", "idioma": "es", "activa": True}
+        for n in ("A", "B", "C")
+    ])
+    historial = {"A": ["error", "error", "error"], "B": ["error", "ok", "error", "error"], "C": ["error", "error"]}
+    for nombre, estados in historial.items():
+        for i, estado in enumerate(estados):
+            almacen.registrar_ejecucion({"inicio": f"2026-10-2{i}T09:30:00+00:00", "fuente_id": ids[nombre], "estado": estado})
+    resultados = [Resultado(n, "rss", ids[n], estado="error") for n in ("A", "B", "C")]
+    assert fuentes_con_errores_seguidos(resultados, almacen) == ["A"]
 
 
 def test_normalizar_url_quita_rastreo():
