@@ -34,7 +34,14 @@ exportar_snapshot.py         exporta todas las tablas de Supabase a un Excel (ex
    ```
 3. GitHub: en *Settings → Secrets and variables → Actions* crear `SUPABASE_URL` y
    `SUPABASE_SERVICE_ROLE_KEY`. El workflow se lanza solo a las 9:30 (`apertura`) y 18:00
-   (`cierre`) hora de Madrid, y a mano desde *Actions → Ingesta de titulares → Run workflow* (`manual`).
+   (`cierre`) hora de Madrid, y a mano desde *Actions → Ingesta de titulares → Run workflow*, donde se
+   elige la franja (`manual` por defecto; `apertura`/`cierre` para recuperar una ejecución perdida).
+
+   Las horas están en **UTC** porque GitHub no respetó el campo `timezone` (lanzaba en hora de Chile).
+   Cada franja está programada a las dos horas UTC posibles (verano/invierno) y el primer paso del
+   workflow deja seguir solo la que corresponde al horario vigente en Madrid; la otra termina en
+   segundos con el mensaje "Se omite". GitHub puede retrasar las ejecuciones programadas en momentos
+   de carga (normalmente minutos).
 
 ### Opciones de la CLI
 

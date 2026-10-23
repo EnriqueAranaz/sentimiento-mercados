@@ -1,12 +1,21 @@
 name: Ingesta de titulares
 
+# Horas en UTC: el campo `timezone` no se respetó (las ejecuciones salieron en hora de Chile).
+# Cada franja se programa a las dos horas UTC posibles y el paso "Determinar franja" deja seguir
+# solo la que corresponde al horario vigente en Madrid (verano UTC+2 / invierno UTC+1).
 on:
   schedule:
-    - cron: '30 9 * * *'
-      timezone: 'Europe/Madrid'
-    - cron: '0 18 * * *'
-      timezone: 'Europe/Madrid'
+    - cron: '30 7 * * *'   # apertura 9:30 Madrid en horario de verano
+    - cron: '30 8 * * *'   # apertura 9:30 Madrid en horario de invierno
+    - cron: '0 16 * * *'   # cierre 18:00 Madrid en horario de verano
+    - cron: '0 17 * * *'   # cierre 18:00 Madrid en horario de invierno
   workflow_dispatch:
+    inputs:
+      franja:
+        description: 'Franja con la que se registra la ejecución'
+        type: choice
+        options: [manual, apertura, cierre]
+        default: manual
 
 # Evita dos ingestas simultáneas (p. ej. una manual solapada con una programada).
 concurrency:
@@ -21,30 +30,46 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:
+      - name: Determinar franja
+        id: franja
+        env:
+          SCHEDULE: ${{ github.event.schedule }}
+          FRANJA_MANUAL: ${{ inputs.franja }}
+        run: |
+          desfase_madrid=$(TZ=Europe/Madrid date +%z)   # +0200 en verano, +0100 en invierno
+          requiere=""
+          case "$SCHEDULE" in
+            "30 7 * * *") franja=apertura; requiere=+0200 ;;
+            "30 8 * * *") franja=apertura; requiere=+0100 ;;
+            "0 16 * * *") franja=cierre;   requiere=+0200 ;;
+            "0 17 * * *") franja=cierre;   requiere=+0100 ;;
+            *)            franja=${FRANJA_MANUAL:-manual} ;;
+          esac
+          if [ -n "$requiere" ] && [ "$requiere" != "$desfase_madrid" ]; then
+            ejecutar=false
+            echo "Se omite: el cron '$SCHEDULE' es para Madrid UTC$requiere y ahora Madrid está en UTC$desfase_madrid"
+          else
+            ejecutar=true
+          fi
+          echo "franja=$franja" >> "$GITHUB_OUTPUT"
+          echo "ejecutar=$ejecutar" >> "$GITHUB_OUTPUT"
+          echo "Franja: $franja (schedule='$SCHEDULE', Madrid UTC$desfase_madrid, hora Madrid $(TZ=Europe/Madrid date +%H:%M), ejecutar=$ejecutar)"
+
       - uses: actions/checkout@v7
+        if: steps.franja.outputs.ejecutar == 'true'
 
       - uses: actions/setup-python@v7
+        if: steps.franja.outputs.ejecutar == 'true'
         with:
           python-version: '3.11'
           cache: pip
 
       - name: Instalar dependencias
+        if: steps.franja.outputs.ejecutar == 'true'
         run: pip install -r requirements.txt
 
-      - name: Determinar franja
-        id: franja
-        env:
-          SCHEDULE: ${{ github.event.schedule }}
-        run: |
-          case "$SCHEDULE" in
-            "30 9 * * *") franja=apertura ;;
-            "0 18 * * *") franja=cierre ;;
-            *)            franja=manual ;;
-          esac
-          echo "franja=$franja" >> "$GITHUB_OUTPUT"
-          echo "Franja: $franja (schedule='$SCHEDULE')"
-
       - name: Ingesta
+        if: steps.franja.outputs.ejecutar == 'true'
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
