@@ -33,15 +33,31 @@ exportar_snapshot.py         exporta todas las tablas de Supabase a un Excel (ex
    .venv/Scripts/python -m ingesta                   # ejecución manual contra Supabase
    ```
 3. GitHub: en *Settings → Secrets and variables → Actions* crear `SUPABASE_URL` y
-   `SUPABASE_SERVICE_ROLE_KEY`. El workflow se lanza solo a las 9:30 (`apertura`) y 18:00
-   (`cierre`) hora de Madrid, y a mano desde *Actions → Ingesta de titulares → Run workflow*, donde se
-   elige la franja (`manual` por defecto; `apertura`/`cierre` para recuperar una ejecución perdida).
+   `SUPABASE_SERVICE_ROLE_KEY`. También se puede lanzar a mano desde *Actions → Ingesta de titulares →
+   Run workflow*, eligiendo la franja (`manual` por defecto; `apertura`/`cierre` para recuperar una
+   ejecución perdida).
 
-   Las horas están en **UTC** porque GitHub no respetó el campo `timezone` (lanzaba en hora de Chile).
-   Cada franja está programada a las dos horas UTC posibles (verano/invierno) y el primer paso del
-   workflow deja seguir solo la que corresponde al horario vigente en Madrid; la otra termina en
-   segundos con el mensaje "Se omite". GitHub puede retrasar las ejecuciones programadas en momentos
-   de carga (normalmente minutos).
+### Programación (cron-job.org)
+
+El workflow **no** usa el programador de GitHub (`schedule`): en las pruebas lanzó en hora de Chile
+pese a `timezone: Europe/Madrid` y otras veces no lanzó nada. Lo dispara **cron-job.org** (gratuito),
+con dos tareas en zona horaria `Europe/Madrid`:
+
+| Tarea | Hora | Cuerpo |
+|---|---|---|
+| Ingesta apertura | 09:30 | `{"ref":"main","inputs":{"franja":"apertura"}}` |
+| Ingesta cierre | 18:00 | `{"ref":"main","inputs":{"franja":"cierre"}}` |
+
+Ambas hacen `POST https://api.github.com/repos/EnriqueAranaz/sentimiento-mercados/actions/workflows/ingesta.yml/dispatches`
+con los encabezados `Authorization: Bearer <token>`, `Accept: application/vnd.github+json`,
+`X-GitHub-Api-Version: 2022-11-28` y `Content-Type: application/json`. GitHub responde `204` si la acepta.
+
+- **Token**: *fine-grained* de GitHub, solo para este repositorio y con el único permiso **Actions: Read and write**.
+  Caduca (máx. 1 año): al caducar, GitHub responde `401` y cron-job.org avisa por email. Se renueva en
+  GitHub y se cambia el encabezado `Authorization` de las dos tareas.
+- **Versión de la API**: `2022-11-28` tiene fin de soporte el 10/03/2028; antes de esa fecha, cambiar el
+  encabezado a la versión vigente (p. ej. `2026-03-10`) y probar.
+- **Si una ejecución no llega**: lanzarla a mano desde GitHub con su franja.
 
 ### Opciones de la CLI
 
