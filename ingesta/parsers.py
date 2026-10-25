@@ -39,9 +39,15 @@ def rss(contenido: bytes, base_url: str, cfg: dict) -> list[Item]:
     return items
 
 
+class SinNovedades(Exception):
+    """El listado está vacío a propósito (p. ej. sitemap con <no_news> en fin de semana): no es un error."""
+
+
 def sitemap_news(contenido: bytes, base_url: str, cfg: dict) -> list[Item]:
     """Sitemap de Google News (<news:title>, <news:publication_date>)."""
     xml = BeautifulSoup(contenido, "xml")
+    if not xml.find("url") and xml.find("no_news"):
+        raise SinNovedades("el sitemap indica <no_news>: sin noticias recientes")
     items = []
     for u in xml.find_all("url"):
         loc, titulo = u.find("loc"), u.find("title")

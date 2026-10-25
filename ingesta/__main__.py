@@ -19,7 +19,7 @@ from dotenv import load_dotenv
 from .almacen import crear_almacen
 from .http import BloqueoError, ClienteEducado, RobotsError
 from .modelos import MADRID, Item
-from .parsers import PARSERS
+from .parsers import PARSERS, SinNovedades
 
 RAIZ = Path(__file__).resolve().parent.parent
 log = logging.getLogger("ingesta")
@@ -55,7 +55,12 @@ def recorrer_listado(listado: dict, cliente: ClienteEducado, almacen, max_pagina
     for n in range(1, paginas + 1):
         url = listado["url"] if n == 1 else listado["url_pagina"].format(n=n)
         r = cliente.get(url)
-        items = parser(r.content, str(r.url), listado)
+        try:
+            items = parser(r.content, str(r.url), listado)
+        except SinNovedades as e:
+            # Vacío intencionado: no hay nada nuevo que leer, luego tampoco puede haber hueco.
+            log.info("%s · %s", listado.get("seccion") or url, e)
+            return n, True, leidos
         if not items:
             if n == 1:
                 raise ValueError(f"listado vacío en {url} (¿ha cambiado el HTML?)")

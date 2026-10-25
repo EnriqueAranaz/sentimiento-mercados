@@ -94,5 +94,17 @@ def test_alerta_tres_errores_seguidos(tmp_path):
     assert fuentes_con_errores_seguidos(resultados, almacen) == ["A"]
 
 
+def test_sitemap_no_news_no_es_error():
+    import pytest
+
+    from ingesta.parsers import SinNovedades, sitemap_news
+
+    cab = '<?xml version="1.0"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">'
+    with pytest.raises(SinNovedades):
+        sitemap_news((cab + "<no_news>no news</no_news></urlset>").encode(), "https://x.com/sitemap.xml", {})
+    # Vacío sin la marca <no_news>: devuelve lista vacía y el orquestador lo trata como posible cambio de formato.
+    assert sitemap_news((cab + "</urlset>").encode(), "https://x.com/sitemap.xml", {}) == []
+
+
 def test_normalizar_url_quita_rastreo():
     assert normalizar_url("https://WWW.x.com/a.html?utm_source=tw&id=3#c") == "https://www.x.com/a.html?id=3"
