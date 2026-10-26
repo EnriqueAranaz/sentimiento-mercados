@@ -12,6 +12,7 @@ Uso:
 """
 from __future__ import annotations
 
+import json
 import os
 import sys
 from pathlib import Path
@@ -22,6 +23,7 @@ from openpyxl.styles import Font
 
 RAIZ = Path(__file__).resolve().parent.parent
 REFERENCIA = RAIZ / "referencia" / "clasificacion_titulares_2026-10-26_v3.xlsx"
+APROBADAS_JSON = RAIZ / "clasificacion" / "empresas_aprobadas.json"
 SALIDA = RAIZ / "referencia" / "empresas_cargadas.xlsx"
 
 # (nombre, ticker TradingView, sector). El mercado se deduce del índice de la lista.
@@ -247,6 +249,7 @@ ALIAS_EXTRA = {
     "SpaceX": ["Space X"],
     "Air France-KLM": ["Air France"],
     "Euroclear": [],
+    "Cementos Molins": ["Molins"],
     "Geely": ["Geely Automobile"],
     "SAIC Motor": ["SAIC"],
     "Chery": ["Chery Automobile"],
@@ -307,6 +310,17 @@ def construir() -> list[dict]:
         empresas.setdefault(nombre, {"nombre": nombre, "ticker": ticker, "sector": sector, "en_universo": False,
                                      "mercado": mercado_por_ticker(ticker),
                                      "origen": "Propuesta del agente, aprobada 26/10/2026"})
+    # Segunda tanda aprobada (clasificación completa, 26/10/2026), en un fichero de datos.
+    for e in json.loads(APROBADAS_JSON.read_text("utf-8")):
+        empresas.setdefault(e["nombre"], {
+            "nombre": e["nombre"], "ticker": e["ticker"], "sector": e["sector"], "en_universo": e["en_universo"],
+            "mercado": e.get("mercado") or mercado_por_ticker(e["ticker"]),
+            "origen": "Propuesta del agente, aprobada 26/10/2026 (2.ª tanda)"})
+        ALIAS_EXTRA.setdefault(e["nombre"], e.get("alias", []))
+    # Aclaración v3 (b, c): Anthropic cotiza (OPV) y las grandes mundiales de Asia están en el universo.
+    for nombre in ("Anthropic", "Samsung", "SK Hynix"):
+        if nombre in empresas:
+            empresas[nombre]["en_universo"] = True
     for e in empresas.values():
         alias = [e["nombre"], *ALIAS_EXTRA.get(e["nombre"], [])]
         e["alias"] = list({a.casefold(): a for a in reversed(alias)}.values())[::-1]  # sin repetidos por mayúsculas

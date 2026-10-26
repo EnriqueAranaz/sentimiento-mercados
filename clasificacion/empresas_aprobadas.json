@@ -1,0 +1,329 @@
+[
+ {
+  "nombre": "Acuity",
+  "ticker": "NYSE:AYI",
+  "sector": "Industria, defensa y aeroespacial",
+  "en_universo": false
+ },
+ {
+  "nombre": "Alantra",
+  "ticker": "BME:ALNT",
+  "sector": "Seguros y servicios financieros",
+  "en_universo": false
+ },
+ {
+  "nombre": "Alliance Resource Partners",
+  "ticker": "NASDAQ:ARLP",
+  "sector": "Materiales, química y minería",
+  "en_universo": false
+ },
+ {
+  "nombre": "Anixa Biosciences",
+  "ticker": "NASDAQ:ANIX",
+  "sector": "Salud y farmacia",
+  "en_universo": false
+ },
+ {
+  "nombre": "Apollo Global Management",
+  "ticker": "NYSE:APO",
+  "sector": "Seguros y servicios financieros",
+  "en_universo": false
+ },
+ {
+  "nombre": "Avantor",
+  "ticker": "NYSE:AVTR",
+  "sector": "Salud y farmacia",
+  "en_universo": false
+ },
+ {
+  "nombre": "Bank of Hawaii",
+  "ticker": "NYSE:BOH",
+  "sector": "Banca",
+  "en_universo": false
+ },
+ {
+  "nombre": "Bank of Marin Bancorp",
+  "ticker": "NASDAQ:BMRC",
+  "sector": "Banca",
+  "en_universo": false
+ },
+ {
+  "nombre": "Bending Spoons",
+  "ticker": "NASDAQ:BSP",
+  "sector": "Tecnología",
+  "en_universo": false
+ },
+ {
+  "nombre": "Betterware de México",
+  "ticker": "NASDAQ:BWMX",
+  "sector": "Consumo y distribución",
+  "en_universo": false
+ },
+ {
+  "nombre": "Bloom Energy",
+  "ticker": "NYSE:BE",
+  "sector": "Eléctricas, renovables y redes",
+  "en_universo": false
+ },
+ {
+  "nombre": "Boston Omaha",
+  "ticker": "NYSE:BOC",
+  "sector": "Medios y entretenimiento",
+  "en_universo": false
+ },
+ {
+  "nombre": "CACI",
+  "ticker": "NYSE:CACI",
+  "sector": "Industria, defensa y aeroespacial",
+  "en_universo": false
+ },
+ {
+  "nombre": "Cadence Design Systems",
+  "ticker": "NASDAQ:CDNS",
+  "sector": "Tecnología",
+  "en_universo": false
+ },
+ {
+  "nombre": "City Holding",
+  "ticker": "NASDAQ:CHCO",
+  "sector": "Banca",
+  "en_universo": false
+ },
+ {
+  "nombre": "DarioHealth",
+  "ticker": "NASDAQ:DRIO",
+  "sector": "Salud y farmacia",
+  "en_universo": false
+ },
+ {
+  "nombre": "Datadog",
+  "ticker": "NASDAQ:DDOG",
+  "sector": "Tecnología",
+  "en_universo": false
+ },
+ {
+  "nombre": "easyJet",
+  "ticker": "LSE:EZJ",
+  "sector": "Transporte y turismo",
+  "en_universo": false
+ },
+ {
+  "nombre": "EQT Corporation",
+  "ticker": "NYSE:EQT",
+  "sector": "Petróleo y gas",
+  "en_universo": false
+ },
+ {
+  "nombre": "FedEx",
+  "ticker": "NYSE:FDX",
+  "sector": "Transporte y turismo",
+  "en_universo": false
+ },
+ {
+  "nombre": "Fortum",
+  "ticker": "OMXHEX:FORTUM",
+  "sector": "Eléctricas, renovables y redes",
+  "en_universo": false
+ },
+ {
+  "nombre": "Forum Markets",
+  "ticker": "NASDAQ:FRMM",
+  "sector": "Tecnología",
+  "en_universo": false
+ },
+ {
+  "nombre": "HeartBeam",
+  "ticker": "NASDAQ:BEAT",
+  "sector": "Salud y farmacia",
+  "en_universo": false
+ },
+ {
+  "nombre": "Herc Holdings",
+  "ticker": "NYSE:HRI",
+  "sector": "Industria, defensa y aeroespacial",
+  "en_universo": false
+ },
+ {
+  "nombre": "High Liner Foods",
+  "ticker": "TSX:HLF",
+  "sector": "Consumo y distribución",
+  "en_universo": false
+ },
+ {
+  "nombre": "Intrepid Potash",
+  "ticker": "NYSE:IPI",
+  "sector": "Materiales, química y minería",
+  "en_universo": false
+ },
+ {
+  "nombre": "IQSTEL",
+  "ticker": "NASDAQ:IQST",
+  "sector": "Telecomunicaciones",
+  "en_universo": false
+ },
+ {
+  "nombre": "IREN",
+  "ticker": "NASDAQ:IREN",
+  "sector": "Tecnología",
+  "en_universo": false
+ },
+ {
+  "nombre": "Jackson Financial",
+  "ticker": "NYSE:JXN",
+  "sector": "Seguros y servicios financieros",
+  "en_universo": false
+ },
+ {
+  "nombre": "Labcorp",
+  "ticker": "NYSE:LH",
+  "sector": "Salud y farmacia",
+  "en_universo": false
+ },
+ {
+  "nombre": "Logan Energy",
+  "ticker": "TSXV:LGN",
+  "sector": "Petróleo y gas",
+  "en_universo": false
+ },
+ {
+  "nombre": "MasterBrand",
+  "ticker": "NYSE:MBC",
+  "sector": "Construcción e infraestructuras",
+  "en_universo": false
+ },
+ {
+  "nombre": "Medifast",
+  "ticker": "NYSE:MED",
+  "sector": "Consumo y distribución",
+  "en_universo": false
+ },
+ {
+  "nombre": "Nebius",
+  "ticker": "NASDAQ:NBIS",
+  "sector": "Tecnología",
+  "en_universo": false
+ },
+ {
+  "nombre": "Ovintiv",
+  "ticker": "NYSE:OVV",
+  "sector": "Petróleo y gas",
+  "en_universo": false
+ },
+ {
+  "nombre": "PDD Holdings",
+  "ticker": "NASDAQ:PDD",
+  "sector": "Consumo y distribución",
+  "en_universo": false
+ },
+ {
+  "nombre": "Range Resources",
+  "ticker": "NYSE:RRC",
+  "sector": "Petróleo y gas",
+  "en_universo": false
+ },
+ {
+  "nombre": "Regeneron",
+  "ticker": "NASDAQ:REGN",
+  "sector": "Salud y farmacia",
+  "en_universo": false
+ },
+ {
+  "nombre": "S&P Global",
+  "ticker": "NYSE:SPGI",
+  "sector": "Seguros y servicios financieros",
+  "en_universo": false
+ },
+ {
+  "nombre": "Scienjoy",
+  "ticker": "NASDAQ:SJ",
+  "sector": "Medios y entretenimiento",
+  "en_universo": false
+ },
+ {
+  "nombre": "Sierra Bancorp",
+  "ticker": "NASDAQ:BSRR",
+  "sector": "Banca",
+  "en_universo": false
+ },
+ {
+  "nombre": "Sonae",
+  "ticker": "ELI:SON",
+  "sector": "Consumo y distribución",
+  "en_universo": false
+ },
+ {
+  "nombre": "Spotify",
+  "ticker": "NYSE:SPOT",
+  "sector": "Medios y entretenimiento",
+  "en_universo": false
+ },
+ {
+  "nombre": "Surgery Partners",
+  "ticker": "NASDAQ:SGRY",
+  "sector": "Salud y farmacia",
+  "en_universo": false
+ },
+ {
+  "nombre": "Tempus AI",
+  "ticker": "NASDAQ:TEM",
+  "sector": "Salud y farmacia",
+  "en_universo": false
+ },
+ {
+  "nombre": "Tencent",
+  "ticker": "HKEX:700",
+  "sector": "Tecnología",
+  "en_universo": true,
+  "mercado": "Otros"
+ },
+ {
+  "nombre": "Tikehau Capital",
+  "ticker": "EURONEXT:TKO",
+  "sector": "Seguros y servicios financieros",
+  "en_universo": false
+ },
+ {
+  "nombre": "Touchmark Bancshares",
+  "ticker": "OTC:TMAK",
+  "sector": "Banca",
+  "en_universo": false
+ },
+ {
+  "nombre": "Toyota",
+  "ticker": "TSE:7203",
+  "sector": "Automóvil",
+  "en_universo": true,
+  "mercado": "Otros",
+  "alias": [
+   "Toyota Motor"
+  ]
+ },
+ {
+  "nombre": "TSMC",
+  "ticker": "NYSE:TSM",
+  "sector": "Semiconductores",
+  "en_universo": true,
+  "mercado": "Otros",
+  "alias": [
+   "Taiwan Semiconductor"
+  ]
+ },
+ {
+  "nombre": "Western Digital",
+  "ticker": "NASDAQ:WDC",
+  "sector": "Tecnología",
+  "en_universo": false
+ },
+ {
+  "nombre": "XTEND AI Robotics",
+  "ticker": "NYSE:XTND",
+  "sector": "Industria, defensa y aeroespacial",
+  "en_universo": false
+ },
+ {
+  "nombre": "ZenaTech",
+  "ticker": "NASDAQ:ZENA",
+  "sector": "Tecnología",
+  "en_universo": false
+ }
+]

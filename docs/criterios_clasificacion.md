@@ -1,10 +1,10 @@
 # Criterios de clasificación de titulares
 
-**Versión de criterios: `v3.2`** (modelo del Excel `referencia/clasificacion_titulares_2026-10-26_v3.xlsx`, 26/10/2026,
-más las *Aclaraciones v2* de la sección 9). Es el valor que va en `version_criterios`.
+**Versión de criterios: `v3.3`** (modelo del Excel `referencia/clasificacion_titulares_2026-10-26_v3.xlsx`, 26/10/2026,
+más las *Aclaraciones v2* de la sección 9 y las *Aclaraciones v3* de la sección 10). Es el valor que va en `version_criterios`.
 Este documento es la **única fuente de criterios** del agente clasificador. Las secciones 1 a 7 son copia íntegra
-de la hoja *Criterios* del Excel; la sección 8 son ejemplos reales del Excel, clasificados a mano; la sección 9 son
-aclaraciones posteriores al piloto, que **prevalecen** sobre lo anterior si hay conflicto.
+de la hoja *Criterios* del Excel; la sección 8 son ejemplos reales del Excel, clasificados a mano; las secciones 9 y 10
+son aclaraciones posteriores, que **prevalecen** sobre lo anterior si hay conflicto (la 10 sobre la 9).
 Los nombres de ámbitos, objetos de Global, sectores, temas, orígenes y motivos deben usarse **exactamente** como aparecen aquí.
 
 ## 1. Estructura
@@ -252,3 +252,50 @@ precios al alza = negativo; paro a la baja o empleo fuerte = positivo; PMI o con
 positivo, por debajo = negativo. Si no hay dirección clara: **0**.
 - *Los precios industriales en España suben un 18,3% interanual en septiembre* → Relevante · *Macro* · *Hecho (empresa o dato oficial)* · Mercado · Ibex 35 → **-1**
 - *El crecimiento de la eurozona cae a su nivel más bajo en cuatro meses, según el PMI* → Relevante · *Macro* · *Hecho (empresa o dato oficial)* · Mercado · Europa → **-1**
+
+## 10. Aclaraciones v3 (tras la clasificación completa; prevalecen sobre todo lo anterior)
+
+**a) La IA es un tema, no un sector.** Sector · Tecnología solo cuando el titular nombra el sector o sus valores
+("las tecnológicas", "sector tecnológico", "valores tecnológicos"). El miedo a la IA sin más va a Global · Mercados o
+a las empresas citadas.
+- *Yen se dispara por preocupación por el petróleo, la IA y Francia* → Mercado · Japón → **2** · Mercado · Francia → **-1** (**sin** Sector · Tecnología)
+- *Las tecnológicas moderan su caída en Asia y el crudo toca máximos de cinco meses* → Sector · Tecnología · Tecnología → **-1** · Mercado · Asia → **-1** · Global · Petróleo → **1** (nombra "las tecnológicas")
+- *Las bolsas asiáticas se mantienen cerca de su mínimo de tres meses ante los temores sobre la financiación de la IA* → Mercado · Asia → **-1** (sin Sector · Tecnología)
+
+**b) Salidas a bolsa.** Una empresa con OPV anunciada o folleto registrado (Anthropic) se trata como cotizada: la
+noticia es relevante y se anota (Anthropic está en el universo). OpenAI, igual solo si el titular habla de su salida a
+bolsa o de su cotización; si no, es no cotizada. SpaceX cotiza.
+- *Anthropic registra el folleto para salir a bolsa y muestra pérdidas de 80.700 millones hasta junio* → Relevante · *Corporativo* · *Hecho (empresa o dato oficial)* · Empresa · Anthropic · Tecnología → **-1**
+- *OpenAI y la NASK de Polonia colaboran en la investigación sobre la seguridad de la inteligencia artificial* → No relevante · **Empresa no cotizada** (no habla de su salida a bolsa)
+
+**c) Grandes empresas mundiales.** Las ~50 mayores del mundo (TSMC, Samsung, SK Hynix, Tencent, Toyota…) son
+excepción a "Asia = Fuera de alcance": son relevantes y están en el universo.
+- *Bankinter eleva el objetivo de TSMC a 530 dólares: las claves de su apuesta por el fabricante de chips* → Relevante · *Recomendación / análisis* · *Analista* · Empresa · TSMC · Semiconductores → **1**
+- *SK Hynix anunciará este miércoles medidas para aumentar la rentabilidad para los accionistas* → Relevante · *Corporativo* · *Hecho (empresa o dato oficial)* · Empresa · SK Hynix · Semiconductores → **1**
+
+**d) Rentabilidad de los bonos.** Sube = negativo para su mercado; baja = positivo; salvo que el titular atribuya la
+bajada a miedo o a huida a refugio, que es negativo.
+- *Los rendimientos del Tesoro repuntan pese a las menores apuestas de subida de tipos* → Mercado · EE. UU. → **-1**
+- *Rendimiento bonos Tesoro EEUU se hunde ya que resurgen temores sobre sostenibilidad del auge de la IA* → Mercado · EE. UU. → **-1** (bajada por miedo) · Global · Mercados → **-1** (miedo a la IA, regla a)
+
+**e) Objetos de Mercado permitidos.** Además de Ibex 35, DAX, Europa y EE. UU.: países europeos (Francia, Italia,
+Portugal, Alemania…), Reino Unido, Canadá, Japón, Corea, China, Australia y Asia. Israel, Latam, India y similares:
+**Fuera de alcance (Latam, India…)**, salvo efecto en lo nuestro.
+- *El TSX sube gracias a las ganancias del sector tecnológico tras la solicitud de salida a bolsa de Anthropic…* → Mercado · Canadá → **1** · Sector · Tecnología → **1** (nombra el sector)
+- *Los mercados israelíes ven potencial alcista en la derrota de Netanyahu, tras tres años de repunte* → No relevante · **Fuera de alcance (Latam, India…)**
+
+**f) Mismo dato, distinto verbo.** Puede tener distinto valor: es correcto, se puntúa el tono del texto.
+- *La inflación industrial se dispara al 18,3% en septiembre por la energía y marca récord en casi cuatro años* → Mercado · Ibex 35 → **-2**
+- *Los precios industriales en España suben un 18,3% interanual en septiembre* → Mercado · Ibex 35 → **-1**
+
+**g) Filiales no cotizadas.** Se asignan a su matriz cotizada (Audi → Volkswagen, Iberia → IAG, Genentech → Roche).
+- *Datos clave: VOW: planta de Audi en EE. UU. por $4.2 mil millones; pausa de VE en India; 12 mil recortes de empleo* → Empresa · Volkswagen · Automóvil → **0**
+- *Genentech informa una reducción del 43.1% de la proteinuria en fase III en la nefropatía por IgA* → Empresa · Roche · Salud y farmacia → **1**
+
+**h) Datos de un sector en un país.** Van al ámbito **Sector**; el Mercado del país solo si el titular habla de su
+economía o de su bolsa en conjunto.
+- *Los coches eléctricos se disparan más del 70% en Europa y suponen casi un tercio del mercado* → Sector · Automóvil · Automóvil → **2**
+- *La compraventa de vivienda sube un 3,4% en agosto, con su mejor cifra en este mes desde 2024* → Sector · Inmobiliario · Inmobiliario → **1** (no Ibex 35)
+
+**i) El titular manda en el tono.** El resumen solo sirve para identificar objetos, nunca para fijar el valor.
+- *Bankinter eleva su beneficio un 11%, hasta los 901 millones* → Empresa · Bankinter · Banca → **1** (aunque el resumen diga que cae en bolsa)
