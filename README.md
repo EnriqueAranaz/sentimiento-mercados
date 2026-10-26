@@ -69,6 +69,29 @@ con los encabezados `Authorization: Bearer <token>`, `Accept: application/vnd.gi
 | `--dry-run` | No toca Supabase: guarda en `data/dry_run.json` (útil para probar una fuente nueva). Con `--solo`, prueba la fuente aunque tenga `activa: false` |
 | `--muestras N` | Nº de titulares de ejemplo por fuente en el resumen (5 por defecto) |
 
+## Fase 2: clasificación de titulares (sin API de Claude)
+
+Modelo y criterios: `docs/criterios_clasificacion.md` (versión `v3`, copia de `referencia/clasificacion_titulares_2026-10-26_v3.xlsx`).
+Tablas (`sql/003_clasificacion.sql`): catálogos `sectores`, `temas`, `origenes`, `motivos_no_relevancia`; `empresas`;
+`detecciones` (pistas); `clasificacion` (una por noticia); `afectaciones` (una por objeto afectado, impacto -2..2);
+vistas `resumen_diario`, `resumen_total`, `resumen_sectores`, `resumen_origen` (equivalentes a las hojas del Excel).
+
+**A) Reglas mecánicas** (`ingesta/reglas.py`): al final de cada ingesta, sobre los artículos nuevos, buscan empresas
+(alias en el titular sin mayúsculas ni tildes, y símbolos de TradingView contra el ticker), mercados y objetos globales
+por palabras clave → `detecciones`; y marcan cripto (secciones Beincrypto/Cointelegraph de TradingView o titulares
+claramente cripto) → `clasificacion` no relevante, motivo `Cripto`. Nada más: el resto lo decide el agente. Si fallan,
+se anota en el log y la ingesta sigue. Algunos alias que son palabras comunes (Meta, Dia, Visa, Colonial, Acciona,
+Continental…) solo cuentan escritos con mayúscula. Para aplicarlas a todo lo guardado: `python -m ingesta.reglas --todos`.
+
+**B) Agente clasificador manual** (`.claude/agents/clasificador-noticias.md`, comando `/clasificar` en Claude Code):
+lee los criterios, exporta lotes con `clasificacion/pendientes.py --lote 100`, clasifica titular a titular, escribe el
+JSON y lo carga con `clasificacion/cargar.py`, que valida catálogos, valores, sectores y empresas antes de escribir
+(los rechazados se corrigen y se recargan). Las empresas que no están en la tabla se acumulan en
+`clasificacion/lotes/empresas_nuevas_propuestas.json` para aprobarlas. `pendientes.py --estado` da el recuento.
+
+Empresas: `clasificacion/semilla_empresas.py` carga el universo (Ibex 35, DAX 40, Euro Stoxx 50, Stoxx Europe 50 y
+~50 mayores de EE. UU.) y las empresas del Excel, y deja la copia de revisión en `referencia/empresas_cargadas.xlsx`.
+
 ## Exportar una foto de la base de datos a Excel
 
 ```bash

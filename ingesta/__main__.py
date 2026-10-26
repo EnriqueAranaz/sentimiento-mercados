@@ -38,6 +38,7 @@ class Resultado:
     nuevos: int = 0
     avisos: list[str] = field(default_factory=list)
     muestras: list[Item] = field(default_factory=list)
+    insertados: list[dict] = field(default_factory=list)  # filas nuevas (con id), para las reglas
 
 
 def ahora() -> datetime:
@@ -238,7 +239,8 @@ def procesar_fuente(fuente: dict, fuente_id: int, cliente: ClienteEducado, almac
     if filas:
         try:
             conocidas = almacen.urls_conocidas([f["url"] for f in filas])
-            res.nuevos = almacen.insertar_articulos(filas)
+            res.insertados = almacen.insertar_articulos(filas)
+            res.nuevos = len(res.insertados)
             nuevos = [it for it in vistos.values() if it.url not in conocidas]
             res.muestras = (nuevos or list(vistos.values()))[:n_muestras]
         except Exception as e:  # noqa: BLE001
@@ -325,6 +327,9 @@ def main(argv: list[str] | None = None) -> int:
 
     imprimir_resumen(resultados, inactivas)
 
+    if not args.dry_run:
+        aplicar_reglas([f for r in resultados for f in r.insertados], almacen)
+
     alertas = fuentes_con_errores_seguidos(resultados, almacen)
     for nombre in alertas:
         log.error("ALERTA · %s acumula %d ejecuciones seguidas con estado 'error' (la fuente sigue activa)",
@@ -332,6 +337,20 @@ def main(argv: list[str] | None = None) -> int:
     if resultados and all(r.estado == "error" for r in resultados):
         return 1
     return 2 if alertas else 0
+
+
+def aplicar_reglas(nuevos: list[dict], almacen) -> None:
+    """Reglas mecánicas (detecciones y cripto) sobre los artículos nuevos. Un fallo no afecta a la ingesta."""
+    if not nuevos:
+        return
+    try:
+        from . import reglas
+
+        stats = reglas.aplicar(almacen.db, nuevos)
+        log.info("Reglas · %(articulos)d artículos nuevos · %(detecciones)d detecciones · "
+                 "%(con_empresa)d con empresa · %(cripto)d cripto", stats)
+    except Exception:  # noqa: BLE001
+        log.exception("Reglas · error al aplicar las reglas (la ingesta no se ve afectada)")
 
 
 ERRORES_SEGUIDOS_ALERTA = 3

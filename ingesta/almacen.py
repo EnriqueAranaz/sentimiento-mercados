@@ -40,15 +40,16 @@ class AlmacenSupabase:
         )
         return datetime.fromisoformat(res.data[0]["inicio"]) if res.data else None
 
-    def insertar_articulos(self, filas: list[dict]) -> int:
-        nuevos = 0
+    def insertar_articulos(self, filas: list[dict]) -> list[dict]:
+        """Inserta y devuelve solo las filas nuevas (con su id); las URLs ya guardadas se ignoran."""
+        nuevos: list[dict] = []
         for i in range(0, len(filas), _LOTE):
             res = (
                 self.db.table("articulos")
                 .upsert(filas[i:i + _LOTE], on_conflict="url", ignore_duplicates=True)  # ON CONFLICT (url) DO NOTHING
                 .execute()
             )
-            nuevos += len(res.data)
+            nuevos += res.data
         return nuevos
 
     def registrar_ejecucion(self, fila: dict) -> int:
@@ -93,12 +94,12 @@ class AlmacenLocal:
         inicios = [e["inicio"] for e in self.datos["ejecuciones"] if e["fuente_id"] == fuente_id and e["estado"] in ("ok", "parcial")]
         return datetime.fromisoformat(max(inicios)) if inicios else None
 
-    def insertar_articulos(self, filas: list[dict]) -> int:
-        nuevos = 0
+    def insertar_articulos(self, filas: list[dict]) -> list[dict]:
+        nuevos = []
         for f in filas:
             if f["url"] not in self.datos["articulos"]:
                 self.datos["articulos"][f["url"]] = f
-                nuevos += 1
+                nuevos.append(f)
         self._guardar()
         return nuevos
 
