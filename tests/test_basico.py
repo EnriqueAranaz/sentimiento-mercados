@@ -144,6 +144,30 @@ def test_archivo_diario_hueco_si_se_agotan_las_paginas():
     assert (pags, frontera) == (3, False)
 
 
+def test_html_enlaces_seccion_desde_url_y_excluye_destacadas():
+    from ingesta.parsers import html_enlaces
+
+    base = "https://www.bolsamania.com/capitalbolsa/noticias/"
+    html = "".join(f'<article><h2><a href="{base}{p}">Titular de prueba {i}</a></h2></article>'
+                   for i, p in enumerate(["bolsa/a--1.html", "economia/b--2.html", "destacadas/c--3.html"])).encode()
+    cfg = {"seccion": "minuto-a-minuto", "selector": "article h2 a",
+           "patron_url": r"^https://www\.bolsamania\.com/capitalbolsa/noticias/(?!destacadas/)(?P<seccion>[a-z0-9-]+)/[^?#]+--\d+\.html$"}
+    assert [(it.url.rsplit("/", 2)[-2], it.seccion) for it in html_enlaces(html, base, cfg)] == [
+        ("bolsa", "bolsa"), ("economia", "economia")]
+
+
+def test_excluir_por_titulo_promocion_de_pago():
+    from ingesta.__main__ import excluir_por_titulo
+    from ingesta.modelos import Item
+
+    titulos = ["La empresa de drones que podría duplicar su valor: descubra gratis esta idea de CB Premium",
+               "Gratis el Servicio Premium Capital Bolsa: vean cómo trabajan los gestores",
+               "El Ibex sube un 1% con la banca"]
+    vistos = {f"u{i}": Item(url=f"u{i}", titulo=t) for i, t in enumerate(titulos)}
+    assert excluir_por_titulo(vistos, r"(?i)\bCB Premium\b|Servicio Premium|Capital ?Bolsa Premium") == 2
+    assert [it.titulo for it in vistos.values()] == ["El Ibex sube un 1% con la banca"]
+
+
 def test_tradingview_extrae_simbolos():
     from ingesta.parsers import tradingview_json
 

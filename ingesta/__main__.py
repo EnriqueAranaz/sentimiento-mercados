@@ -8,6 +8,7 @@ from __future__ import annotations
 import argparse
 import logging
 import os
+import re
 import sys
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta, timezone
@@ -110,6 +111,15 @@ def recorrer_archivo_diario(listado: dict, cliente: ClienteEducado, almacen, max
     return paginas, True, leidos
 
 
+def excluir_por_titulo(vistos: dict[str, Item], patron: str) -> int:
+    """Quita de `vistos` los artículos cuyo titular casa con `patron` (p. ej. promoción de pago)."""
+    regex = re.compile(patron)
+    fuera = [url for url, it in vistos.items() if regex.search(it.titulo)]
+    for url in fuera:
+        del vistos[url]
+    return len(fuera)
+
+
 def completar_fechas(fuente: dict, vistos: dict[str, Item], cliente: ClienteEducado, almacen, res: Resultado) -> None:
     """Abre la página de cada artículo nuevo sin fecha y toma la real (meta o JSON-LD datePublished).
 
@@ -203,6 +213,11 @@ def procesar_fuente(fuente: dict, fuente_id: int, cliente: ClienteEducado, almac
     elif fallos:
         res.estado = "parcial"
 
+    if fuente.get("excluir_titulo"):
+        excluidos = excluir_por_titulo(vistos, fuente["excluir_titulo"])
+        if excluidos:
+            log.info("%s · excluidos por titular (excluir_titulo): %d", fuente["nombre"], excluidos)
+
     if fuente.get("fecha_desde_articulo") and vistos:
         completar_fechas(fuente, vistos, cliente, almacen, res)
 
@@ -288,8 +303,13 @@ def main(argv: list[str] | None = None) -> int:
     ids = almacen.sincronizar_fuentes(fuentes)
 
     seleccion = [f for f in fuentes if not args.solo or f["clave"] in args.solo]
-    activas = [f for f in seleccion if f.get("activa", True)]
-    inactivas = [f for f in seleccion if not f.get("activa", True)]
+    # En --dry-run, una fuente nombrada con --solo se prueba aunque esté inactiva (no toca Supabase).
+    probar = lambda f: f.get("activa", True) or (args.dry_run and bool(args.solo))  # noqa: E731
+    activas = [f for f in seleccion if probar(f)]
+    inactivas = [f for f in seleccion if not probar(f)]
+    for f in activas:
+        if not f.get("activa", True):
+            log.info("%s · inactiva: se prueba solo porque es --dry-run con --solo", f["nombre"])
     for f in inactivas:
         log.info("%s · desactivada: %s", f["nombre"], f.get("motivo", ""))
 

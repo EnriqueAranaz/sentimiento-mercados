@@ -127,6 +127,45 @@ fuentes:
         selector: "article h1 a, article h2 a, article h3 a, article h4 a"
         patron_url: '^https://www\.bolsamania\.com/noticias/[^?#]+--\d+\.html$'
 
+  # Sección de Bolsamanía (mismo dominio): comparte con ella el límite de 1 pet/s por dominio.
+  - nombre: CapitalBolsa
+    clave: capitalbolsa
+    tipo_fuente: portal
+    tipo_acceso: html
+    url: https://www.bolsamania.com/capitalbolsa
+    idioma: es
+    activa: true
+    motivo: "Principal: archivo diario de Minuto a minuto (/capitalbolsa/noticias/minuto-a-minuto/AAAA-MM-DD/N); complementos: listados de sección y su sitemap de noticias. Sin fecha en listados: fecha real de la página del artículo. Excluida la promoción de pago (sección destacadas y titulares de CB Premium)."
+    fecha_desde_articulo: true
+    max_fechas_por_ejecucion: 150   # la primera lectura trae ~140 sin fecha; luego solo las nuevas
+    excluir_titulo: '(?i)\bCB Premium\b|Servicio Premium|Capital ?Bolsa Premium'
+    listados:
+      - url_dia: https://www.bolsamania.com/capitalbolsa/noticias/minuto-a-minuto/{fecha}
+        url_dia_pagina: https://www.bolsamania.com/capitalbolsa/noticias/minuto-a-minuto/{fecha}/{n}
+        max_paginas: 15
+        parser: html_enlaces
+        seccion: minuto-a-minuto
+        selector: "article h6 a"   # CapitalBolsa pone los titulares en <h6>
+        # La sección real sale de la URL; `destacadas` (promoción de CB Premium) queda fuera.
+        patron_url: '^https://www\.bolsamania\.com/capitalbolsa/noticias/(?!destacadas/)(?P<seccion>[a-z0-9-]+)/[^?#]+--\d+\.html$'
+      - url: https://www.bolsamania.com/capitalbolsa/sitemap.xml
+        parser: sitemap_news
+        seccion: sitemap
+        detecta_hueco: false
+      - &cb_seccion
+        url: https://www.bolsamania.com/capitalbolsa/noticias/gurus-de-mercado
+        parser: html_enlaces
+        seccion: gurus-de-mercado
+        detecta_hueco: false
+        selector: "article h6 a"
+        patron_url: '^https://www\.bolsamania\.com/capitalbolsa/noticias/(?!destacadas/)(?P<seccion>[a-z0-9-]+)/[^?#]+--\d+\.html$'
+      - {<<: *cb_seccion, url: "https://www.bolsamania.com/capitalbolsa/noticias/recomendaciones", seccion: recomendaciones}
+      - {<<: *cb_seccion, url: "https://www.bolsamania.com/capitalbolsa/noticias/bolsa", seccion: bolsa}
+      - {<<: *cb_seccion, url: "https://www.bolsamania.com/capitalbolsa/noticias/economia", seccion: economia}
+      - {<<: *cb_seccion, url: "https://www.bolsamania.com/capitalbolsa/noticias/empresas", seccion: empresas}
+      - {<<: *cb_seccion, url: "https://www.bolsamania.com/capitalbolsa/noticias/materias-primas", seccion: materias-primas}
+      - {<<: *cb_seccion, url: "https://www.bolsamania.com/capitalbolsa/noticias/renta-fija", seccion: renta-fija}
+
   - nombre: Investing.com
     clave: investing
     tipo_fuente: portal

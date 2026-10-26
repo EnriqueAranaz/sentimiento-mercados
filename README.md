@@ -66,7 +66,7 @@ con los encabezados `Authorization: Bearer <token>`, `Accept: application/vnd.gi
 |---|---|
 | `--franja apertura\|cierre\|manual` | Etiqueta de la ejecución (por defecto `manual`) |
 | `--solo expansion bolsamania` | Procesa solo esas fuentes (por `clave`) |
-| `--dry-run` | No toca Supabase: guarda en `data/dry_run.json` (útil para probar una fuente nueva) |
+| `--dry-run` | No toca Supabase: guarda en `data/dry_run.json` (útil para probar una fuente nueva). Con `--solo`, prueba la fuente aunque tenga `activa: false` |
 | `--muestras N` | Nº de titulares de ejemplo por fuente en el resumen (5 por defecto) |
 
 ## Exportar una foto de la base de datos a Excel
@@ -110,10 +110,14 @@ Usa las credenciales de `.env`. La carpeta `exports/` está en `.gitignore`: los
    - `rss` — cualquier RSS/Atom (titular, fecha y entradilla).
    - `sitemap_news` — sitemap de Google News (`<news:title>`, `<news:publication_date>`).
    - `html_enlaces` — listado HTML genérico; requiere `selector` (CSS) y `patron_url` (regex de URL de artículo).
+     Si `patron_url` tiene un grupo `(?P<seccion>...)`, la sección se toma de la URL de cada artículo.
      No da fecha: con `fecha_desde_articulo: true` en la fuente se abre la página de cada artículo nuevo
      (1 pet/s) y se toma la fecha real (`article:published_time` o JSON-LD `datePublished`); si no se
      consigue, se guarda la hora de captura con `fecha_estimada=true`.
    - `tradingview_json` — específico.
+
+   Para excluir contenido (p. ej. promoción de un servicio de pago), `excluir_titulo` en la fuente: regex
+   sobre el titular; los que casan no se guardan.
 
    Paginación (solo HTML): añadir `url_pagina: https://.../listado?page={n}`. Si la web tiene archivo
    por días, usar `url_dia` / `url_dia_pagina` con `{fecha}` y `{n}` (ver Bolsamanía): se recorre desde hoy
@@ -163,6 +167,7 @@ Se procesan siempre todas las fuentes; el código de salida se decide al final:
 | Expansión | activa | RSS `e00-expansion.uecdn.es/rss/` `mercados.xml` y `empresas.xml` | ~50 + ~50 entradas. Titular + entradilla pública. `seccion`: mercados / empresas |
 | Cinco Días | activa | RSS `feeds.elpais.com` (mercados-financieros y companias) | El HTML da 403 a bots; los feeds oficiales sí responden. ~28 + ~30 entradas. `seccion`: mercados-financieros / empresas |
 | Bolsamanía | activa | HTML: archivo diario + sitemap de noticias + listados de sección | Principal: `/noticias/ultimas/AAAA-MM-DD/N` (completo, ~35-40 noticias por día laborable). Agrupa por día de creación: las programadas para días posteriores llegan por el sitemap y los listados. Fecha real desde el JSON-LD del artículo |
+| CapitalBolsa | activa | HTML: archivo diario de Minuto a minuto + listados de sección + sitemap | Sección de Bolsamanía (mismo dominio, comparte 1 pet/s). ~36 noticias/día; sección tomada de la URL; fecha real del JSON-LD; excluida la promoción de CB Premium (sección `destacadas` y titulares que la anuncian) |
 | TradingView | activa | HTML (JSON incrustado) | ~110 noticias por lectura (~1 día); sin paginación porque "cargar más" requiere JS |
 | El Economista | **inactiva** | — | Akamai: 403 en todo (incluido robots.txt y RSS) |
 | Investing.com | **inactiva** | — | Cloudflare: 403 en HTML y robots.txt; el RSS solo trae 10 entradas (~40 min) |

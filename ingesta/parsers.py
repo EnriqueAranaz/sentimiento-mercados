@@ -64,7 +64,11 @@ def sitemap_news(contenido: bytes, base_url: str, cfg: dict) -> list[Item]:
 
 
 def html_enlaces(contenido: bytes, base_url: str, cfg: dict) -> list[Item]:
-    """Listado HTML genérico: enlaces que casan con `selector` y `patron_url`. Sin fecha."""
+    """Listado HTML genérico: enlaces que casan con `selector` y `patron_url`. Sin fecha.
+
+    Si `patron_url` tiene un grupo con nombre `seccion`, la sección se toma de la URL del artículo
+    (útil en listados que mezclan secciones); si no, se usa la `seccion` del listado.
+    """
     soup = BeautifulSoup(contenido, "lxml")
     patron = re.compile(cfg["patron_url"])
     vistos: dict[str, Item] = {}
@@ -73,8 +77,10 @@ def html_enlaces(contenido: bytes, base_url: str, cfg: dict) -> list[Item]:
             continue
         url = urljoin(base_url, a.get("href", ""))
         titulo = limpiar_texto(a.get_text(" "))
-        if titulo and patron.match(url) and url not in vistos:
-            vistos[url] = Item(url=normalizar_url(url), titulo=titulo, seccion=cfg.get("seccion"))
+        m = patron.match(url)
+        if titulo and m and url not in vistos:
+            seccion = m.groupdict().get("seccion") or cfg.get("seccion")
+            vistos[url] = Item(url=normalizar_url(url), titulo=titulo, seccion=seccion)
     return list(vistos.values())
 
 
