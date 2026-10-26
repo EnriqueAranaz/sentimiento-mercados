@@ -7,6 +7,7 @@ Uso:
     python clasificacion/pendientes.py --lote 100     # exporta hasta 100
     python clasificacion/pendientes.py --estado       # solo cuenta clasificados y pendientes
     python clasificacion/pendientes.py --lote 100 --particion 2/4   # solo ids con id % 4 == 2 (agentes en paralelo)
+    python clasificacion/pendientes.py --lote 100 --ids lista.json  # solo esos articulo_id (piloto)
 """
 from __future__ import annotations
 
@@ -15,6 +16,7 @@ import json
 import re
 import sys
 from datetime import datetime
+from pathlib import Path
 
 from comun import LOTES, MADRID, VERSION_CRITERIOS, conectar, todas
 
@@ -44,10 +46,24 @@ def main() -> int:
     ap.add_argument("--lote", type=int, default=100)
     ap.add_argument("--estado", action="store_true")
     ap.add_argument("--particion", help="k/n: solo artículos con id %% n == k, para repartir entre agentes")
+    ap.add_argument("--ids", help="fichero JSON con una lista de articulo_id: solo esos (p. ej. un piloto)")
+    ap.add_argument("--reclasificar", action="store_true",
+                    help="con --ids: exporta esos artículos aunque ya estén clasificados (revisión con criterios nuevos)")
     args = ap.parse_args()
 
     db = conectar()
     pend, estado = pendientes(db)
+    if args.ids:
+        elegidos = set(json.loads(Path(args.ids).read_text("utf-8")))
+        if args.reclasificar:  # para no repetir dentro de una revisión, se saltan los ya revisados con la versión vigente
+            revisados = {c["articulo_id"] for c in todas(db, "clasificacion", "articulo_id,version_criterios",
+                                                          orden="articulo_id")
+                         if c["version_criterios"] == VERSION_CRITERIOS}
+            todos = todas(db, "articulos", "id,fuente_id,seccion,publicado_en,titulo,resumen,simbolos")
+            pend = [a for a in todos if a["id"] in elegidos and a["id"] not in revisados]
+        else:
+            pend = [a for a in pend if a["id"] in elegidos]
+        estado["pendientes_de_la_lista"] = len(pend)
     if args.particion:
         k, n = map(int, args.particion.split("/"))
         pend = [a for a in pend if a["id"] % n == k]

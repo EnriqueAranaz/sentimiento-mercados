@@ -18,7 +18,7 @@ from dataclasses import dataclass
 
 log = logging.getLogger("ingesta.reglas")
 
-VERSION_CRITERIOS = "v3"  # versión de docs/criterios_clasificacion.md (modelo del Excel v3, 26/10/2026)
+VERSION_CRITERIOS = "v3.2"  # docs/criterios_clasificacion.md: modelo del Excel v3 + Aclaraciones v2 (26/10/2026)
 
 # Alias que también son palabras comunes en español: solo cuentan escritos con la mayúscula del nombre.
 ALIAS_SENSIBLES = {"Meta", "Dia", "DIA", "Visa", "Colonial", "Acciona", "Continental", "BAT", "Orange", "ING"}

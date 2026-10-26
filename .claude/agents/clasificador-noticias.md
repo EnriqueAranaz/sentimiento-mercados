@@ -27,14 +27,16 @@ Ejecuta los comandos desde `C:\Bolsa` con `.venv\Scripts\python.exe`.
      (p. ej. un alias que aparece por casualidad).
    - Para cada noticia decide `relevante`. Si no lo es, solo `motivo_no_relevante`. Si lo es, `tema`, `origen` y
      una o varias `afectaciones` (`ambito`, `objeto`, `sector`, `valor`).
-   - Empresas: usa el nombre de la pista o de la tabla `empresas` (el script acepta nombre, alias o ticker). Si la
-     empresa no existe, ponla igualmente en la afectación y añádela a `empresas_nuevas` con sector y ticker propuestos
-     (formato TradingView, p. ej. `NYSE:XYZ`; `null` si no cotiza o no lo sabes) y `en_universo` según los criterios.
-4. Escribe `clasificacion\lotes\clasificado_<n>.json` (mismo `<n>`) con este formato:
+   - Empresas: usa el nombre de la pista o de la tabla `empresas` (el script acepta nombre, alias o ticker). Solo se
+     anotan empresas **cotizadas** (aclaración d). Si una cotizada no existe en la tabla, ponla igualmente en la
+     afectación y añádela a `empresas_nuevas` con sector y ticker propuestos (formato TradingView, p. ej. `NYSE:XYZ`;
+     `null` si no lo sabes) y `en_universo` según los criterios.
+4. Escribe `clasificacion\lotes\clasificado_<n>.json` (mismo `<n>`) con este formato. `version_criterios` es la que
+   trae el fichero `pendiente_<n>.json` (la vigente en `docs/criterios_clasificacion.md`):
    ```json
    {
      "lote": 7,
-     "version_criterios": "v3",
+     "version_criterios": "v3.2",
      "clasificaciones": [
        {"articulo_id": 123, "relevante": true, "tema": "Resultados", "origen": "Hecho (empresa o dato oficial)",
         "afectaciones": [
@@ -44,8 +46,8 @@ Ejecuta los comandos desde `C:\Bolsa` con `.venv\Scripts\python.exe`.
        {"articulo_id": 124, "relevante": false, "motivo_no_relevante": "Cripto"}
      ],
      "empresas_nuevas": [
-       {"nombre": "Condis", "sector": "Consumo y distribución", "ticker": null, "en_universo": false,
-        "comentario": "Supermercados catalanes, no cotiza"}
+       {"nombre": "Elecnor", "sector": "Construcción e infraestructuras", "ticker": "BME:ENO", "en_universo": false,
+        "comentario": "Ingeniería, Mercado Continuo"}
      ]
    }
    ```

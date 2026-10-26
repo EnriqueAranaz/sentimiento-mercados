@@ -2,13 +2,13 @@
 
 Formato de entrada:
 {
-  "lote": 7, "version_criterios": "v3",
+  "lote": 7, "version_criterios": "v3.2",
   "clasificaciones": [
     {"articulo_id": 123, "relevante": true, "tema": "Resultados", "origen": "Hecho (empresa o dato oficial)",
      "afectaciones": [{"ambito": "Empresa", "objeto": "Santander", "sector": "Banca", "valor": 1}]},
     {"articulo_id": 124, "relevante": false, "motivo_no_relevante": "Cripto"}
   ],
-  "empresas_nuevas": [{"nombre": "Condis", "sector": "Consumo y distribución", "ticker": null,
+  "empresas_nuevas": [{"nombre": "Elecnor", "sector": "Construcción e infraestructuras", "ticker": "BME:ENO",
                        "en_universo": false, "comentario": "..."}]
 }
 

@@ -1,8 +1,10 @@
 # Criterios de clasificación de titulares
 
-**Versión de criterios: `v3`** (modelo del Excel `referencia/clasificacion_titulares_2026-10-26_v3.xlsx`, 26/10/2026).
+**Versión de criterios: `v3.2`** (modelo del Excel `referencia/clasificacion_titulares_2026-10-26_v3.xlsx`, 26/10/2026,
+más las *Aclaraciones v2* de la sección 9). Es el valor que va en `version_criterios`.
 Este documento es la **única fuente de criterios** del agente clasificador. Las secciones 1 a 7 son copia íntegra
-de la hoja *Criterios* del Excel; la sección 8 son ejemplos reales del Excel, clasificados a mano.
+de la hoja *Criterios* del Excel; la sección 8 son ejemplos reales del Excel, clasificados a mano; la sección 9 son
+aclaraciones posteriores al piloto, que **prevalecen** sobre lo anterior si hay conflicto.
 Los nombres de ámbitos, objetos de Global, sectores, temas, orígenes y motivos deben usarse **exactamente** como aparecen aquí.
 
 ## 1. Estructura
@@ -210,3 +212,43 @@ Formato: `ámbito · objeto [· sector] → valor`. La línea *Clave* señala qu
 31. **Ramaco Resources, Inc. (METC) fija la publicación de resultados del tercer trimestre de 2026 para el 3 de noviembre tras el cierre** (TradingView) → No relevante · **Agenda / convocatoria**
 32. **La CNMC investiga a Exolum por posible abuso de posición dominante** (Expansión) → No relevante · **Empresa no cotizada**
 33. **La CNMV multa con un millón de euros a la sociedad de valores del exCEO del Banco Popular** (Cinco Días) → No relevante · **Otros**
+
+## 9. Aclaraciones v2 (tras el piloto de 300 noticias; prevalecen sobre lo anterior)
+
+**a) Cotizadas fuera de alcance.** Si la cotización principal de la empresa es en Latam, India o Asia (Bimbo, Bradesco,
+Grupo Aeroportuario del Sureste…): no relevante, motivo **Fuera de alcance (Latam, India…)**, salvo que la noticia afecte
+a una empresa o mercado de nuestro alcance (p. ej. Brasil → Santander o Ibex). Si la cotización principal es en
+EE. UU. o Europa (Nu Holdings), es relevante.
+- *El tráfico de Grupo Aeroportuario del Sureste, S.A.B. de C.V. (ASUR/B) cae 1.2% interanual en el tercer trimestre* → No relevante · **Fuera de alcance (Latam, India…)**
+- *Nu Holdings Ltd. (NU): el CTO Eric Young renunciará* → Relevante · *Corporativo* · *Hecho (empresa o dato oficial)* · Empresa · Nu Holdings · Banca → **0** (cotiza en NYSE)
+- *La victoria de Lula penaliza al IBEX 35 en el arranque de una semana de alto voltaje* → Relevante · *Mercado* · *Mercado* · Mercado · Ibex 35 → **-1** (Brasil afecta a un mercado de nuestro alcance)
+
+**b) Cotizada pequeña con noticia rutinaria** (bancos regionales de EE. UU., dividendos ordinarios): relevante, con la
+empresa fuera del universo (`en_universo = false`). No hay motivo nuevo: el panel la filtra por universo.
+- *Avidia Bancorp, Inc. (AVBC) registra BPA de $0.47 en el tercer trimestre frente a $0.39; declara un dividendo de $0.06* → Relevante · *Resultados* · *Hecho (empresa o dato oficial)* · Empresa · Avidia Bancorp · Banca → **2** (BPA +20%)
+- *L3Harris Technologies (LHX) declara un dividendo trimestral de $1.25* → Relevante · *Corporativo* · *Hecho (empresa o dato oficial)* · Empresa · L3Harris · Industria, defensa y aeroespacial → **0**
+
+**c) Listas y sucesos.** Titulares que son solo una lista de tickers o recopilatorios sin contenido: **Sin objeto
+identificable**. Catástrofes, sucesos y flujos de mercancías sin efecto de mercado explícito: **Otros**.
+- *American Express, Gorman-Rupp, Moderna* → No relevante · **Sin objeto identificable**
+- *Taiwán se paraliza ante la llegada del tifón Champi, con casi 1.000 vuelos cancelados* → No relevante · **Otros**
+- *Un cargamento de diésel ruso se dirige a EEUU tras el acuerdo Putin-Trump, según datos* → No relevante · **Otros**
+
+**d) Solo empresas cotizadas.** Las afectaciones de Empresa son solo para cotizadas. Las no cotizadas que aparecen en
+una noticia relevante no se anotan. Si la noticia solo trata de no cotizadas: no relevante, motivo **Empresa no cotizada**
+(una empresa que prepara su salida a bolsa todavía no cotiza).
+- *Carrefour estudia la compra de Condis para crecer en Cataluña* → Relevante · *Fusiones y OPAs* · *Rumor / según fuentes* · Empresa · Carrefour · Consumo y distribución → **0** (Condis no se anota)
+- *Las gasolineras de Moeve amplían el plazo de su programa de descuento* → No relevante · **Empresa no cotizada**
+- *OPay, respaldada por SoftBank, prevé una valoración de hasta 4.400 millones de dólares en su salida a bolsa en EEUU* → No relevante · **Empresa no cotizada**
+
+**e) Divisas.** Una moneda concreta va al **Mercado** de su zona (euro → Europa, dólar → EE. UU., yen → Japón,
+libra → Reino Unido), con el tono sobre esa moneda (se debilita = negativo; se fortalece = positivo).
+Global · Divisas solo cuando el titular habla del mercado de divisas en general.
+- *Pistas para invertir ahora con un euro bajo presión* → Relevante · *Mercado* · *Opinión / prensa* · Mercado · Europa → **-1**
+- *Yen se dispara por preocupación por el petróleo, la IA y Francia* → Relevante · *Mercado* · *Mercado* · Mercado · Japón → **2** · Mercado · Francia → **-1** · Sector · Tecnología → **-1**
+
+**f) Macro sin adjetivo.** El tono se fija por lo que el dato significa para la economía por convención: inflación o
+precios al alza = negativo; paro a la baja o empleo fuerte = positivo; PMI o confianza por encima de lo previsto =
+positivo, por debajo = negativo. Si no hay dirección clara: **0**.
+- *Los precios industriales en España suben un 18,3% interanual en septiembre* → Relevante · *Macro* · *Hecho (empresa o dato oficial)* · Mercado · Ibex 35 → **-1**
+- *El crecimiento de la eurozona cae a su nivel más bajo en cuatro meses, según el PMI* → Relevante · *Macro* · *Hecho (empresa o dato oficial)* · Mercado · Europa → **-1**

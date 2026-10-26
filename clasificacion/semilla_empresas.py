@@ -164,6 +164,23 @@ EEUU = [  # ~50 mayores por capitalización (sin las del Excel)
 ]
 LISTAS = [("Ibex 35", IBEX), ("DAX", DAX), ("Europa", EUROPA), ("EE. UU.", EEUU)]
 
+# Propuestas del agente clasificador aprobadas por el usuario (26/10/2026): fuera del universo.
+APROBADAS = [
+    ("Elecnor", "BME:ENO", "Construcción e infraestructuras"),
+    ("Coinbase", "NASDAQ:COIN", "Seguros y servicios financieros"),
+    ("DoorDash", "NASDAQ:DASH", "Tecnología"),
+    ("Geely", "HKEX:175", "Automóvil"),
+    ("SAIC Motor", "SSE:600104", "Automóvil"),
+    ("Chery", "HKEX:9973", "Automóvil"),  # verificado: cotiza en HKEX (9973) desde el 25/09/2025
+    ("Woodside Energy", "ASX:WDS", "Petróleo y gas"),
+    ("Hong Kong Exchanges and Clearing", "HKEX:388", "Seguros y servicios financieros"),
+    ("Marriott Vacations Worldwide", "NYSE:VAC", "Transporte y turismo"),
+    ("BeOne Medicines", "NASDAQ:ONC", "Salud y farmacia"),
+    ("Sichuan Kelun-Biotech", "HKEX:6990", "Salud y farmacia"),
+    ("Atico Mining", "TSXV:ATY", "Materiales, química y minería"),
+    ("BlackRock Smaller Companies Trust", "LSE:BRSC", "Seguros y servicios financieros"),
+]
+
 # Alias habituales en la prensa española (además del propio nombre).
 ALIAS_EXTRA = {
     "Santander": ["Banco Santander"],
@@ -230,6 +247,14 @@ ALIAS_EXTRA = {
     "SpaceX": ["Space X"],
     "Air France-KLM": ["Air France"],
     "Euroclear": [],
+    "Geely": ["Geely Automobile"],
+    "SAIC Motor": ["SAIC"],
+    "Chery": ["Chery Automobile"],
+    "Woodside Energy": ["Woodside"],
+    "Hong Kong Exchanges and Clearing": ["HKEX", "Bolsa de Hong Kong"],
+    "Marriott Vacations Worldwide": ["Marriott Vacations", "MVCI"],
+    "BeOne Medicines": ["BeOne", "BeiGene"],
+    "Sichuan Kelun-Biotech": ["Kelun-Biotech", "Kelun Biotech"],
 }
 
 # Notas para la revisión del Excel de salida.
@@ -278,6 +303,10 @@ def construir() -> list[dict]:
                 continue
             empresas[nombre] = {"nombre": nombre, "ticker": ticker, "sector": sector, "en_universo": True,
                                 "mercado": mercado, "origen": f"Universo {mercado}"}
+    for nombre, ticker, sector in APROBADAS:
+        empresas.setdefault(nombre, {"nombre": nombre, "ticker": ticker, "sector": sector, "en_universo": False,
+                                     "mercado": mercado_por_ticker(ticker),
+                                     "origen": "Propuesta del agente, aprobada 26/10/2026"})
     for e in empresas.values():
         alias = [e["nombre"], *ALIAS_EXTRA.get(e["nombre"], [])]
         e["alias"] = list({a.casefold(): a for a in reversed(alias)}.values())[::-1]  # sin repetidos por mayúsculas
