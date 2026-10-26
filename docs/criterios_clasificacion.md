@@ -281,7 +281,7 @@ bajada a miedo o a huida a refugio, que es negativo.
 **e) Objetos de Mercado permitidos.** Además de Ibex 35, DAX, Europa y EE. UU.: países europeos (Francia, Italia,
 Portugal, Alemania…), Reino Unido, Canadá, Japón, Corea, China, Australia y Asia. Israel, Latam, India y similares:
 **Fuera de alcance (Latam, India…)**, salvo efecto en lo nuestro.
-- *El TSX sube gracias a las ganancias del sector tecnológico tras la solicitud de salida a bolsa de Anthropic…* → Mercado · Canadá → **1** · Sector · Tecnología → **1** (nombra el sector)
+- *El TSX sube gracias a las ganancias del sector tecnológico tras la solicitud de salida a bolsa de Anthropic…* → Mercado · Canadá → **1** · Empresa · Anthropic → **1** · Global · Petróleo → **-1** (Anthropic está nombrada: regla 11 e)
 - *Los mercados israelíes ven potencial alcista en la derrota de Netanyahu, tras tres años de repunte* → No relevante · **Fuera de alcance (Latam, India…)**
 
 **f) Mismo dato, distinto verbo.** Puede tener distinto valor: es correcto, se puntúa el tono del texto.
@@ -304,7 +304,7 @@ economía o de su bolsa en conjunto.
 
 **a) Grupos de valores de IA.** "Sector de la IA", "neoclouds", "centros de datos", "valores de IA" y expresiones
 similares cuentan como nombrar un grupo de valores tecnológicos → **Sector · Tecnología**.
-**Pero si en el titular aparece el nombre de una empresa, la afectación va a esa empresa** (y no a Sector · Tecnología).
+**Pero si en el titular aparece el nombre de una empresa, la afectación va a esa empresa** (y no a Sector · Tecnología; ver e).
 - *Por qué Musk cree que más de 200 neoclouds de IA podrían fracasar* → Sector · Tecnología · Tecnología → **-1**
 - *Euro se hunde por preocupación sobre deuda francesa; yen sube tras caída del sector de la IA* → … · Sector · Tecnología · Tecnología → **-1**
 - *Acciones de CoreWeave, Nebius e Iren caen tras aviso de Musk sobre 200 neoclouds* → Empresa · CoreWeave → **-1** · Empresa · Nebius → **-1** · Empresa · IREN → **-1** (sin Sector · Tecnología)
@@ -319,3 +319,11 @@ similares cuentan como nombrar un grupo de valores tecnológicos → **Sector ·
 **d) Filial cuya matriz cotizada está fuera de alcance** (Jaguar → Tata Motors, que cotiza en India): la noticia queda
 **Fuera de alcance (Latam, India…)**.
 - *Jaguar va a retirar del mercado unos 94 000 vehículos en EEUU por un problema con la cámara de visión trasera, según la NHTSA* → No relevante · **Fuera de alcance (Latam, India…)**
+
+**e) Empresa nombrada, siempre a la empresa.** Si el titular nombra específicamente una empresa, la afectación se
+atribuye a esa empresa **siempre**, y esa noticia no lleva afectación de **Sector** (de ningún sector), aunque el
+titular mencione también el sector ("las tecnológicas", "la banca", "las telecos"…). El ámbito Sector queda para
+noticias del sector en conjunto que no nombran ninguna empresa. Mercados y objetos de Global se anotan igual que antes.
+- *El alto costo de la IA pasa la cuenta a Meta y a otras acciones tecnológicas* → Empresa · Meta · Tecnología → **-1** (sin Sector · Tecnología)
+- *JP Morgan recorta Telefónica a 'infraponderar' y alerta del riesgo de crédito en las telecos* → Empresa · Telefónica · Telecomunicaciones → **-1** (sin Sector · Telecomunicaciones)
+- *Enagás y Amadeus lideran la semana en el Ibex; Solaria se desploma y la banca sufre* → Empresa · Enagás → **1** · Empresa · Amadeus → **1** · Empresa · Solaria → **-2** (sin Sector · Banca)

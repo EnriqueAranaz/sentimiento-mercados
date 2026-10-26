@@ -25,11 +25,20 @@ def test_relevante_valido_con_alias_y_empresa_nueva():
     err, afs = _v({"articulo_id": 1, "relevante": True, "tema": "Fusiones y OPAs", "origen": "Rumor / según fuentes",
                    "afectaciones": [{"ambito": "Empresa", "objeto": "Banco Santander", "sector": "Banca", "valor": 1},
                                     {"ambito": "Empresa", "objeto": "Condis", "sector": "Consumo y distribución", "valor": 0},
-                                    {"ambito": "Global", "objeto": "Petróleo", "sector": None, "valor": -1},
-                                    {"ambito": "Sector", "objeto": "Banca", "sector": "Banca", "valor": -2}]})
+                                    {"ambito": "Global", "objeto": "Petróleo", "sector": None, "valor": -1}]})
     assert err == []
     assert afs[0]["empresa_id"] == 1 and afs[0]["objeto"] == "Santander"
     assert afs[1]["empresa_id"] is None
+
+
+def test_empresa_nombrada_excluye_sector():
+    err, _ = _v({"articulo_id": 1, "relevante": True, "tema": "Mercado", "origen": "Mercado",
+                 "afectaciones": [{"ambito": "Empresa", "objeto": "Santander", "sector": "Banca", "valor": -1},
+                                  {"ambito": "Sector", "objeto": "Banca", "sector": "Banca", "valor": -1}]})
+    assert any("11 e" in e for e in err)
+    err, _ = _v({"articulo_id": 1, "relevante": True, "tema": "Mercado", "origen": "Mercado",
+                 "afectaciones": [{"ambito": "Sector", "objeto": "Banca", "sector": "Banca", "valor": -1}]})
+    assert err == []
 
 
 def test_no_relevante_necesita_motivo_valido():
