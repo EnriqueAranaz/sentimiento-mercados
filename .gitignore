@@ -6,4 +6,5 @@ __pycache__/
 data/
 exports/
 clasificacion/lotes/
+dashboard/config.js
 .vscode/

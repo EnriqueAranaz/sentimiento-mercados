@@ -1,0 +1,512 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sentimiento de mercados</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&display=swap">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<script src="config.js"></script>
+<style>
+  /* Panel de lectura: tarjetas por sector, detalle con gráfico y tablas. Tokens claros y oscuros. */
+  :root {
+    --color-bg: #f6f7f8; --color-panel: #ffffff; --color-fg: #1b1f24; --color-fg-muted: #5f6b76;
+    --color-border-line: #dde2e7; --color-ok: #1f7a4d; --color-bad: #b4372f; --chart-1: #2f6f9f;
+    --cds-chart-grid: #e8ecef; --cds-chart-axis: #9aa5ae; --cds-chart-muted: #b9c2c9; --cds-chart-status-critical: #c8463c;
+    --cds-surface-popover: #ffffff; --cds-border: #d3d9de; --cds-shadow-popover: 0 4px 16px rgba(20, 30, 40, .12);
+    --cds-text-secondary: #5f6b76;
+    --font-sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --font-serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+    --fs-caption: .8rem; --fs-body: .95rem; --fs-heading: 1.05rem; --fs-title: 1.9rem; --fw-medium: 500;
+    --gap-xs: .25rem; --gap-sm: .5rem; --gap-md: .9rem; --gap-lg: 1.5rem;
+    --pad-xs: .3rem; --pad-sm: .55rem; --pad-md: .85rem; --pad-lg: 1.1rem; --radius: 8px;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --color-bg: #121518; --color-panel: #1a1e22; --color-fg: #e7ebee; --color-fg-muted: #98a3ad;
+      --color-border-line: #2c3238; --color-ok: #5cc28c; --color-bad: #ef7d73; --chart-1: #6aa8d8;
+      --cds-chart-grid: #262c31; --cds-chart-axis: #56616a; --cds-chart-muted: #4a545c; --cds-chart-status-critical: #e5675d;
+      --cds-surface-popover: #22272c; --cds-border: #353c43; --cds-shadow-popover: 0 4px 16px rgba(0, 0, 0, .45);
+      --cds-text-secondary: #98a3ad; color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --color-bg: #121518; --color-panel: #1a1e22; --color-fg: #e7ebee; --color-fg-muted: #98a3ad;
+    --color-border-line: #2c3238; --color-ok: #5cc28c; --color-bad: #ef7d73; --chart-1: #6aa8d8;
+    --cds-chart-grid: #262c31; --cds-chart-axis: #56616a; --cds-chart-muted: #4a545c; --cds-chart-status-critical: #e5675d;
+    --cds-surface-popover: #22272c; --cds-border: #353c43; --cds-shadow-popover: 0 4px 16px rgba(0, 0, 0, .45);
+    --cds-text-secondary: #98a3ad; color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--color-bg); color: var(--color-fg); font-family: var(--font-sans); font-size: var(--fs-body); }
+  .sm { max-width: 1280px; margin: 0 auto; padding-block: 1.5rem 3rem;
+    padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+    display: grid; gap: var(--gap-lg); }
+  .sm-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: var(--gap-md); }
+  .sm-head h1 { font-family: var(--font-serif); font-weight: 400; font-size: var(--fs-title); margin: 0; text-wrap: balance; }
+  .sm-take { color: var(--color-fg-muted); margin: var(--gap-xs) 0 0; }
+  .sm-take b { color: var(--color-fg); font-weight: var(--fw-medium); }
+  .sm-estado { font-size: var(--fs-caption); color: var(--color-fg-muted); }
+  .sm-estado button, .sm-ctrl button, .sm-orden button { font: inherit; font-size: var(--fs-caption); color: var(--color-fg); background: none; cursor: pointer;
+    border: 1px solid var(--color-border-line); border-radius: var(--radius); padding: var(--pad-xs) var(--pad-sm); }
+  .sm-error { background: var(--color-panel); border: 1px solid var(--color-bad); border-radius: var(--radius); padding: var(--pad-lg); }
+  .sm-tabs { display: flex; gap: var(--gap-xs); border-bottom: 1px solid var(--color-border-line); }
+  .sm-tabs button { font: inherit; color: var(--color-fg-muted); background: none; cursor: pointer;
+    border: 0; border-bottom: 2px solid transparent; padding: var(--pad-sm) var(--pad-md); margin-bottom: -1px; }
+  .sm-tabs button[aria-selected="true"] { color: var(--color-fg); border-bottom-color: var(--color-fg); }
+  button:focus-visible, select:focus-visible, a:focus-visible { outline: 2px solid var(--chart-1); outline-offset: 2px; }
+  .sm-page { display: grid; gap: var(--gap-lg); }
+  .sm-ctrl { display: flex; flex-wrap: wrap; gap: var(--gap-md); align-items: end; }
+  .sm-ctrl label { display: grid; gap: var(--gap-xs); font-size: var(--fs-caption); color: var(--color-fg-muted); }
+  .sm-ctrl select { width: 16rem; max-width: 100%; font: inherit; color: var(--color-fg);
+    padding: var(--pad-xs) var(--pad-sm); border: 1px solid var(--color-border-line); border-radius: var(--radius); background: var(--color-panel); }
+  .sm-orden { display: flex; flex-wrap: wrap; gap: var(--gap-xs); align-items: center; font-size: var(--fs-caption); color: var(--color-fg-muted); }
+  .sm-orden button[aria-pressed="true"] { background: var(--color-fg); color: var(--color-bg); border-color: var(--color-fg); }
+  .sm-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr)); gap: var(--gap-md); }
+  .sm-card { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--radius); padding: var(--pad-lg); min-width: 0; }
+  .sm-tile .lab { font-size: var(--fs-caption); color: var(--color-fg-muted); }
+  .sm-tile .val { font-family: var(--font-serif); font-size: var(--fs-title); font-variant-numeric: tabular-nums; margin-top: var(--gap-xs); }
+  .sm-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr)); gap: var(--gap-md); }
+  .sm-card h2, .sm-sec h2, .sm-enlaces h2 { font-size: var(--fs-heading); font-weight: var(--fw-medium); margin: 0; }
+  .sm-note { font-size: var(--fs-caption); color: var(--color-fg-muted); margin: var(--gap-xs) 0 var(--gap-md); }
+  .sm-sec { display: grid; gap: var(--gap-sm); }
+  .sm-sec .sm-note { margin: 0; }
+  .sm-mapa { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 13rem), 1fr)); gap: var(--gap-md); }
+  .sm-mapa.peq { grid-template-columns: repeat(auto-fill, minmax(min(100%, 10rem), 1fr)); }
+  .sm-sc { display: grid; gap: var(--gap-xs); text-align: left; font: inherit; color: var(--color-fg); cursor: pointer; background: var(--color-panel);
+    border: 1px solid var(--color-border-line); border-radius: var(--radius); padding: var(--pad-md); min-width: 0; }
+  .sm-sc:hover { border-color: var(--color-fg); }
+  .sm-sc .nom { font-weight: var(--fw-medium); line-height: 1.25; min-height: 2.5em; }
+  .sm-sc .tono { font-family: var(--font-serif); font-size: var(--fs-title); font-variant-numeric: tabular-nums; }
+  .sm-sc .det { font-size: var(--fs-caption); color: var(--color-fg-muted); font-variant-numeric: tabular-nums; }
+  .sm-sc .spark { height: 28px; }
+  .sm-sc.vacio { cursor: default; opacity: .55; }
+  .sm-sc.vacio:hover { border-color: var(--color-border-line); }
+  .sm-leyenda { display: flex; align-items: center; gap: var(--gap-sm); font-size: var(--fs-caption); color: var(--color-fg-muted); }
+  .sm-leyenda .barra { width: 8rem; height: 8px; border-radius: 4px; }
+  .sm-chart { position: relative; min-height: 240px; }
+  .sm-tip { position: absolute; pointer-events: none; background: var(--cds-surface-popover); border: 1px solid var(--cds-border);
+    border-radius: var(--radius); box-shadow: var(--cds-shadow-popover); padding: var(--pad-xs) var(--pad-sm); font-size: var(--fs-caption); white-space: nowrap; }
+  .sm-tip .d { color: var(--cds-text-secondary); }
+  .sm-scroll { max-height: 24rem; overflow: auto; }
+  table.sm-t { width: 100%; border-collapse: collapse; font-size: var(--fs-caption); font-variant-numeric: tabular-nums; }
+  .sm-t th { position: sticky; top: 0; background: var(--color-panel); text-align: left; color: var(--color-fg-muted); font-weight: var(--fw-medium); padding: var(--pad-xs); }
+  .sm-t td { padding: var(--pad-xs); border-top: 1px solid var(--color-border-line); vertical-align: top; }
+  .sm-t .num { text-align: right; white-space: nowrap; }
+  .sm-t tr.clic { cursor: pointer; }
+  .sm-t tr.clic:hover td { background: var(--cds-chart-grid); }
+  .sm-t a { color: inherit; text-decoration: none; }
+  .sm-t a:hover { text-decoration: underline; }
+  .sm .pos { color: var(--color-ok); }
+  .sm .neg { color: var(--color-bad); }
+  .sm-enlaces { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr)); gap: var(--gap-md);
+    border-top: 1px solid var(--color-border-line); padding-top: var(--pad-lg); }
+  .sm-enlaces h2 { margin-bottom: var(--gap-sm); }
+  .sm-enlaces ul { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--gap-xs); }
+  .sm-enlaces a { color: var(--color-fg); text-decoration: underline; text-decoration-color: var(--color-border-line); text-underline-offset: 3px; }
+  .sm-enlaces a:hover { text-decoration-color: var(--color-fg); }
+  .sm-enlaces li span { display: block; font-size: var(--fs-caption); color: var(--color-fg-muted); }
+</style>
+</head>
+<body>
+<div class="sm">
+  <header class="sm-head">
+    <div>
+      <h1>Sentimiento de mercados</h1>
+      <p class="sm-take">Tono de los titulares de prensa económica, de −2 (muy negativo) a +2 (muy positivo).</p>
+    </div>
+    <div class="sm-estado"><span id="sm-estado">Cargando…</span> <button id="sm-recargar" type="button">Actualizar</button></div>
+  </header>
+
+  <div class="sm-error" id="sm-error" hidden></div>
+
+  <nav class="sm-tabs" role="tablist">
+    <button id="tab-sectores" role="tab" type="button" aria-selected="true">Sectores</button>
+    <button id="tab-detalle" role="tab" type="button" aria-selected="false">Detalle</button>
+  </nav>
+
+  <!-- ============ PANTALLA INICIAL: SECTORES ============ -->
+  <div class="sm-page" id="sectores">
+    <div class="sm-ctrl" style="justify-content: space-between;">
+      <div class="sm-orden" role="group" aria-label="Ordenar">
+        <span>Ordenar por</span>
+        <button type="button" data-orden="peor" aria-pressed="true">Peor sentimiento</button>
+        <button type="button" data-orden="mejor" aria-pressed="false">Mejor sentimiento</button>
+        <button type="button" data-orden="noticias" aria-pressed="false">Más noticias</button>
+        <button type="button" data-orden="neg" aria-pressed="false">% negativas</button>
+      </div>
+      <div class="sm-leyenda"><span>−1</span><span class="barra" id="sm-barra"></span><span>+1</span></div>
+    </div>
+    <section class="sm-sec">
+      <h2>Sectores</h2>
+      <p class="sm-note">Cada tarjeta suma las noticias del sector en conjunto y las de sus empresas. Pulsa una para ver el detalle.</p>
+      <div class="sm-mapa" id="sm-mapa"></div>
+    </section>
+    <section class="sm-sec">
+      <h2>Mercados y global</h2>
+      <p class="sm-note">Índices o regiones, y lo que mueve a todos los mercados (petróleo, materias primas, divisas…).</p>
+      <div class="sm-mapa peq" id="sm-mapa-mg"></div>
+    </section>
+  </div>
+
+  <!-- ============ DETALLE ============ -->
+  <div class="sm-page" id="detalle" hidden>
+    <p class="sm-take"><b class="sm-m" data-field="nombre">—</b>: tono medio <b class="sm-m" data-field="media">—</b> en
+      <b class="sm-m" data-field="n">—</b> noticias; <b class="sm-m" data-field="pct_neg">—</b> % negativas.</p>
+    <div class="sm-ctrl">
+      <label for="sm-sector">Sector <select id="sm-sector"></select></label>
+      <label for="sm-empresa">Empresa <select id="sm-empresa"></select></label>
+      <button id="sm-todo" type="button">Ver todo</button>
+    </div>
+    <div class="sm-tiles">
+      <div class="sm-card sm-tile"><div class="lab">Noticias</div><div class="val sm-m" data-field="n">—</div></div>
+      <div class="sm-card sm-tile"><div class="lab">Tono medio (−2 a +2)</div><div class="val sm-m" data-field="media">—</div></div>
+      <div class="sm-card sm-tile"><div class="lab">% negativas</div><div class="val sm-m" data-field="pct_neg">—</div></div>
+      <div class="sm-card sm-tile"><div class="lab">% positivas</div><div class="val sm-m" data-field="pct_pos">—</div></div>
+    </div>
+    <div class="sm-grid">
+      <section class="sm-card">
+        <h2>Tono medio por día</h2>
+        <p class="sm-note">Media del tono de las noticias de cada día (fecha de publicación, hora de Madrid).</p>
+        <div class="sm-chart" id="sm-chart"></div>
+      </section>
+      <section class="sm-card">
+        <h2 id="sm-rank-titulo">Por sector</h2>
+        <p class="sm-note">Pulsa una fila para verla en detalle.</p>
+        <div class="sm-scroll">
+          <table class="sm-t" id="sm-rank">
+            <thead><tr><th>Nombre</th><th class="num">Noticias</th><th class="num">Tono medio</th><th class="num">% negativas</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+    <section class="sm-card">
+      <h2>Últimos titulares</h2>
+      <p class="sm-note">Cada noticia con el tono que le asignó la clasificación hacia el objeto de la fila. Pulsa el titular para abrir la noticia.</p>
+      <div class="sm-scroll">
+        <table class="sm-t" id="sm-tit">
+          <thead><tr><th>Día</th><th>Fuente</th><th>Titular</th><th>Objeto</th><th class="num">Tono</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <footer class="sm-enlaces">
+    <section>
+      <h2>Sentimiento general</h2>
+      <ul>
+        <li><a href="https://edition.cnn.com/markets/fear-and-greed" target="_blank" rel="noopener">CNN Fear &amp; Greed Index</a><span>Miedo y codicia del mercado de EE. UU. (0 a 100)</span></li>
+        <li><a href="https://www.aaii.com/sentimentsurvey" target="_blank" rel="noopener">AAII Sentiment Survey</a><span>Encuesta semanal a inversores minoristas: alcistas, neutrales y bajistas</span></li>
+        <li><a href="https://www.cboe.com/tradable_products/vix/" target="_blank" rel="noopener">VIX (Cboe)</a><span>Volatilidad implícita del S&amp;P 500, el «índice del miedo»</span></li>
+        <li><a href="https://stoxx.com/index/v2tx/" target="_blank" rel="noopener">VSTOXX (STOXX)</a><span>Volatilidad implícita del Euro Stoxx 50</span></li>
+      </ul>
+    </section>
+    <section>
+      <h2>Fuentes del panel</h2>
+      <ul>
+        <li><a href="https://www.expansion.com/mercados.html" target="_blank" rel="noopener">Expansión · Mercados</a><span>Mercados y Empresas (RSS)</span></li>
+        <li><a href="https://cincodias.elpais.com/mercados-financieros/" target="_blank" rel="noopener">Cinco Días · Mercados financieros</a><span>Mercados financieros y Empresas (RSS)</span></li>
+        <li><a href="https://www.bolsamania.com/ultimas/index.html" target="_blank" rel="noopener">Bolsamanía · Últimas</a><span>Archivo diario, sitemap y secciones</span></li>
+        <li><a href="https://www.bolsamania.com/capitalbolsa" target="_blank" rel="noopener">CapitalBolsa</a><span>Minuto a minuto y secciones</span></li>
+        <li><a href="https://es.tradingview.com/news/" target="_blank" rel="noopener">TradingView · Noticias</a><span>Noticias con los tickers relacionados</span></li>
+      </ul>
+    </section>
+    <section>
+      <h2>Fuentes no incluidas</h2>
+      <ul>
+        <li><a href="https://www.eleconomista.es/mercados-cotizaciones/" target="_blank" rel="noopener">El Economista · Mercados</a><span>Bloquea el acceso automatizado</span></li>
+        <li><a href="https://es.investing.com/news/stock-market-news" target="_blank" rel="noopener">Investing.com · Bolsa</a><span>Pendiente de probar sus RSS</span></li>
+      </ul>
+    </section>
+  </footer>
+</div>
+
+<script>
+(() => {
+  const SECTORES = ['Banca', 'Seguros y servicios financieros', 'Petróleo y gas', 'Eléctricas, renovables y redes', 'Tecnología',
+    'Semiconductores', 'Telecomunicaciones', 'Inmobiliario', 'Construcción e infraestructuras', 'Automóvil', 'Transporte y turismo',
+    'Consumo y distribución', 'Lujo, moda y cosmética', 'Salud y farmacia', 'Industria, defensa y aeroespacial',
+    'Materiales, química y minería', 'Medios y entretenimiento'];
+  const fmt = new Intl.NumberFormat('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const fmtInt = new Intl.NumberFormat('es-ES');
+  const signo = (v) => (v > 0 ? 'pos' : v < 0 ? 'neg' : '');
+  const diaCorto = (d) => d.slice(8, 10) + '/' + d.slice(5, 7);
+  const token = (n) => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const $ = (id) => document.getElementById(id);
+
+  // ---------- Estado ----------
+  const estado = { vista: 'sectores', sel: 'todo', orden: 'peor', afect: [], resumen: [], diario: [] };
+  const leerHash = () => {
+    const h = decodeURIComponent(location.hash.slice(1));
+    if (h.startsWith('detalle')) { estado.vista = 'detalle'; const s = h.split('/')[1]; if (s) estado.sel = s; }
+    else estado.vista = 'sectores';
+  };
+  const ir = (vista, sel) => {
+    estado.vista = vista; if (sel) estado.sel = sel;
+    try {  // al abrir el fichero con doble clic (file://) algunos navegadores no dejan cambiar la dirección
+      history.replaceState(null, '', '#' + (vista === 'detalle' ? 'detalle/' + encodeURIComponent(estado.sel) : 'sectores'));
+    } catch (e) { /* sin enlace directo a la vista; la página funciona igual */ }
+    dibujar();
+  };
+
+  // ---------- Datos (Supabase, solo lectura con la clave publishable) ----------
+  async function cargar() {
+    const cfg = window.PANEL_CONFIG || {};
+    if (!cfg.supabaseUrl || !cfg.supabaseKey || cfg.supabaseKey.includes('...')) {
+      throw new Error('Falta la configuración: copia dashboard/config.example.js como dashboard/config.js y pon la URL y la clave publishable de tu proyecto Supabase.');
+    }
+    const base = `${cfg.supabaseUrl.replace(/\/$/, '')}/rest/v1/`;
+    const leer = async (ruta) => {
+      const filas = [];
+      for (let desde = 0; ; desde += 1000) {
+        const r = await fetch(base + ruta, { headers: { apikey: cfg.supabaseKey, Authorization: `Bearer ${cfg.supabaseKey}`,
+          Range: `${desde}-${desde + 999}`, 'Range-Unit': 'items' } });
+        if (!r.ok) {
+          const txt = await r.text();
+          throw new Error(`Supabase respondió ${r.status}. ${r.status === 401 || r.status === 403 || txt.includes('permission')
+            ? '¿Has ejecutado sql/004_lectura_panel.sql y usas la clave publishable?' : ''} Detalle: ${txt.slice(0, 200)}`);
+        }
+        const lote = await r.json();
+        filas.push(...lote);
+        if (lote.length < 1000) return filas;
+      }
+    };
+    const [afect, arts] = await Promise.all([
+      leer('v_afectaciones?select=id,articulo_id,dia,fuente,titulo,ambito,objeto,sector,en_universo,valor,origen,tema&order=id.asc'),
+      leer('articulos?select=id,url&order=id.asc'),
+    ]);
+    const urls = new Map(arts.map((a) => [a.id, a.url]));
+    for (const a of afect) a.url = urls.get(a.articulo_id) || null;
+    return afect;
+  }
+
+  function calcular(afectaciones) {
+    const g = new Map(), gd = new Map();
+    const add = (clave, tipo, nombre, sector, v) => {
+      let r = g.get(clave);
+      if (!r) { r = { clave, tipo, nombre, sector, n: 0, s: 0, neg: 0, pos: 0 }; g.set(clave, r); }
+      r.n += 1; r.s += v; if (v < 0) r.neg += 1; if (v > 0) r.pos += 1;
+    };
+    const addD = (clave, dia, v) => {
+      const k = clave + '|' + dia;
+      let r = gd.get(k);
+      if (!r) { r = { clave, dia, n: 0, s: 0 }; gd.set(k, r); }
+      r.n += 1; r.s += v;
+    };
+    for (const a of afectaciones) {
+      const v = Number(a.valor), dia = String(a.dia).slice(0, 10);
+      const claves = [['todo', 'todo', 'Todo', null]];
+      if (a.sector) claves.push(['s:' + a.sector, 'sector', a.sector, a.sector]);
+      if (a.ambito === 'Empresa') claves.push(['e:' + a.objeto, 'empresa', a.objeto, a.sector]);
+      if (a.ambito === 'Mercado') claves.push(['m:' + a.objeto, 'mercado', a.objeto, null]);
+      if (a.ambito === 'Global') claves.push(['g:' + a.objeto, 'global', a.objeto, null]);
+      for (const [c, t, n, s] of claves) { add(c, t, n, s, v); addD(c, dia, v); }
+    }
+    estado.resumen = [...g.values()].map((r) => ({ clave: r.clave, tipo: r.tipo, nombre: r.nombre, sector: r.sector, n: r.n,
+      media: r.s / r.n, pct_neg: Math.round((r.neg / r.n) * 100), pct_pos: Math.round((r.pos / r.n) * 100) }));
+    estado.diario = [...gd.values()].map((r) => ({ clave: r.clave, dia: r.dia, n: r.n, media: r.s / r.n }));
+  }
+
+  // ---------- Pantalla de sectores ----------
+  function tinte(media) {
+    const panel = token('--color-panel');
+    const c = media < 0 ? token('--color-bad') : token('--color-ok');
+    if (!media) return panel;
+    return d3.interpolateRgb(panel, c)(Math.min(1, Math.abs(media)) * 0.45);
+  }
+  function chispa(cont, serie) {
+    cont.replaceChildren();
+    if (serie.length < 2) return;
+    const W = cont.clientWidth || 160, H = 28;
+    const x = d3.scalePoint(serie.map((d) => d.dia), [2, W - 2]);
+    const y = d3.scaleLinear([-2, 2], [H - 2, 2]);
+    const svg = d3.select(cont).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).attr('aria-hidden', 'true');
+    svg.append('line').attr('x1', 0).attr('x2', W).attr('y1', y(0)).attr('y2', y(0)).attr('stroke', 'var(--cds-chart-grid)');
+    svg.append('path').datum(serie).attr('fill', 'none').attr('stroke', 'var(--color-fg-muted)').attr('stroke-width', 1.5)
+      .attr('stroke-linecap', 'round').attr('stroke-linejoin', 'round').attr('d', d3.line().x((d) => x(d.dia)).y((d) => y(d.media)));
+    const u = serie[serie.length - 1];
+    svg.append('circle').attr('cx', x(u.dia)).attr('cy', y(u.media)).attr('r', 2.5).attr('fill', 'var(--color-fg)');
+  }
+  function tarjeta(clave, nombre, fila, serie) {
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'sm-sc';
+    const nom = document.createElement('div'); nom.className = 'nom'; nom.textContent = nombre;
+    b.append(nom);
+    if (!fila) {
+      b.classList.add('vacio'); b.disabled = true;
+      const t = document.createElement('div'); t.className = 'det'; t.textContent = 'Sin noticias en el periodo';
+      b.append(t); return b;
+    }
+    b.style.background = tinte(fila.media);
+    const tono = document.createElement('div');
+    tono.className = 'tono ' + signo(fila.media);
+    tono.textContent = (fila.media > 0 ? '+' : '') + fmt.format(fila.media);
+    const det = document.createElement('div'); det.className = 'det';
+    det.textContent = `${fmtInt.format(fila.n)} noticias · ${fila.pct_neg} % negativas`;
+    const sp = document.createElement('div'); sp.className = 'spark';
+    b.append(tono, det, sp);
+    b.setAttribute('aria-label', `${nombre}: tono medio ${fmt.format(fila.media)}, ${fila.n} noticias. Ver detalle`);
+    b.addEventListener('click', () => ir('detalle', clave));
+    requestAnimationFrame(() => chispa(sp, serie));
+    return b;
+  }
+  function ordenar(lista) {
+    const f = {
+      peor: (a, b) => a.fila.media - b.fila.media || b.fila.n - a.fila.n,
+      mejor: (a, b) => b.fila.media - a.fila.media || b.fila.n - a.fila.n,
+      noticias: (a, b) => b.fila.n - a.fila.n,
+      neg: (a, b) => b.fila.pct_neg - a.fila.pct_neg || b.fila.n - a.fila.n,
+    }[estado.orden];
+    return [...lista.filter((x) => x.fila).sort(f), ...lista.filter((x) => !x.fila)];
+  }
+  function pantallaSectores() {
+    const porClave = new Map(estado.resumen.map((r) => [r.clave, r]));
+    const series = d3.group(estado.diario, (d) => d.clave);
+    const serie = (k) => (series.get(k) || []).slice().sort((a, b) => a.dia.localeCompare(b.dia));
+    $('sm-mapa').replaceChildren(...ordenar(SECTORES.map((s) => ({ clave: 's:' + s, nombre: s, fila: porClave.get('s:' + s) })))
+      .map((x) => tarjeta(x.clave, x.nombre, x.fila, serie(x.clave))));
+    $('sm-mapa-mg').replaceChildren(...ordenar(estado.resumen.filter((r) => r.tipo === 'mercado' || r.tipo === 'global')
+      .map((r) => ({ clave: r.clave, nombre: r.nombre, fila: r }))).map((x) => tarjeta(x.clave, x.nombre, x.fila, serie(x.clave))));
+    $('sm-barra').style.background = `linear-gradient(90deg, ${tinte(-1)}, ${tinte(0)}, ${tinte(1)})`;
+  }
+  document.querySelectorAll('.sm-orden button').forEach((b) => b.addEventListener('click', () => {
+    estado.orden = b.dataset.orden;
+    document.querySelectorAll('.sm-orden button').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+    dibujar();
+  }));
+
+  // ---------- Detalle ----------
+  const selSector = $('sm-sector'), selEmpresa = $('sm-empresa'), chart = $('sm-chart'), rank = $('sm-rank'), tit = $('sm-tit');
+  selSector.addEventListener('change', () => ir('detalle', selSector.value ? 's:' + selSector.value : 'todo'));
+  selEmpresa.addEventListener('change', () => ir('detalle', selEmpresa.value ? 'e:' + selEmpresa.value : (selSector.value ? 's:' + selSector.value : 'todo')));
+  $('sm-todo').addEventListener('click', () => ir('detalle', 'todo'));
+  rank.addEventListener('click', (e) => { const tr = e.target.closest('tr[data-key]'); if (tr) ir('detalle', tr.dataset.key); });
+
+  function detalle() {
+    const sel = estado.sel, filas = estado.resumen;
+    const fila = filas.find((r) => r.clave === sel);
+    document.querySelectorAll('.sm-m').forEach((el) => {
+      el.classList.remove('pos', 'neg');
+      if (!fila) { el.textContent = '—'; return; }
+      const f = el.dataset.field, v = fila[f];
+      if (f === 'media') { el.textContent = fmt.format(v); if (signo(v)) el.classList.add(signo(v)); }
+      else if (f === 'n' || f === 'pct_neg' || f === 'pct_pos') el.textContent = fmtInt.format(v);
+      else el.textContent = v;
+    });
+    // selectores
+    const sector = fila && fila.sector ? fila.sector : '';
+    const sectores = filas.filter((r) => r.tipo === 'sector').sort((a, b) => a.nombre.localeCompare(b.nombre, 'es'));
+    selSector.replaceChildren(new Option('Todos los sectores', ''), ...sectores.map((r) => new Option(r.nombre, r.nombre)));
+    selSector.value = sector;
+    const empresas = filas.filter((r) => r.tipo === 'empresa' && (!sector || r.sector === sector)).sort((a, b) => a.nombre.localeCompare(b.nombre, 'es'));
+    selEmpresa.replaceChildren(new Option(sector ? 'Todas las de ' + sector : 'Todas las empresas', ''),
+      ...empresas.map((r) => new Option(`${r.nombre} (${r.n})`, r.nombre)));
+    selEmpresa.value = fila && fila.tipo === 'empresa' ? fila.nombre : '';
+    // ranking
+    let lista, titulo;
+    if (fila && (fila.tipo === 'sector' || fila.tipo === 'empresa')) {
+      lista = filas.filter((r) => r.tipo === 'empresa' && r.sector === fila.sector); titulo = 'Empresas de ' + fila.sector;
+    } else { lista = filas.filter((r) => r.tipo === 'sector'); titulo = 'Por sector'; }
+    lista.sort((a, b) => b.n - a.n || a.nombre.localeCompare(b.nombre, 'es'));
+    $('sm-rank-titulo').textContent = titulo;
+    const td = (t, c) => { const x = document.createElement('td'); x.textContent = t; if (c) x.className = c; return x; };
+    rank.tBodies[0].replaceChildren(...lista.map((r) => {
+      const tr = document.createElement('tr'); tr.className = 'clic'; tr.dataset.key = r.clave;
+      tr.append(td(r.nombre), td(fmtInt.format(r.n), 'num'), td(fmt.format(r.media), 'num ' + signo(r.media)), td(r.pct_neg + ' %', 'num'));
+      if (r.clave === sel) tr.style.fontWeight = 'var(--fw-medium)';
+      return tr;
+    }));
+    // titulares
+    const pref = sel.slice(0, 2), obj = sel.slice(2);
+    let tl = estado.afect;
+    if (pref === 's:') tl = tl.filter((a) => a.sector === obj);
+    else if (pref === 'e:') tl = tl.filter((a) => a.ambito === 'Empresa' && a.objeto === obj);
+    else if (pref === 'm:') tl = tl.filter((a) => a.ambito === 'Mercado' && a.objeto === obj);
+    else if (pref === 'g:') tl = tl.filter((a) => a.ambito === 'Global' && a.objeto === obj);
+    tl = [...tl].sort((a, b) => String(b.dia).localeCompare(String(a.dia)) || b.id - a.id).slice(0, 60);
+    tit.tBodies[0].replaceChildren(...tl.map((a) => {
+      const tr = document.createElement('tr'); const v = Number(a.valor);
+      const celda = document.createElement('td');
+      if (a.url && /^https?:\/\//.test(a.url)) {
+        const link = document.createElement('a');
+        link.href = a.url; link.target = '_blank'; link.rel = 'noopener'; link.textContent = a.titulo;
+        celda.append(link);
+      } else celda.textContent = a.titulo;
+      tr.append(td(diaCorto(String(a.dia))), td(a.fuente), celda, td(a.objeto), td(v > 0 ? '+' + v : String(v), 'num ' + signo(v)));
+      return tr;
+    }));
+    grafico(estado.diario.filter((r) => r.clave === sel).sort((a, b) => a.dia.localeCompare(b.dia)));
+  }
+
+  function grafico(datos) {
+    chart.replaceChildren();
+    if (!datos.length) return;
+    const W = chart.clientWidth || 600, H = 240, m = { t: 12, r: 8, b: 26, l: 30 };
+    const svg = d3.select(chart).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`);
+    const x = d3.scaleBand(datos.map((d) => d.dia), [m.l, W - m.r]).padding(0.25);
+    const y = d3.scaleLinear([-2, 2], [H - m.b, m.t]);
+    svg.append('g').selectAll('line').data([-2, -1, 0, 1, 2]).join('line').attr('x1', m.l).attr('x2', W - m.r)
+      .attr('y1', (d) => y(d)).attr('y2', (d) => y(d)).attr('stroke', (d) => (d === 0 ? 'var(--cds-chart-axis)' : 'var(--cds-chart-grid)'));
+    svg.append('g').selectAll('text').data([-2, -1, 0, 1, 2]).join('text').attr('x', m.l - 6).attr('y', (d) => y(d)).attr('dy', '0.32em')
+      .attr('text-anchor', 'end').attr('fill', 'var(--color-fg-muted)').style('font-size', 'var(--fs-caption)').text((d) => (d > 0 ? '+' + d : d));
+    const paso = Math.max(1, Math.ceil((datos.length * 44) / (W - m.l - m.r)));
+    svg.append('g').selectAll('text').data(datos.filter((d, i) => i % paso === 0)).join('text')
+      .attr('x', (d) => x(d.dia) + x.bandwidth() / 2).attr('y', H - 6).attr('text-anchor', 'middle')
+      .attr('fill', 'var(--color-fg-muted)').style('font-size', 'var(--fs-caption)').text((d) => diaCorto(d.dia));
+    const tip = document.createElement('div'); tip.className = 'sm-tip'; tip.hidden = true; chart.append(tip);
+    svg.append('g').selectAll('rect').data(datos).join('rect').attr('x', (d) => x(d.dia)).attr('width', x.bandwidth())
+      .attr('y', (d) => Math.min(y(d.media), y(0))).attr('height', (d) => Math.max(1, Math.abs(y(d.media) - y(0)))).attr('rx', 3)
+      .attr('fill', (d) => (d.media < 0 ? 'var(--cds-chart-status-critical)' : d.media > 0 ? 'var(--chart-1)' : 'var(--cds-chart-muted)'))
+      .on('mousemove', (ev, d) => {
+        tip.hidden = false;
+        tip.innerHTML = '';
+        const a = document.createElement('div'); a.className = 'd'; a.textContent = diaCorto(d.dia);
+        const b = document.createElement('div'); b.textContent = `Tono medio ${fmt.format(d.media)} · ${fmtInt.format(d.n)} noticias`;
+        tip.append(a, b);
+        const [px, py] = d3.pointer(ev, chart);
+        tip.style.left = Math.min(px + 10, chart.clientWidth - tip.offsetWidth - 4) + 'px';
+        tip.style.top = Math.max(0, py - 40) + 'px';
+      })
+      .on('mouseleave', () => { tip.hidden = true; });
+  }
+
+  // ---------- Dibujo y arranque ----------
+  function dibujar() {
+    $('sectores').hidden = estado.vista !== 'sectores';
+    $('detalle').hidden = estado.vista !== 'detalle';
+    $('tab-sectores').setAttribute('aria-selected', String(estado.vista === 'sectores'));
+    $('tab-detalle').setAttribute('aria-selected', String(estado.vista === 'detalle'));
+    if (!estado.afect.length) return;
+    if (estado.vista === 'sectores') pantallaSectores(); else detalle();
+  }
+  $('tab-sectores').addEventListener('click', () => ir('sectores'));
+  $('tab-detalle').addEventListener('click', () => ir('detalle'));
+  window.addEventListener('resize', () => { clearTimeout(window.__rz); window.__rz = setTimeout(dibujar, 150); });
+
+  async function arrancar() {
+    $('sm-estado').textContent = 'Cargando…';
+    $('sm-error').hidden = true;
+    try {
+      estado.afect = await cargar();
+      calcular(estado.afect);
+      const dias = estado.afect.map((a) => String(a.dia).slice(0, 10)).sort();
+      $('sm-estado').textContent = `${fmtInt.format(estado.afect.length)} afectaciones · ${diaCorto(dias[0])} a ${diaCorto(dias[dias.length - 1])} · leído a las ${new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })}`;
+      dibujar();
+    } catch (e) {
+      $('sm-estado').textContent = 'Sin datos';
+      $('sm-error').hidden = false;
+      $('sm-error').textContent = e.message;
+    }
+  }
+  $('sm-recargar').addEventListener('click', arrancar);
+  leerHash();
+  dibujar();
+  arrancar();
+})();
+</script>
+</body>
+</html>
