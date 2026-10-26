@@ -2,7 +2,7 @@
 
 Formato de entrada:
 {
-  "lote": 7, "version_criterios": "v3.3",
+  "lote": 7, "version_criterios": "v3.4",
   "clasificaciones": [
     {"articulo_id": 123, "relevante": true, "tema": "Resultados", "origen": "Hecho (empresa o dato oficial)",
      "afectaciones": [{"ambito": "Empresa", "objeto": "Santander", "sector": "Banca", "valor": 1}]},

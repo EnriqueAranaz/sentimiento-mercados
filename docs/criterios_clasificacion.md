@@ -1,10 +1,10 @@
 # Criterios de clasificación de titulares
 
-**Versión de criterios: `v3.3`** (modelo del Excel `referencia/clasificacion_titulares_2026-10-26_v3.xlsx`, 26/10/2026,
-más las *Aclaraciones v2* de la sección 9 y las *Aclaraciones v3* de la sección 10). Es el valor que va en `version_criterios`.
+**Versión de criterios: `v3.4`** (modelo del Excel `referencia/clasificacion_titulares_2026-10-26_v3.xlsx`, 26/10/2026,
+más las aclaraciones de las secciones 9, 10 y 11). Es el valor que va en `version_criterios`.
 Este documento es la **única fuente de criterios** del agente clasificador. Las secciones 1 a 7 son copia íntegra
-de la hoja *Criterios* del Excel; la sección 8 son ejemplos reales del Excel, clasificados a mano; las secciones 9 y 10
-son aclaraciones posteriores, que **prevalecen** sobre lo anterior si hay conflicto (la 10 sobre la 9).
+de la hoja *Criterios* del Excel; la sección 8 son ejemplos reales del Excel, clasificados a mano; las secciones 9 a 11
+son aclaraciones posteriores, que **prevalecen** sobre lo anterior si hay conflicto (la más reciente sobre las demás).
 Los nombres de ámbitos, objetos de Global, sectores, temas, orígenes y motivos deben usarse **exactamente** como aparecen aquí.
 
 ## 1. Estructura
@@ -299,3 +299,21 @@ economía o de su bolsa en conjunto.
 
 **i) El titular manda en el tono.** El resumen solo sirve para identificar objetos, nunca para fijar el valor.
 - *Bankinter eleva su beneficio un 11%, hasta los 901 millones* → Empresa · Bankinter · Banca → **1** (aunque el resumen diga que cae en bolsa)
+
+## 11. Aclaraciones v3.4 (prevalecen sobre todo lo anterior)
+
+**a) Grupos de valores de IA.** "Sector de la IA", "neoclouds", "centros de datos", "valores de IA" y expresiones
+similares cuentan como nombrar un grupo de valores tecnológicos → **Sector · Tecnología**. Si el titular nombra las
+empresas, además se anotan una a una. Si "centros de datos" es solo el negocio de una empresa concreta, va a esa empresa.
+- *Por qué Musk cree que más de 200 neoclouds de IA podrían fracasar* → Sector · Tecnología · Tecnología → **-1**
+- *Euro se hunde por preocupación sobre deuda francesa; yen sube tras caída del sector de la IA* → … · Sector · Tecnología · Tecnología → **-1**
+
+**b) Bonos sin país.** Global · Mercados con tema *Deuda y bonos* (no se crea un objeto nuevo).
+- *Regresa la rentabilidad de la deuda* → Relevante · *Deuda y bonos* · *Opinión / prensa* · Global · Mercados → **-1** (rentabilidad al alza, sección 10 d)
+
+**c) Fuerzas opuestas sobre el mismo objeto** en el titular: **0**.
+- *La deuda de EEUU, de amenaza para los mercados a refugio predilecto* → Mercado · EE. UU. → **0**
+
+**d) Filial cuya matriz cotizada está fuera de alcance** (Jaguar → Tata Motors, que cotiza en India): la noticia queda
+**Fuera de alcance (Latam, India…)**.
+- *Jaguar va a retirar del mercado unos 94 000 vehículos en EEUU por un problema con la cámara de visión trasera, según la NHTSA* → No relevante · **Fuera de alcance (Latam, India…)**
