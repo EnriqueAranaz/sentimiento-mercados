@@ -303,10 +303,12 @@ economía o de su bolsa en conjunto.
 ## 11. Aclaraciones v3.4 (prevalecen sobre todo lo anterior)
 
 **a) Grupos de valores de IA.** "Sector de la IA", "neoclouds", "centros de datos", "valores de IA" y expresiones
-similares cuentan como nombrar un grupo de valores tecnológicos → **Sector · Tecnología**. Si el titular nombra las
-empresas, además se anotan una a una. Si "centros de datos" es solo el negocio de una empresa concreta, va a esa empresa.
+similares cuentan como nombrar un grupo de valores tecnológicos → **Sector · Tecnología**.
+**Pero si en el titular aparece el nombre de una empresa, la afectación va a esa empresa** (y no a Sector · Tecnología).
 - *Por qué Musk cree que más de 200 neoclouds de IA podrían fracasar* → Sector · Tecnología · Tecnología → **-1**
 - *Euro se hunde por preocupación sobre deuda francesa; yen sube tras caída del sector de la IA* → … · Sector · Tecnología · Tecnología → **-1**
+- *Acciones de CoreWeave, Nebius e Iren caen tras aviso de Musk sobre 200 neoclouds* → Empresa · CoreWeave → **-1** · Empresa · Nebius → **-1** · Empresa · IREN → **-1** (sin Sector · Tecnología)
+- *Merlin se desinfla ante el giro de expectativas en los centros de datos* → Empresa · Merlin Properties · Inmobiliario → **-1** (sin Sector · Tecnología)
 
 **b) Bonos sin país.** Global · Mercados con tema *Deuda y bonos* (no se crea un objeto nuevo).
 - *Regresa la rentabilidad de la deuda* → Relevante · *Deuda y bonos* · *Opinión / prensa* · Global · Mercados → **-1** (rentabilidad al alza, sección 10 d)
