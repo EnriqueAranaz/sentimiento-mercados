@@ -13,13 +13,14 @@ from dataclasses import dataclass, field
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
+import httpx
 import yaml
 from dotenv import load_dotenv
 
 from .almacen import crear_almacen
 from .http import BloqueoError, ClienteEducado, RobotsError
 from .modelos import MADRID, Item
-from .parsers import PARSERS, SinNovedades
+from .parsers import PARSERS, SinNovedades, fecha_de_articulo
 
 RAIZ = Path(__file__).resolve().parent.parent
 log = logging.getLogger("ingesta")
@@ -43,13 +44,14 @@ def ahora() -> datetime:
 
 
 def recorrer_listado(listado: dict, cliente: ClienteEducado, almacen, max_paginas: int,
-                     limite_fecha: datetime | None, vistos: dict[str, Item]) -> tuple[int, bool, list[Item]]:
+                     ultima: datetime | None, vistos: dict[str, Item]) -> tuple[int, bool, list[Item]]:
     """Recorre las páginas de un listado hasta tocar terreno ya capturado.
 
     Devuelve (páginas leídas, frontera encontrada, items leídos en este listado).
     """
+    if "url_dia" in listado:
+        return recorrer_archivo_diario(listado, cliente, almacen, max_paginas, ultima, vistos)
     parser = PARSERS[listado["parser"]]
-    corte = listado.get("corte", "url")
     paginas = max_paginas if listado.get("url_pagina") else 1
     leidos: list[Item] = []
     for n in range(1, paginas + 1):
@@ -68,15 +70,88 @@ def recorrer_listado(listado: dict, cliente: ClienteEducado, almacen, max_pagina
         for it in items:
             vistos.setdefault(it.url, it)
         leidos.extend(items)
-
-        if corte == "fecha":
-            fechas = [it.publicado_en for it in items if it.publicado_en]
-            # Ordenado por última actividad: basta con mirar el último elemento con fecha.
-            if limite_fecha and fechas and fechas[-1] <= limite_fecha:
-                return n, True, leidos
-        elif almacen.urls_conocidas([it.url for it in items]):
+        if almacen.urls_conocidas([it.url for it in items]):
             return n, True, leidos
     return paginas, False, leidos
+
+
+def recorrer_archivo_diario(listado: dict, cliente: ClienteEducado, almacen, max_paginas: int,
+                            ultima: datetime | None, vistos: dict[str, Item]) -> tuple[int, bool, list[Item]]:
+    """Archivo por días (`url_dia` / `url_dia_pagina` con {fecha} y {n}), del más reciente al más antiguo.
+
+    Recorre hoy y los días anteriores (hora de Madrid) hasta el día de la ejecución anterior, página a
+    página, y para al encontrar una URL ya guardada. Si llega al día de la ejecución anterior sin
+    encontrarla, el intervalo está cubierto entero (el archivo es completo): no hay hueco aunque haya
+    días vacíos, como los fines de semana. Solo hay posible hueco si se agota `max_paginas` antes.
+    """
+    parser = PARSERS[listado["parser"]]
+    max_paginas = listado.get("max_paginas", max_paginas)
+    hoy = ahora().astimezone(MADRID).date()
+    hasta = ultima.astimezone(MADRID).date() if ultima else hoy - timedelta(days=1)
+    leidos: list[Item] = []
+    paginas = 0
+    dia = hoy
+    while dia >= hasta:
+        for n in range(1, max_paginas + 1):
+            if paginas >= max_paginas:
+                return paginas, False, leidos
+            plantilla = listado["url_dia"] if n == 1 else listado["url_dia_pagina"]
+            r = cliente.get(plantilla.format(fecha=dia.isoformat(), n=n))
+            paginas += 1
+            items = parser(r.content, str(r.url), listado)
+            if not items:
+                break  # fin de ese día (o día sin publicaciones)
+            for it in items:
+                vistos.setdefault(it.url, it)
+            leidos.extend(items)
+            if almacen.urls_conocidas([it.url for it in items]):
+                return paginas, True, leidos
+        dia -= timedelta(days=1)
+    return paginas, True, leidos
+
+
+def completar_fechas(fuente: dict, vistos: dict[str, Item], cliente: ClienteEducado, almacen, res: Resultado) -> None:
+    """Abre la página de cada artículo nuevo sin fecha y toma la real (meta o JSON-LD datePublished).
+
+    Una petición por artículo (el cliente respeta 1 pet/s por dominio). Los artículos que aún no
+    están publicados (página 404 o fecha futura, p. ej. programados) se descartan en esta ejecución
+    y se capturarán cuando se publiquen.
+    """
+    sin_fecha = [it for it in vistos.values() if it.publicado_en is None]
+    conocidas = almacen.urls_conocidas([it.url for it in sin_fecha]) if sin_fecha else set()
+    pendientes = [it for it in sin_fecha if it.url not in conocidas]
+    limite = fuente.get("max_fechas_por_ejecucion", 80)
+    obtenidas = descartados = 0
+    for it in pendientes[:limite]:
+        try:
+            r = cliente.get(it.url)
+        except BloqueoError as e:
+            res.avisos.append(f"fechas: bloqueado al abrir artículos ({e})")
+            break
+        except httpx.HTTPStatusError as e:
+            if e.response.status_code == 404:
+                del vistos[it.url]
+                descartados += 1
+            continue
+        except Exception as e:  # noqa: BLE001 — sin fecha real se guarda con fecha estimada
+            log.warning("%s · sin fecha para %s: %s", fuente["nombre"], it.url, e)
+            continue
+        if "404" in r.url.path:  # Bolsamanía redirige las páginas inexistentes a /404.html con 200
+            del vistos[it.url]
+            descartados += 1
+            continue
+        fecha = fecha_de_articulo(r.content)
+        if fecha and fecha > ahora() + timedelta(minutes=10):
+            del vistos[it.url]
+            descartados += 1
+        elif fecha:
+            it.publicado_en = fecha
+            obtenidas += 1
+    if len(pendientes) > limite:
+        res.avisos.append(f"fechas: {len(pendientes) - limite} artículos quedan con fecha estimada (límite {limite})")
+    if pendientes:
+        log.info("%s · fechas reales: %d de %d artículos nuevos sin fecha (%d aún no publicados)",
+                 fuente["nombre"], obtenidas, len(pendientes), descartados)
 
 
 def procesar_fuente(fuente: dict, fuente_id: int, cliente: ClienteEducado, almacen, franja: str,
@@ -86,14 +161,12 @@ def procesar_fuente(fuente: dict, fuente_id: int, cliente: ClienteEducado, almac
     ultima = almacen.ultima_ejecucion(fuente_id)
     primera = not almacen.tiene_articulos(fuente_id)
     vistos: dict[str, Item] = {}
-    hilos: dict[str, int | None] = {}  # hilos de foro vistos en esta ejecución -> nº de respuestas
     fallos = 0
 
     for listado in fuente["listados"]:
-        etiqueta = listado.get("seccion") or listado["url"]
+        etiqueta = listado.get("seccion") or listado.get("url") or listado.get("url_dia")
         try:
-            limite = ultima or (inicio - timedelta(hours=24))
-            pags, frontera, items = recorrer_listado(listado, cliente, almacen, max_paginas, limite, vistos)
+            pags, frontera, items = recorrer_listado(listado, cliente, almacen, max_paginas, ultima, vistos)
         except BloqueoError as e:
             fallos += 1
             res.avisos.append(f"[{etiqueta}] BLOQUEADO: {e}")
@@ -111,8 +184,6 @@ def procesar_fuente(fuente: dict, fuente_id: int, cliente: ClienteEducado, almac
             continue
 
         res.paginas += pags
-        if listado["parser"] == "rankia_foro":
-            hilos.update({it.url: it.n_respuestas for it in items})
         log.info("%s · %s · páginas=%d leídos=%d frontera=%s", fuente["nombre"], etiqueta, pags, len(items), frontera)
 
         if not frontera and listado.get("detecta_hueco", True):
@@ -132,6 +203,9 @@ def procesar_fuente(fuente: dict, fuente_id: int, cliente: ClienteEducado, almac
     elif fallos:
         res.estado = "parcial"
 
+    if fuente.get("fecha_desde_articulo") and vistos:
+        completar_fechas(fuente, vistos, cliente, almacen, res)
+
     filas = [
         {
             "fuente_id": fuente_id,
@@ -139,9 +213,8 @@ def procesar_fuente(fuente: dict, fuente_id: int, cliente: ClienteEducado, almac
             "titulo": it.titulo,
             "resumen": it.resumen,
             "seccion": it.seccion,
-            "n_respuestas": it.n_respuestas,
             "publicado_en": (it.publicado_en or inicio).isoformat(),
-            "fecha_estimada": it.publicado_en is None or it.fecha_estimada,
+            "fecha_estimada": it.publicado_en is None,
             "simbolos": it.simbolos,
         }
         for it in vistos.values()
@@ -158,7 +231,7 @@ def procesar_fuente(fuente: dict, fuente_id: int, cliente: ClienteEducado, almac
             res.avisos.append(f"error guardando artículos: {e}")
             log.exception("%s · error guardando", fuente["nombre"])
 
-    ejecucion_id = almacen.registrar_ejecucion({
+    almacen.registrar_ejecucion({
         "inicio": inicio.isoformat(),
         "fin": ahora().isoformat(),
         "franja": franja,
@@ -169,23 +242,6 @@ def procesar_fuente(fuente: dict, fuente_id: int, cliente: ClienteEducado, almac
         "paginas_leidas": res.paginas,
         "error_msg": "; ".join(res.avisos)[:2000] or None,
     })
-
-    if hilos:
-        # Una fila por hilo visto, exista o no de antes: es la serie temporal de actividad.
-        try:
-            ids = almacen.ids_articulos(list(hilos))
-            almacen.insertar_actividad([
-                {"articulo_id": ids[url], "ejecucion_id": ejecucion_id, "n_respuestas": n}
-                for url, n in hilos.items() if url in ids
-            ])
-            log.info("%s · actividad registrada para %d hilos", res.nombre, len(ids))
-        except Exception as e:  # noqa: BLE001
-            res.avisos.append(f"error registrando rankia_actividad: {e}")
-            if res.estado == "ok":
-                res.estado = "parcial"
-            almacen.actualizar_ejecucion(ejecucion_id, {"estado": res.estado, "error_msg": "; ".join(res.avisos)[:2000]})
-            log.exception("%s · error registrando actividad", res.nombre)
-
     log.info("%s · estado=%s páginas=%d leídos=%d nuevos=%d", res.nombre, res.estado, res.paginas, res.leidos, res.nuevos)
     return res
 

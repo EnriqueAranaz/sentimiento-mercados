@@ -1,6 +1,6 @@
 """Intérprete de robots.txt (RFC 9309) con comodines `*` y `$`.
 
-`urllib.robotparser` no soporta comodines, que usan Expansión, Rankia o Cinco Días,
+`urllib.robotparser` no soporta comodines, que usan Expansión o Cinco Días,
 así que se implementa aquí: regla más larga gana y, en empate, Allow.
 """
 from __future__ import annotations

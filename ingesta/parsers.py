@@ -107,54 +107,40 @@ def tradingview_json(contenido: bytes, base_url: str, cfg: dict) -> list[Item]:
     return list(vistos.values())
 
 
-_FECHA_RANKIA = re.compile(r"\((\d{2}/\d{2}/\d{2} \d{2}:\d{2})\)")
-_NUM_ABREV = re.compile(r"^(\d+(?:[.,]\d+)?)\s*([KkMm]?)$")
-
-
-def _numero_abreviado(texto: str) -> int | None:
-    """'52' -> 52, '3,93K' -> 3930, '346K' -> 346000 (Rankia abrevia: valor aproximado), '-' -> 0."""
-    if texto.strip() == "-":  # hilo sin respuestas
-        return 0
-    m = _NUM_ABREV.match(texto.strip())
-    if not m:
-        return None
-    num, sufijo = m.groups()
-    if not sufijo:
-        return int(num.replace(".", "").replace(",", ""))
-    return round(float(num.replace(",", ".")) * (1_000 if sufijo.lower() == "k" else 1_000_000))
-
-
-def rankia_foro(contenido: bytes, base_url: str, cfg: dict) -> list[Item]:
-    """Listado de hilos del foro. Solo título, URL, fecha de última actividad y nº de respuestas.
-
-    No se guardan autores, extractos de mensajes ni ningún otro dato personal.
-    """
-    soup = BeautifulSoup(contenido, "lxml")
-    items = []
-    for fila in soup.select("tr"):
-        enlace = fila.select_one("h5 a[href*='/temas/']")
-        if not enlace:
-            continue
-        url = urljoin(base_url, enlace["href"].split("?", 1)[0])
-        celdas = fila.find_all("td", recursive=False)
-        n_resp = _numero_abreviado(celdas[2].get_text(strip=True)) if len(celdas) >= 3 else None
-        m = _FECHA_RANKIA.search(fila.get_text(" "))
-        items.append(Item(
-            url=normalizar_url(url),
-            titulo=limpiar_texto(enlace.get_text(" ")),
-            # Fecha del último mensaje (hora de Madrid -> UTC): el listado no muestra la de creación.
-            publicado_en=parsear_fecha(m.group(1)) if m else None,
-            fecha_estimada=True,
-            seccion=cfg.get("seccion"),
-            n_respuestas=n_resp,
-        ))
-    return items
-
-
 PARSERS = {
     "rss": rss,
     "sitemap_news": sitemap_news,
     "html_enlaces": html_enlaces,
     "tradingview_json": tradingview_json,
-    "rankia_foro": rankia_foro,
 }
+
+
+def _date_published(nodo) -> str | None:
+    """Busca datePublished en un bloque JSON-LD (objeto, lista o @graph)."""
+    if isinstance(nodo, list):
+        return next((f for f in map(_date_published, nodo) if f), None)
+    if isinstance(nodo, dict):
+        if isinstance(nodo.get("datePublished"), str):
+            return nodo["datePublished"]
+        return _date_published(nodo.get("@graph"))
+    return None
+
+
+def fecha_de_articulo(contenido: bytes) -> datetime | None:
+    """Fecha real de publicación de una página de artículo.
+
+    Se toma de <meta property="article:published_time"> o, si no está (caso de Bolsamanía),
+    del `datePublished` del JSON-LD. Solo se lee la cabecera de metadatos: el cuerpo no se guarda.
+    """
+    soup = BeautifulSoup(contenido, "lxml")
+    meta = soup.find("meta", attrs={"property": "article:published_time"})
+    if meta and meta.get("content"):
+        return parsear_fecha(meta["content"])
+    for script in soup.find_all("script", type="application/ld+json"):
+        try:
+            valor = _date_published(json.loads(script.string or ""))
+        except json.JSONDecodeError:
+            continue
+        if valor:
+            return parsear_fecha(valor)
+    return None

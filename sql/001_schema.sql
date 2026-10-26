@@ -19,7 +19,6 @@ create table if not exists public.articulos (
     titulo          text not null,
     resumen         text,
     seccion         text,
-    n_respuestas    integer,
     publicado_en    timestamptz not null,
     fecha_estimada  boolean not null default false,
     capturado_en    timestamptz not null default now()

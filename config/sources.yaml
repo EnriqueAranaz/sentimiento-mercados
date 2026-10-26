@@ -11,15 +11,20 @@
 #   idioma        es
 #   activa        true | false
 #   motivo        (opcional) por qué está desactivada o notas de viabilidad
+#   fecha_desde_articulo  (opcional) true: a los artículos nuevos sin fecha se les abre la página
+#                 (1 pet/s) para tomar la fecha real (article:published_time o JSON-LD datePublished)
+#   max_fechas_por_ejecucion  (opcional, 80 por defecto) tope de páginas de artículo abiertas por ejecución
 #   listados      lista de listados a recorrer, cada uno con:
 #       url           URL de la primera página
 #       url_pagina    (opcional) plantilla para páginas 2..N, con {n}
-#       parser        rss | sitemap_news | html_enlaces | tradingview_json | rankia_foro
+#       url_dia / url_dia_pagina  (en lugar de url) archivo por días, con {fecha} (AAAA-MM-DD) y {n}:
+#                     se recorre desde hoy hasta el día de la ejecución anterior (hora de Madrid)
+#       max_paginas   (opcional) tope de páginas de este listado (por defecto defaults.max_paginas)
+#       parser        rss | sitemap_news | html_enlaces | tradingview_json
 #       seccion       etiqueta que se guarda en articulos.seccion
-#       corte         url (para al encontrar una URL ya guardada; por defecto)
-#                     fecha (para listados ordenados por actividad: para al pasar la última ejecución)
 #       detecta_hueco true por defecto; false en listados complementarios de una sola página
 #       selector / patron_url   solo para html_enlaces
+#   Se para al encontrar una URL ya guardada; si se agotan las páginas sin encontrarla -> 'parcial'.
 
 defaults:
   max_paginas: 10
@@ -83,11 +88,20 @@ fuentes:
     url: https://www.bolsamania.com/ultimas/index.html
     idioma: es
     activa: true
-    motivo: "El RSS solo trae 20 entradas (~5 h). Se usa el sitemap de noticias (fecha exacta) + listados HTML de Últimas, Mercados, Empresas e Internacional (sin fecha: fecha_estimada=true). Los listados no tienen paginación hacia atrás."
+    motivo: "Fuente principal: archivo diario de Últimas (/noticias/ultimas/AAAA-MM-DD/N), completo y paginable (~35-40 noticias por día laborable). Agrupa por día de creación, así que las noticias programadas para días posteriores se recogen con el sitemap de noticias y los listados de sección. Las que llegan sin fecha toman la real de la página del artículo (JSON-LD datePublished)."
+    fecha_desde_articulo: true
     listados:
+      - url_dia: https://www.bolsamania.com/noticias/ultimas/{fecha}
+        url_dia_pagina: https://www.bolsamania.com/noticias/ultimas/{fecha}/{n}
+        max_paginas: 15
+        parser: html_enlaces
+        seccion: archivo
+        selector: "article h1 a, article h2 a, article h3 a, article h4 a"
+        patron_url: '^https://www\.bolsamania\.com/noticias/[^?#]+--\d+\.html$'
       - url: https://www.bolsamania.com/sitemap.xml
         parser: sitemap_news
         seccion: sitemap
+        detecta_hueco: false
       - url: https://www.bolsamania.com/ultimas/index.html
         parser: html_enlaces
         seccion: ultimas
@@ -138,22 +152,3 @@ fuentes:
       - url: https://es.tradingview.com/news/
         parser: tradingview_json
         seccion: news
-
-  # ------------------------------------------------------------------ comunidad
-  - nombre: Rankia
-    clave: rankia
-    tipo_fuente: comunidad
-    tipo_acceso: html
-    url: https://www.rankia.com/foros/bolsa
-    idioma: es
-    activa: true
-    motivo: "Foro de Bolsa por HTML (ordenado por última actividad: corte por fecha) + RSS de titulares (posts de blogs). Sin usuarios ni datos personales."
-    listados:
-      - url: https://www.rankia.com/foros/bolsa/temas
-        url_pagina: https://www.rankia.com/foros/bolsa/temas?page={n}
-        parser: rankia_foro
-        seccion: foro-bolsa
-        corte: fecha
-      - url: https://www.rankia.com/titulares/feed.rss
-        parser: rss
-        seccion: blogs
