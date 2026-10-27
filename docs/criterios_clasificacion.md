@@ -1,10 +1,11 @@
 # Criterios de clasificación de titulares
 
-**Versión de criterios: `v3.4`** (modelo del Excel `referencia/clasificacion_titulares_2026-10-26_v3.xlsx`, 26/10/2026,
-más las aclaraciones de las secciones 9, 10 y 11). Es el valor que va en `version_criterios`.
+**Versión de criterios: `v3.5`** (modelo del Excel `referencia/clasificacion_titulares_2026-10-26_v3.xlsx`, 26/10/2026,
+más las aclaraciones de las secciones 9 a 12). Es el valor que va en `version_criterios`.
 Este documento es la **única fuente de criterios** del agente clasificador. Las secciones 1 a 7 son copia íntegra
-de la hoja *Criterios* del Excel; la sección 8 son ejemplos reales del Excel, clasificados a mano; las secciones 9 a 11
+de la hoja *Criterios* del Excel; la sección 8 son ejemplos reales del Excel, clasificados a mano; las secciones 9 a 12
 son aclaraciones posteriores, que **prevalecen** sobre lo anterior si hay conflicto (la más reciente sobre las demás).
+**Principio de la v3.5 (sección 12): el precio narrado no es noticia.**
 Los nombres de ámbitos, objetos de Global, sectores, temas, orígenes y motivos deben usarse **exactamente** como aparecen aquí.
 
 ## 1. Estructura
@@ -58,6 +59,8 @@ Resultados · Recomendación / análisis · Macro · Materias primas · Fusiones
 ## 7. Motivos de no relevancia (9)
 
 Cripto · Finanzas personales · Divulgativo / genérico · Sin objeto identificable · Fuera de alcance (Latam, India…) · Política sin efecto de mercado · Agenda / convocatoria · Empresa no cotizada · Otros
+
+Desde v3.5 hay dos más (sección 12): **Precio sin causa** · **Análisis técnico**.
 
 Fuentes del modelo: Expansión, Cinco Días, Bolsamanía y TradingView (después se añadió CapitalBolsa). Rankia quedó excluida.
 
@@ -336,3 +339,38 @@ noticias del sector en conjunto que no nombran ninguna empresa. Mercados y objet
 positivo o negativo según la opinión; la entidad que opina **no** se anota (aunque sea cotizada). Origen *Analista*.
 - *Morgan Stanley deja sin potencial a Redeia por la presión de la deuda* → Empresa · Redeia · Eléctricas, renovables y redes → **-1** (Morgan Stanley no se anota)
 - *Bankinter eleva el objetivo de TSMC a 530 dólares: las claves de su apuesta por el fabricante de chips* → Empresa · TSMC · Semiconductores → **1** (Bankinter no se anota)
+
+## 12. v3.5 Precio sin causa y análisis técnico (prevalece sobre todo lo anterior)
+
+### Precio sin causa → no relevante, motivo "Precio sin causa"
+Titulares que solo cuentan un movimiento o un nivel de precio, sin una causa concreta. Incluye:
+- Solo el movimiento o el nivel: "El Ibex intenta resistir cerca de los 19.000 puntos", "Wall Street cierra en baja para terminar complicada semana", "El petróleo se repliega tras tocar máximos de mayo", "El Dow y el S&P 500 caen, mientras que el sector tecnológico se estabiliza".
+- Causas genéricas: cautela, incertidumbre, nervios, recogida de beneficios, "semana complicada", "jornada de volatilidad".
+- Precio explicado por el precio del mismo objeto o de sus componentes: "arrastrado por la banca", "las ventas de tecnológicas provocan…", "las tecnológicas moderan su caída".
+- Récords, rankings e hitos de precio: "Inditex arrebata el trono a Santander como mayor valor del Ibex", "El mejor día del año para el S&P 500".
+- Acompañamiento sin relación causal: "El Ibex abre con un alza del 0,4%… con el petróleo a más de 114 dólares".
+
+### Precio con causa → relevante, como hasta ahora
+El movimiento se atribuye a algo concreto:
+- Un hecho: "La victoria de Lula tumba a Telefónica y Santander", "CoreWeave, Nebius e Iren caen tras aviso de Musk", "Caídas en Wall Street tras los resultados de Meta y Tesla".
+- Un miedo o una expectativa con nombre: "…ante los temores sobre la financiación de la IA", "Los disturbios en Francia agravan los temores de una crisis de deuda".
+- Otra variable de mercado distinta del objeto: "El oro sufre por el alza del petróleo", "El Treasury llega al 5,34%: las compañías que más sufren".
+
+La causa puede estar en el titular o en el resumen. El tono sigue saliendo solo del titular (regla v3.3).
+
+Origen Mercado (redefinido): movimiento de precio con causa atribuida por la prensa. Si la causa es un hecho de la empresa o un dato oficial y el titular trata del hecho, el origen sigue siendo Hecho.
+
+### Análisis técnico → no relevante, motivo "Análisis técnico"
+Titulares cuyo contenido es la lectura técnica del precio: soportes, resistencias, directrices, niveles clave, sobrecompra o sobreventa, figuras, rupturas, patrones estacionales o electorales (Halloween, midterms) y consultorios de análisis técnico. Va a "Análisis técnico" aunque lo firme un analista o un bróker. Ejemplos: "Santander se la juega en soportes clave", "El Ibex ataca niveles clave de soporte", "Puig rompe resistencias y apunta más alto", "Los chips: cerca de soportes y muy sobrevendido", "Halloween llega al rescate de los alcistas". Excepción: si el titular técnico trae una causa concreta ("el petróleo rompe resistencias por los ataques hutíes"), se clasifica por la causa con las reglas anteriores.
+
+### No cambia
+- Agenda / convocatoria sigue igual ("Futuros del Nasdaq +160: 5 claves antes de la apertura", "Día de PMI y cautela en bolsa").
+- Un análisis fundamental o un artículo que explica el porqué de una caída ("Por qué Bankinter cae un 7,56%") sigue siendo relevante, con su origen correspondiente.
+
+### Ejemplos anteriores que la v3.5 deja superados
+Estos ejemplos de secciones anteriores ya no se aplican tal como están escritos:
+- 8.1 n.º 1, *Inditex arrebata el trono a Santander…* → No relevante · **Precio sin causa** (ranking de precio).
+- 8.3 n.º 11, *La impecable directriz alcista del petróleo* → No relevante · **Análisis técnico**.
+- 8.4 n.º 14, *Indra y el muro de los 65-66 euros* → No relevante · **Análisis técnico**.
+- 10 a, *Las tecnológicas moderan su caída en Asia y el crudo toca máximos de cinco meses* → No relevante · **Precio sin causa**.
+- La definición de **Mercado** en la sección 5 ("movimientos de precio y crónicas de mercado sin un hecho concreto detrás") queda sustituida por la de esta sección: un movimiento sin causa ya no es relevante.
