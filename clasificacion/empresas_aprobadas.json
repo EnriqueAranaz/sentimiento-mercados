@@ -102,6 +102,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Cintas",
+  "ticker": "NASDAQ:CTAS",
+  "sector": "Industria, defensa y aeroespacial",
+  "en_universo": false
+ },
+ {
   "nombre": "City Holding",
   "ticker": "NASDAQ:CHCO",
   "sector": "Banca",
@@ -249,6 +255,12 @@
   "en_universo": false
  },
  {
+  "nombre": "MPLX",
+  "ticker": "NYSE:MPLX",
+  "sector": "Petróleo y gas",
+  "en_universo": false
+ },
+ {
   "nombre": "Nebius",
   "ticker": "NASDAQ:NBIS",
   "sector": "Tecnología",
@@ -300,6 +312,12 @@
   "nombre": "Sierra Bancorp",
   "ticker": "NASDAQ:BSRR",
   "sector": "Banca",
+  "en_universo": false
+ },
+ {
+  "nombre": "Snowflake",
+  "ticker": "NYSE:SNOW",
+  "sector": "Tecnología",
   "en_universo": false
  },
  {
@@ -369,6 +387,18 @@
   "nombre": "UFP Industries",
   "ticker": "NASDAQ:UFPI",
   "sector": "Materiales, química y minería",
+  "en_universo": false
+ },
+ {
+  "nombre": "UPS",
+  "ticker": "NYSE:UPS",
+  "sector": "Transporte y turismo",
+  "en_universo": false
+ },
+ {
+  "nombre": "Veolia",
+  "ticker": "EURONEXT:VIE",
+  "sector": "Eléctricas, renovables y redes",
   "en_universo": false
  },
  {
