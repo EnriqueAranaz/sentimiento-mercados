@@ -63,3 +63,18 @@ def test_relevante_sin_afectaciones_y_articulo_inexistente():
     assert "al menos 1 afectación" in " ".join(_v({"articulo_id": 1, "relevante": True, "tema": "Mercado",
                                                     "origen": "Mercado", "afectaciones": []})[0])
     assert _v({"articulo_id": 99, "relevante": False, "motivo_no_relevante": "Otros"})[0]
+
+
+def test_no_relevante_con_afectaciones_se_rechaza():
+    err, _ = _v({"articulo_id": 2, "relevante": False, "motivo_no_relevante": "Otros",
+                 "afectaciones": [{"ambito": "Global", "objeto": "Mercados", "sector": None, "valor": -1}]})
+    assert any("no lleva tema, origen ni afectaciones" in e for e in err)
+
+
+def test_version_criterios_unica_y_documentada():
+    import comun
+    from ingesta import reglas
+
+    assert comun.VERSION_CRITERIOS is reglas.VERSION_CRITERIOS
+    cabecera = (Path(__file__).resolve().parent.parent / "docs" / "criterios_clasificacion.md").read_text("utf-8")[:400]
+    assert f"`{reglas.VERSION_CRITERIOS}`" in cabecera

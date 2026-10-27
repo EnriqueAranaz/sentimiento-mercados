@@ -1,9 +1,9 @@
 # Criterios de clasificación de titulares
 
-**Versión de criterios: `v3.5`** (modelo del Excel `referencia/clasificacion_titulares_2026-10-26_v3.xlsx`, 26/10/2026,
-más las aclaraciones de las secciones 9 a 12). Es el valor que va en `version_criterios`.
+**Versión de criterios: `v3.6`** (modelo del Excel `referencia/clasificacion_titulares_2026-10-26_v3.xlsx`, 26/10/2026,
+más las aclaraciones de las secciones 9 a 13). Es el valor que va en `version_criterios`.
 Este documento es la **única fuente de criterios** del agente clasificador. Las secciones 1 a 7 son copia íntegra
-de la hoja *Criterios* del Excel; la sección 8 son ejemplos reales del Excel, clasificados a mano; las secciones 9 a 12
+de la hoja *Criterios* del Excel; la sección 8 son ejemplos reales del Excel, clasificados a mano; las secciones 9 a 13
 son aclaraciones posteriores, que **prevalecen** sobre lo anterior si hay conflicto (la más reciente sobre las demás).
 **Principio de la v3.5 (sección 12): el precio narrado no es noticia.**
 Los nombres de ámbitos, objetos de Global, sectores, temas, orígenes y motivos deben usarse **exactamente** como aparecen aquí.
@@ -278,7 +278,7 @@ excepción a "Asia = Fuera de alcance": son relevantes y están en el universo.
 
 **d) Rentabilidad de los bonos.** Sube = negativo para su mercado; baja = positivo; salvo que el titular atribuya la
 bajada a miedo o a huida a refugio, que es negativo.
-- *Los rendimientos del Tesoro repuntan pese a las menores apuestas de subida de tipos* → Mercado · EE. UU. → **-1**
+- *El IPC dispara la rentabilidad del bono estadounidense a dos años hasta el 4,93%* → Mercado · EE. UU. → **-2** (sube por un dato concreto, el IPC; "dispara")
 - *Rendimiento bonos Tesoro EEUU se hunde ya que resurgen temores sobre sostenibilidad del auge de la IA* → Mercado · EE. UU. → **-1** (bajada por miedo) · Global · Mercados → **-1** (miedo a la IA, regla a)
 
 **e) Objetos de Mercado permitidos.** Además de Ibex 35, DAX, Europa y EE. UU.: países europeos (Francia, Italia,
@@ -374,3 +374,13 @@ Estos ejemplos de secciones anteriores ya no se aplican tal como están escritos
 - 8.4 n.º 14, *Indra y el muro de los 65-66 euros* → No relevante · **Análisis técnico**.
 - 10 a, *Las tecnológicas moderan su caída en Asia y el crudo toca máximos de cinco meses* → No relevante · **Precio sin causa**.
 - La definición de **Mercado** en la sección 5 ("movimientos de precio y crónicas de mercado sin un hecho concreto detrás") queda sustituida por la de esta sección: un movimiento sin causa ya no es relevante.
+
+## 13. v3.6 Nexo causal y objetos (prevalece sobre todo lo anterior)
+
+- Una causa solo cuenta si hay un nexo causal explícito: "por", "tras", "ante", "debido a", "a causa de", "por miedo/temor a", "golpeado/lastrado/impulsado/arrastrado por" + una variable distinta del objeto, o construcciones del tipo "X tumba/hunde/dispara/castiga a Y" o "X aviva/agrava/mantiene los temores/la alerta".
+- NO son causa: "con", "mientras", "pese a", "a la espera de", "pendientes de", "con la mira en", "en una jornada de". Lo que va detrás es acompañamiento, así que el titular queda en Precio sin causa si no hay otro nexo.
+- Ejemplos de Precio sin causa: "Ligeras caídas en las Bolsas europeas con el petróleo imparable", "Europa apunta a la baja mientras la financiación de la IA concentra las miradas", "El petróleo alcanza los 117 dólares mientras Trump mueve ficha", "El Ibex pierde los 19.000 puntos con el petróleo por encima de los 116 dólares", "El petróleo cede pese a la escalada militar".
+- Ejemplos con causa (relevantes): "Los bonos dan un respiro, pero el 5% de EE. UU. y la deuda francesa mantienen la alerta"; "La tecnología china se desploma: ¿una señal de alerta para las bolsas mundiales?" (opinión sobre Global · Mercados; la caída de la tecnología china en sí no se anota).
+- Análisis técnico incluye también divergencias y rotaciones entre sectores o mercados ("¿Rotación o antesala de una venta generalizada?", "La extrema divergencia entre tecnología y finanzas…"). Si el titular no tiene vocabulario técnico (soporte, resistencia, directriz, sesgo, sobrevendido, patrón, divergencia, rotación) ni causa, va a Precio sin causa.
+- Afectaciones de Empresa: solo si la empresa está nombrada en el titular o en el resumen. Los símbolos de TradingView sirven para detectar, nunca generan una afectación por sí solos. Si el titular nombra un grupo ("los operadores de telecomunicaciones estadounidenses"), se anota el Sector.
+- El ejemplo de la regla 10 d con "pese a" ("Los rendimientos del Tesoro repuntan pese a las menores apuestas de subida de tipos") se ha sustituido por uno con nexo causal, porque ese titular ahora es Precio sin causa.

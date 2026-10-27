@@ -18,7 +18,7 @@ from dataclasses import dataclass
 
 log = logging.getLogger("ingesta.reglas")
 
-VERSION_CRITERIOS = "v3.4"  # docs/criterios_clasificacion.md: Excel v3 + aclaraciones de las secciones 9-11
+VERSION_CRITERIOS = "v3.6"  # única fuente de la versión de criterios (docs/criterios_clasificacion.md); clasificacion/comun.py la importa
 
 # Alias que también son palabras comunes en español: solo cuentan escritos con la mayúscula del nombre.
 ALIAS_SENSIBLES = {"Meta", "Dia", "DIA", "Visa", "Colonial", "Acciona", "Continental", "BAT", "Orange", "ING"}

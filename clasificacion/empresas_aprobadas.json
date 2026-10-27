@@ -1,5 +1,16 @@
 [
  {
+  "nombre": "Abenójar Tungsten",
+  "ticker": null,
+  "sector": "Materiales, química y minería",
+  "en_universo": false,
+  "alias": [
+   "Abenojar Tungsten",
+   "Abenójar"
+  ],
+  "mercado": "Europa"
+ },
+ {
   "nombre": "Acuity",
   "ticker": "NYSE:AYI",
   "sector": "Industria, defensa y aeroespacial",
@@ -8,6 +19,12 @@
  {
   "nombre": "Adecco",
   "ticker": "SIX:ADEN",
+  "sector": "Industria, defensa y aeroespacial",
+  "en_universo": false
+ },
+ {
+  "nombre": "Airtificial",
+  "ticker": "BME:AI",
   "sector": "Industria, defensa y aeroespacial",
   "en_universo": false
  },
@@ -42,6 +59,21 @@
   "en_universo": false
  },
  {
+  "nombre": "Ares Capital",
+  "ticker": "NASDAQ:ARCC",
+  "sector": "Seguros y servicios financieros",
+  "en_universo": false
+ },
+ {
+  "nombre": "Arrowhead Pharmaceuticals",
+  "ticker": "NASDAQ:ARWR",
+  "sector": "Salud y farmacia",
+  "en_universo": false,
+  "alias": [
+   "Arrowhead"
+  ]
+ },
+ {
   "nombre": "Assa Abloy",
   "ticker": "OMXSTO:ASSA_B",
   "sector": "Industria, defensa y aeroespacial",
@@ -64,6 +96,16 @@
   "ticker": "NASDAQ:BMRC",
   "sector": "Banca",
   "en_universo": false
+ },
+ {
+  "nombre": "BE Semiconductor",
+  "ticker": "EURONEXT:BESI",
+  "sector": "Semiconductores",
+  "en_universo": false,
+  "alias": [
+   "BESI",
+   "BE Semiconductor Industries"
+  ]
  },
  {
   "nombre": "Bending Spoons",
@@ -102,10 +144,28 @@
   "en_universo": false
  },
  {
+  "nombre": "Cerebras",
+  "ticker": "NASDAQ:CBRS",
+  "sector": "Semiconductores",
+  "en_universo": false,
+  "alias": [
+   "Cerebras Systems"
+  ]
+ },
+ {
   "nombre": "Cintas",
   "ticker": "NASDAQ:CTAS",
   "sector": "Industria, defensa y aeroespacial",
   "en_universo": false
+ },
+ {
+  "nombre": "Cirsa",
+  "ticker": "BME:CIRSA",
+  "sector": "Medios y entretenimiento",
+  "en_universo": false,
+  "alias": [
+   "Grupo Cirsa"
+  ]
  },
  {
   "nombre": "City Holding",
@@ -126,6 +186,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Duro Felguera",
+  "ticker": "BME:MDF",
+  "sector": "Industria, defensa y aeroespacial",
+  "en_universo": false
+ },
+ {
   "nombre": "easyJet",
   "ticker": "LSE:EZJ",
   "sector": "Transporte y turismo",
@@ -142,6 +208,15 @@
   "ticker": "NYSE:ETD",
   "sector": "Consumo y distribución",
   "en_universo": false
+ },
+ {
+  "nombre": "Faes Farma",
+  "ticker": "BME:FAE",
+  "sector": "Salud y farmacia",
+  "en_universo": false,
+  "alias": [
+   "Faes"
+  ]
  },
  {
   "nombre": "FedEx",
@@ -198,6 +273,21 @@
   "nombre": "Hilton",
   "ticker": "NYSE:HLT",
   "sector": "Transporte y turismo",
+  "en_universo": false
+ },
+ {
+  "nombre": "Informa",
+  "ticker": "LSE:INF",
+  "sector": "Medios y entretenimiento",
+  "en_universo": false,
+  "alias": [
+   "Informa plc"
+  ]
+ },
+ {
+  "nombre": "Inmocemento",
+  "ticker": "BME:IMC",
+  "sector": "Inmobiliario",
   "en_universo": false
  },
  {
@@ -289,6 +379,15 @@
   "ticker": "NYSE:RRC",
   "sector": "Petróleo y gas",
   "en_universo": false
+ },
+ {
+  "nombre": "Realia",
+  "ticker": "BME:RLIA",
+  "sector": "Inmobiliario",
+  "en_universo": false,
+  "alias": [
+   "Realia Business"
+  ]
  },
  {
   "nombre": "Regeneron",
@@ -396,6 +495,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Valmet",
+  "ticker": "OMXHEX:VALMT",
+  "sector": "Industria, defensa y aeroespacial",
+  "en_universo": false
+ },
+ {
   "nombre": "Veolia",
   "ticker": "EURONEXT:VIE",
   "sector": "Eléctricas, renovables y redes",
@@ -405,6 +510,12 @@
   "nombre": "Western Digital",
   "ticker": "NASDAQ:WDC",
   "sector": "Tecnología",
+  "en_universo": false
+ },
+ {
+  "nombre": "WEX",
+  "ticker": "NYSE:WEX",
+  "sector": "Seguros y servicios financieros",
   "en_universo": false
  },
  {

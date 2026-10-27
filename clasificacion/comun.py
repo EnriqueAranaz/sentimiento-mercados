@@ -12,10 +12,8 @@ from dotenv import load_dotenv
 RAIZ = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(RAIZ))
 
-# Versión de los criterios de la clasificación manual (docs/criterios_clasificacion.md).
-# Va aquí y no en ingesta/reglas.py para poder subirla sin tocar las reglas mecánicas,
-# que siguen sellando las de Cripto con su propia constante.
-VERSION_CRITERIOS = "v3.5"
+# Versión de los criterios: una única constante, en ingesta/reglas.py (la usan las reglas y la clasificación manual).
+from ingesta.reglas import VERSION_CRITERIOS  # noqa: E402,F401  (se reexporta)
 
 LOTES = RAIZ / "clasificacion" / "lotes"
 MADRID = ZoneInfo("Europe/Madrid")

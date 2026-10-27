@@ -24,7 +24,8 @@ Ejecuta los comandos desde `C:\Bolsa` con `.venv\Scripts\python.exe`.
 3. Lee el fichero `clasificacion\lotes\pendiente_<n>.json` y clasifica **titular a titular**:
    - **El titular manda.** El `resumen`, la `seccion` y los `simbolos` ayudan a entenderlo; las `pistas` (detecciones
      de las reglas) son solo sugerencias: puedes añadir objetos que no detectaron o descartar los que sobran
-     (p. ej. un alias que aparece por casualidad).
+     (p. ej. un alias que aparece por casualidad). Una empresa solo se anota si está nombrada en el titular o en el
+     resumen: los `simbolos` y las pistas por símbolo nunca generan una afectación por sí solos (criterios, sección 13).
    - Para cada noticia decide `relevante`. Si no lo es, solo `motivo_no_relevante`. Si lo es, `tema`, `origen` y
      una o varias `afectaciones` (`ambito`, `objeto`, `sector`, `valor`).
    - Empresas: usa el nombre de la pista o de la tabla `empresas` (el script acepta nombre, alias o ticker). Solo se
@@ -36,7 +37,7 @@ Ejecuta los comandos desde `C:\Bolsa` con `.venv\Scripts\python.exe`.
    ```json
    {
      "lote": 7,
-     "version_criterios": "v3.5",
+     "version_criterios": "v3.6",
      "clasificaciones": [
        {"articulo_id": 123, "relevante": true, "tema": "Resultados", "origen": "Hecho (empresa o dato oficial)",
         "afectaciones": [
