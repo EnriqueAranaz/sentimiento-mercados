@@ -327,3 +327,12 @@ noticias del sector en conjunto que no nombran ninguna empresa. Mercados y objet
 - *El alto costo de la IA pasa la cuenta a Meta y a otras acciones tecnológicas* → Empresa · Meta · Tecnología → **-1** (sin Sector · Tecnología)
 - *JP Morgan recorta Telefónica a 'infraponderar' y alerta del riesgo de crédito en las telecos* → Empresa · Telefónica · Telecomunicaciones → **-1** (sin Sector · Telecomunicaciones)
 - *Enagás y Amadeus lideran la semana en el Ibex; Solaria se desploma y la banca sufre* → Empresa · Enagás → **1** · Empresa · Amadeus → **1** · Empresa · Solaria → **-2** (sin Sector · Banca)
+
+**f) Cotizadas japonesas.** Quedan **Fuera de alcance (Latam, India…)**, salvo las grandes mundiales del universo
+(Toyota…, sección 10 c). Japón sigue siendo un objeto de Mercado válido para noticias de su bolsa o su economía.
+- *La japonesa GMO se desploma en Bolsa después de un ciberataque* → No relevante · **Fuera de alcance (Latam, India…)**
+
+**g) Analistas.** Cuando un banco, gestora o analista opina sobre una empresa, la afectada es **esa empresa**, en
+positivo o negativo según la opinión; la entidad que opina **no** se anota (aunque sea cotizada). Origen *Analista*.
+- *Morgan Stanley deja sin potencial a Redeia por la presión de la deuda* → Empresa · Redeia · Eléctricas, renovables y redes → **-1** (Morgan Stanley no se anota)
+- *Bankinter eleva el objetivo de TSMC a 530 dólares: las claves de su apuesta por el fabricante de chips* → Empresa · TSMC · Semiconductores → **1** (Bankinter no se anota)
