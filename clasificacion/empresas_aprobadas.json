@@ -6,6 +6,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Adecco",
+  "ticker": "SIX:ADEN",
+  "sector": "Industria, defensa y aeroespacial",
+  "en_universo": false
+ },
+ {
   "nombre": "Alantra",
   "ticker": "BME:ALNT",
   "sector": "Seguros y servicios financieros",
@@ -114,10 +120,25 @@
   "en_universo": false
  },
  {
+  "nombre": "Ethan Allen",
+  "ticker": "NYSE:ETD",
+  "sector": "Consumo y distribución",
+  "en_universo": false
+ },
+ {
   "nombre": "FedEx",
   "ticker": "NYSE:FDX",
   "sector": "Transporte y turismo",
   "en_universo": false
+ },
+ {
+  "nombre": "FF EAI Robotics Ecosystem",
+  "ticker": "NASDAQ:FFR",
+  "sector": "Industria, defensa y aeroespacial",
+  "en_universo": false,
+  "alias": [
+   "FF EAI Robotics"
+  ]
  },
  {
   "nombre": "Fortum",
@@ -129,6 +150,12 @@
   "nombre": "Forum Markets",
   "ticker": "NASDAQ:FRMM",
   "sector": "Tecnología",
+  "en_universo": false
+ },
+ {
+  "nombre": "Freedom Holding",
+  "ticker": "NASDAQ:FRHC",
+  "sector": "Seguros y servicios financieros",
   "en_universo": false
  },
  {
@@ -186,6 +213,12 @@
   "en_universo": false
  },
  {
+  "nombre": "M&T Bank",
+  "ticker": "NYSE:MTB",
+  "sector": "Banca",
+  "en_universo": false
+ },
+ {
   "nombre": "MasterBrand",
   "ticker": "NYSE:MBC",
   "sector": "Construcción e infraestructuras",
@@ -213,6 +246,12 @@
   "nombre": "PDD Holdings",
   "ticker": "NASDAQ:PDD",
   "sector": "Consumo y distribución",
+  "en_universo": false
+ },
+ {
+  "nombre": "Peoples Bancorp",
+  "ticker": "NASDAQ:PEBO",
+  "sector": "Banca",
   "en_universo": false
  },
  {
@@ -307,6 +346,12 @@
   "alias": [
    "Taiwan Semiconductor"
   ]
+ },
+ {
+  "nombre": "UFP Industries",
+  "ticker": "NASDAQ:UFPI",
+  "sector": "Materiales, química y minería",
+  "en_universo": false
  },
  {
   "nombre": "Western Digital",
