@@ -18,6 +18,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Alfa Laval",
+  "ticker": "OMXSTO:ALFA",
+  "sector": "Industria, defensa y aeroespacial",
+  "en_universo": false
+ },
+ {
   "nombre": "Alliance Resource Partners",
   "ticker": "NASDAQ:ARLP",
   "sector": "Materiales, química y minería",
@@ -33,6 +39,12 @@
   "nombre": "Apollo Global Management",
   "ticker": "NYSE:APO",
   "sector": "Seguros y servicios financieros",
+  "en_universo": false
+ },
+ {
+  "nombre": "Assa Abloy",
+  "ticker": "OMXSTO:ASSA_B",
+  "sector": "Industria, defensa y aeroespacial",
   "en_universo": false
  },
  {
@@ -174,6 +186,12 @@
   "nombre": "High Liner Foods",
   "ticker": "TSX:HLF",
   "sector": "Consumo y distribución",
+  "en_universo": false
+ },
+ {
+  "nombre": "Hilton",
+  "ticker": "NYSE:HLT",
+  "sector": "Transporte y turismo",
   "en_universo": false
  },
  {
