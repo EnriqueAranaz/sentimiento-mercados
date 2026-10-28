@@ -7,6 +7,12 @@ agente clasificador según la sección 14 de `docs/criterios_clasificacion.md` (
 - Si la noticia tiene otros objetos, se anotan esos y la empresa descartada no.
 - No se vuelven a proponer en `empresas_nuevas`.
 
+Criterios generales de alta y descarte:
+- **Se dan de alta** las grandes y medianas de EE. UU. y Europa, y **todas las españolas del Mercado Continuo**,
+  aunque sean pequeñas.
+- **Se descartan** las microcotizadas y las pequeñas extranjeras, los bancos regionales de EE. UU., las españolas de
+  **BME Growth** o **Euronext Growth** (mercados de crecimiento) y las que no cotizan.
+
 `clasificacion/cargar.py` lee la primera columna de esta tabla. Si se añade una empresa, hay que mantener el formato.
 
 | Empresa | Ticker | Motivo | Decisión |
@@ -25,3 +31,8 @@ agente clasificador según la sección 14 de `docs/criterios_clasificacion.md` (
 | Blueharbor Bank | OTC:BLHK | Banco regional de EE. UU. | 27/10/2026 |
 | Auburn National Bancorporation | NASDAQ:AUBN | Banco regional de EE. UU. | 27/10/2026 |
 | MidCap Financial Investment | NASDAQ:MFIC | Microcotizada | 27/10/2026 |
+| Photocure | OSL:PHO | Pequeña extranjera | 28/10/2026 |
+| Hunting | LSE:HTG | Pequeña extranjera | 28/10/2026 |
+| Condis | — | No cotiza | 28/10/2026 |
+| OPay | — | No cotiza | 28/10/2026 |
+| Virtualware | EURONEXT:ALVIR | Cotiza en mercado de crecimiento | 28/10/2026 |

@@ -408,8 +408,27 @@ regionales de EE. UU. y pequeñas de menos de ~4.000 M. Léelo antes de clasific
 - **Empresas nuevas (v3.9).** Una cotizada que no está en la tabla `empresas` se sigue proponiendo en `empresas_nuevas`,
   pero su afectación **no se escribe** hasta que esté dada de alta: `cargar.py` rechaza cualquier afectación de Empresa
   sin empresa_id. Si la noticia tiene otros objetos, anota esos.
+- **Españolas pequeñas (aclaración de la v3.9).** Las cotizadas españolas del **Mercado Continuo** se dan de alta
+  aunque sean pequeñas. Las de **BME Growth** o **Euronext Growth** (mercados de crecimiento) se descartan. Al
+  proponer una española, indica en el comentario en qué mercado cotiza.
 - **Empresa pendiente de alta (aclaración de la v3.9).** Una noticia que solo trata de una empresa propuesta y todavía
   no dada de alta: no relevante, motivo **Empresa pendiente de alta** (no "Otros", que se reserva para los descartes
   reales). `cargar.py` guarda el id de la noticia en la propuesta. Cuando se decide sobre la empresa
   (`clasificacion/decidir_empresas.py`), sus noticias se reclasifican: si se da de alta, se anota la empresa; si se
   descarta, pasan a **Fuera de alcance (Latam, India…)**, o se anotan sus otros objetos.
+
+### Aclaraciones del 28/10/2026 (v3.9)
+
+- **Origen de declaraciones.** Las declaraciones públicas de responsables de un banco central o de un gobierno son
+  **Hecho (empresa o dato oficial)**. Lo que llega por fuentes anónimas ("según fuentes", "fuentes de…") es
+  **Rumor / según fuentes**.
+  - *El BCE pausará las alzas de tipos ante la tensión en la deuda* (resumen: "Diferentes miembros del Consejo de
+    Gobierno apuntan a diciembre…") → Hecho · Mercado · Europa → **1**
+- **Expectativas de tipos con fuerzas opuestas** (pausa ahora y subida después): **0**, por la regla 11 c. Es **-1** solo
+  si el titular pone el peso en la subida con "pero" o "aunque".
+  - *PIMCO espera una pausa de la Fed en octubre y una subida de tipos en diciembre* → EE. UU. → **0**
+  - *Los mercados prevén que la Fed pause hoy los tipos, aunque descuentan una subida en diciembre* → EE. UU. → **-1**
+- **En Resultados manda la cifra, no el verbo.** El umbral de la escala (beneficio +20 % o más → 2; −20 % o peor → -2)
+  prevalece sobre el verbo del titular. La regla 10 f ("mismo dato, distinto verbo") queda para los datos macro.
+  - *Aena dispara un 12% su beneficio aupada por el récord de tráfico y el alza de las tasas* → Empresa · Aena → **1**
+

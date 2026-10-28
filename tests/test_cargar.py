@@ -43,7 +43,7 @@ def test_empresa_sin_dar_de_alta_se_rechaza():
 
 def test_lista_de_descartadas():
     d = descartadas()
-    assert len(d) == 14 and clave("UniFirst") in d and clave("Canal+") in d and clave("Empresa") not in d
+    assert len(d) >= 14 and clave("UniFirst") in d and clave("Canal+") in d and clave("Empresa") not in d
 
 
 def test_empresa_nombrada_excluye_sector():

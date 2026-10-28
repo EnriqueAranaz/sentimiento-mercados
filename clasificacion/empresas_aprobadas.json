@@ -23,6 +23,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Admiral Group",
+  "ticker": "LSE:ADM",
+  "sector": "Seguros y servicios financieros",
+  "en_universo": false
+ },
+ {
   "nombre": "Airtificial",
   "ticker": "BME:AI",
   "sector": "Industria, defensa y aeroespacial",
@@ -44,6 +50,12 @@
   "nombre": "Alliance Resource Partners",
   "ticker": "NASDAQ:ARLP",
   "sector": "Materiales, química y minería",
+  "en_universo": false
+ },
+ {
+  "nombre": "Amper",
+  "ticker": "BME:AMP",
+  "sector": "Telecomunicaciones",
   "en_universo": false
  },
  {
@@ -83,6 +95,12 @@
   "nombre": "Avantor",
   "ticker": "NYSE:AVTR",
   "sector": "Salud y farmacia",
+  "en_universo": false
+ },
+ {
+  "nombre": "Azkoyen",
+  "ticker": "BME:AZK",
+  "sector": "Industria, defensa y aeroespacial",
   "en_universo": false
  },
  {
@@ -180,8 +198,20 @@
   "en_universo": false
  },
  {
+  "nombre": "Dassault Systèmes",
+  "ticker": "EURONEXT:DSY",
+  "sector": "Tecnología",
+  "en_universo": false
+ },
+ {
   "nombre": "Datadog",
   "ticker": "NASDAQ:DDOG",
+  "sector": "Tecnología",
+  "en_universo": false
+ },
+ {
+  "nombre": "Delivery Hero",
+  "ticker": "XETR:DHER",
   "sector": "Tecnología",
   "en_universo": false
  },
@@ -195,6 +225,12 @@
   "nombre": "easyJet",
   "ticker": "LSE:EZJ",
   "sector": "Transporte y turismo",
+  "en_universo": false
+ },
+ {
+  "nombre": "Ence",
+  "ticker": "BME:ENC",
+  "sector": "Materiales, química y minería",
   "en_universo": false
  },
  {
@@ -291,6 +327,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Intertek",
+  "ticker": "LSE:ITRK",
+  "sector": "Industria, defensa y aeroespacial",
+  "en_universo": false
+ },
+ {
   "nombre": "Intrepid Potash",
   "ticker": "NYSE:IPI",
   "sector": "Materiales, química y minería",
@@ -315,6 +357,12 @@
   "en_universo": false
  },
  {
+  "nombre": "KPN",
+  "ticker": "EURONEXT:KPN",
+  "sector": "Telecomunicaciones",
+  "en_universo": false
+ },
+ {
   "nombre": "Labcorp",
   "ticker": "NYSE:LH",
   "sector": "Salud y farmacia",
@@ -324,6 +372,24 @@
   "nombre": "Logan Energy",
   "ticker": "TSXV:LGN",
   "sector": "Petróleo y gas",
+  "en_universo": false
+ },
+ {
+  "nombre": "Logitech",
+  "ticker": "SIX:LOGN",
+  "sector": "Tecnología",
+  "en_universo": false
+ },
+ {
+  "nombre": "Lottomatica",
+  "ticker": "MIL:LTMC",
+  "sector": "Medios y entretenimiento",
+  "en_universo": false
+ },
+ {
+  "nombre": "Línea Directa",
+  "ticker": "BME:LDA",
+  "sector": "Seguros y servicios financieros",
   "en_universo": false
  },
  {
@@ -375,6 +441,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Prim",
+  "ticker": "BME:PRM",
+  "sector": "Salud y farmacia",
+  "en_universo": false
+ },
+ {
   "nombre": "Range Resources",
   "ticker": "NYSE:RRC",
   "sector": "Petróleo y gas",
@@ -393,6 +465,12 @@
   "nombre": "Regeneron",
   "ticker": "NASDAQ:REGN",
   "sector": "Salud y farmacia",
+  "en_universo": false
+ },
+ {
+  "nombre": "Renta 4",
+  "ticker": "BME:R4",
+  "sector": "Seguros y servicios financieros",
   "en_universo": false
  },
  {
@@ -429,6 +507,12 @@
   "nombre": "Spotify",
   "ticker": "NYSE:SPOT",
   "sector": "Medios y entretenimiento",
+  "en_universo": false
+ },
+ {
+  "nombre": "Standard Chartered",
+  "ticker": "LSE:STAN",
+  "sector": "Banca",
   "en_universo": false
  },
  {
@@ -483,6 +567,12 @@
   ]
  },
  {
+  "nombre": "Técnicas Reunidas",
+  "ticker": "BME:TRE",
+  "sector": "Construcción e infraestructuras",
+  "en_universo": false
+ },
+ {
   "nombre": "UFP Industries",
   "ticker": "NASDAQ:UFPI",
   "sector": "Materiales, química y minería",
@@ -504,6 +594,12 @@
   "nombre": "Veolia",
   "ticker": "EURONEXT:VIE",
   "sector": "Eléctricas, renovables y redes",
+  "en_universo": false
+ },
+ {
+  "nombre": "Vidrala",
+  "ticker": "BME:VID",
+  "sector": "Materiales, química y minería",
   "en_universo": false
  },
  {
