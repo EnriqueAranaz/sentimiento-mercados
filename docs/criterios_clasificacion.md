@@ -407,6 +407,9 @@ regionales de EE. UU. y pequeñas de menos de ~4.000 M. Léelo antes de clasific
 - Las descartadas **no se proponen** en `empresas_nuevas`.
 - **Empresas nuevas (v3.9).** Una cotizada que no está en la tabla `empresas` se sigue proponiendo en `empresas_nuevas`,
   pero su afectación **no se escribe** hasta que esté dada de alta: `cargar.py` rechaza cualquier afectación de Empresa
-  sin empresa_id. Si la noticia tiene otros objetos, anota esos. Si solo trata de la empresa nueva, déjala como
-  no relevante con motivo **Otros**. `cargar.py` guarda el id de la noticia en la propuesta, para reclasificarla cuando
-  se apruebe.
+  sin empresa_id. Si la noticia tiene otros objetos, anota esos.
+- **Empresa pendiente de alta (aclaración de la v3.9).** Una noticia que solo trata de una empresa propuesta y todavía
+  no dada de alta: no relevante, motivo **Empresa pendiente de alta** (no "Otros", que se reserva para los descartes
+  reales). `cargar.py` guarda el id de la noticia en la propuesta. Cuando se decide sobre la empresa
+  (`clasificacion/decidir_empresas.py`), sus noticias se reclasifican: si se da de alta, se anota la empresa; si se
+  descarta, pasan a **Fuera de alcance (Latam, India…)**, o se anotan sus otros objetos.

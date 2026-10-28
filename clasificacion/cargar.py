@@ -29,17 +29,8 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
-from comun import (AMBITOS, LOTES, OBJETOS_GLOBAL, VERSION_CRITERIOS, IndiceEmpresas, catalogos, clave,
-                   conectar, todas)
-
-PROPUESTAS = LOTES / "empresas_nuevas_propuestas.json"
-DESCARTADAS = LOTES.parent.parent / "docs" / "empresas_descartadas.md"
-
-
-def descartadas() -> set[str]:
-    """Claves de las empresas de la primera columna de la tabla de docs/empresas_descartadas.md."""
-    filas = [ln.split("|")[1].strip() for ln in DESCARTADAS.read_text("utf-8").splitlines() if ln.startswith("| ")]
-    return {clave(n) for n in filas[1:]}  # la primera fila es la cabecera
+from comun import (AMBITOS, OBJETOS_GLOBAL, PROPUESTAS, VERSION_CRITERIOS, IndiceEmpresas, catalogos, clave,
+                   conectar, descartadas, todas)
 
 
 def validar(c: dict, cat: dict, idx: IndiceEmpresas, nuevas: dict, ids_validos: set[int]) -> tuple[list[str], list]:
@@ -96,7 +87,7 @@ def validar(c: dict, cat: dict, idx: IndiceEmpresas, nuevas: dict, ids_validos: 
                         err.append(f"{p} {obj} es del sector {emp['sector']!r}, no {sec!r}")
                 elif clave(obj) in nuevas:
                     err.append(f"{p} {obj!r} aún no está dada de alta: queda propuesta, pero su afectación no se carga "
-                               "(anota los demás objetos o, si solo trata de ella, no relevante · Otros)")
+                               "(anota los demás objetos o, si solo trata de ella, no relevante · Empresa pendiente de alta)")
                 else:
                     err.append(f"{p} empresa desconocida {obj!r}: usar el nombre de la tabla; si es cotizada y no está "
                                "descartada, proponerla en empresas_nuevas sin anotarla")

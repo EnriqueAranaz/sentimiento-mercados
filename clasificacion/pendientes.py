@@ -49,6 +49,9 @@ def main() -> int:
     ap.add_argument("--ids", help="fichero JSON con una lista de articulo_id: solo esos (p. ej. un piloto)")
     ap.add_argument("--reclasificar", action="store_true",
                     help="con --ids: exporta esos artículos aunque ya estén clasificados (revisión con criterios nuevos)")
+    ap.add_argument("--forzar", action="store_true",
+                    help="con --reclasificar: incluye también los ya clasificados con la versión vigente "
+                         "(p. ej. tras aprobar o descartar empresas)")
     args = ap.parse_args()
 
     db = conectar()
@@ -58,7 +61,7 @@ def main() -> int:
         if args.reclasificar:  # para no repetir dentro de una revisión, se saltan los ya revisados con la versión vigente
             revisados = {c["articulo_id"] for c in todas(db, "clasificacion", "articulo_id,version_criterios",
                                                           orden="articulo_id")
-                         if c["version_criterios"] == VERSION_CRITERIOS}
+                         if c["version_criterios"] == VERSION_CRITERIOS and not args.forzar}
             todos = todas(db, "articulos", "id,fuente_id,seccion,publicado_en,titulo,resumen,simbolos")
             pend = [a for a in todos if a["id"] in elegidos and a["id"] not in revisados]
         else:

@@ -11,5 +11,8 @@ Si se ha indicado una partición ($ARGUMENTS), pásasela al agente para que use 
 Cuando el agente termine, recalcula el índice de sentimiento (último paso; ver `docs/indice_sentimiento.md`):
 `.venv\Scripts\python.exe clasificacion\indice.py`
 
+Y comprueba las empresas propuestas pendientes de decisión:
+`.venv\Scripts\python.exe clasificacion\decidir_empresas.py --estado`
+
 Después muéstrame su informe: noticias clasificadas, pendientes que quedan, % de relevantes,
-reparto por origen, empresas nuevas propuestas y dudas, y la línea final de `indice.py` (filas y publicadas).
+reparto por origen, empresas nuevas propuestas y dudas, y la línea final de `indice.py` (filas y publicadas). Termina con un **aviso** visible con el número de empresas propuestas pendientes de decisión y de noticias afectadas (salida de `decidir_empresas.py --estado`), si hay alguna.

@@ -16,6 +16,8 @@ sys.path.insert(0, str(RAIZ))
 from ingesta.reglas import VERSION_CRITERIOS  # noqa: E402,F401  (se reexporta)
 
 LOTES = RAIZ / "clasificacion" / "lotes"
+DESCARTADAS = RAIZ / "docs" / "empresas_descartadas.md"   # empresas que no se dan de alta (criterios, sección 14)
+PROPUESTAS = LOTES / "empresas_nuevas_propuestas.json"  # empresas propuestas por el agente (las acumula cargar.py)
 MADRID = ZoneInfo("Europe/Madrid")
 OBJETOS_GLOBAL = ("Mercados", "Economía", "Petróleo", "Materias primas", "Divisas")
 AMBITOS = ("Global", "Mercado", "Sector", "Empresa")
@@ -47,6 +49,12 @@ def clave(texto: str) -> str:
     """Comparación de nombres sin mayúsculas ni tildes."""
     t = unicodedata.normalize("NFKD", texto or "")
     return " ".join("".join(c for c in t if not unicodedata.combining(c)).casefold().split())
+
+
+def descartadas() -> set[str]:
+    """Claves de las empresas de la primera columna de la tabla de docs/empresas_descartadas.md."""
+    filas = [ln.split("|")[1].strip() for ln in DESCARTADAS.read_text("utf-8").splitlines() if ln.startswith("| ")]
+    return {clave(n) for n in filas[1:]}  # la primera fila es la cabecera
 
 
 class IndiceEmpresas:

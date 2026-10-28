@@ -106,3 +106,14 @@ def test_alias_informa_exige_mayuscula():
     pista = lambda t: [d["objeto"] for d in detectar({"titulo": t}, alias, {})[0] if d["tipo"] == "empresa"]  # noqa: E731
     assert pista("La CNMV informa de una sanción a un bróker") == []
     assert pista("Informa sube tras mejorar sus previsiones") == ["Informa"]
+
+
+def test_decidir_empresas_pendientes_y_fila_descartada():
+    from decidir_empresas import fila_descartada, pendientes_de_decision
+
+    propuestas = {clave("Santander"): {"nombre": "Santander", "ticker": "BME:SAN"},   # ya dada de alta
+                  clave("UniFirst"): {"nombre": "UniFirst", "ticker": "NYSE:UNF"},    # descartada
+                  clave("Elecnor"): {"nombre": "Elecnor", "ticker": "BME:ENO", "articulos": [5, 7]}}
+    pend = pendientes_de_decision(propuestas, IDX, {clave("UniFirst")})
+    assert list(pend) == [clave("Elecnor")]
+    assert fila_descartada(pend[clave("Elecnor")], "Pequeña", "28/10/2026") == "| Elecnor | BME:ENO | Pequeña | 28/10/2026 |"

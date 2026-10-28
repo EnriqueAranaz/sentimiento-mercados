@@ -32,7 +32,8 @@ Ejecuta los comandos desde `C:\Bolsa` con `.venv\Scripts\python.exe`.
      anotan empresas **cotizadas** (aclaración d) y **dadas de alta** en la tabla (sección 14). Si una cotizada no existe
      en la tabla y no está en `docs/empresas_descartadas.md`, añádela a `empresas_nuevas` con sector y ticker propuestos
      (formato TradingView, p. ej. `NYSE:XYZ`; `null` si no lo sabes) y `en_universo` según los criterios, pero **no la
-     pongas en las afectaciones**: anota los demás objetos o, si solo trata de ella, no relevante con motivo Otros.
+     pongas en las afectaciones**: anota los demás objetos o, si solo trata de ella, no relevante con motivo
+     **Empresa pendiente de alta**.
      Pon en `empresas_nuevas` también `"articulos": [ids]` con las noticias que la nombran.
 4. Escribe `clasificacion\lotes\clasificado_<n>.json` (mismo `<n>`) con este formato. `version_criterios` es la que
    trae el fichero `pendiente_<n>.json` (la vigente en `docs/criterios_clasificacion.md`):
