@@ -29,6 +29,18 @@
   "en_universo": false
  },
  {
+  "nombre": "AerCap",
+  "ticker": "NYSE:AER",
+  "sector": "Transporte y turismo",
+  "en_universo": false
+ },
+ {
+  "nombre": "Air Canada",
+  "ticker": "TSX:AC",
+  "sector": "Transporte y turismo",
+  "en_universo": false
+ },
+ {
   "nombre": "Airtificial",
   "ticker": "BME:AI",
   "sector": "Industria, defensa y aeroespacial",
@@ -92,6 +104,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Automatic Data Processing",
+  "ticker": "NASDAQ:ADP",
+  "sector": "Tecnología",
+  "en_universo": false
+ },
+ {
   "nombre": "Avantor",
   "ticker": "NYSE:AVTR",
   "sector": "Salud y farmacia",
@@ -138,6 +156,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Biogen",
+  "ticker": "NASDAQ:BIIB",
+  "sector": "Salud y farmacia",
+  "en_universo": false
+ },
+ {
   "nombre": "Bloom Energy",
   "ticker": "NYSE:BE",
   "sector": "Eléctricas, renovables y redes",
@@ -147,6 +171,12 @@
   "nombre": "Boston Omaha",
   "ticker": "NYSE:BOC",
   "sector": "Medios y entretenimiento",
+  "en_universo": false
+ },
+ {
+  "nombre": "Boston Scientific",
+  "ticker": "NYSE:BSX",
+  "sector": "Salud y farmacia",
   "en_universo": false
  },
  {
@@ -162,6 +192,18 @@
   "en_universo": false
  },
  {
+  "nombre": "CAF",
+  "ticker": "BME:CAF",
+  "sector": "Industria, defensa y aeroespacial",
+  "en_universo": false
+ },
+ {
+  "nombre": "Canadian Pacific Kansas City",
+  "ticker": "NYSE:CP",
+  "sector": "Transporte y turismo",
+  "en_universo": false
+ },
+ {
   "nombre": "Cerebras",
   "ticker": "NASDAQ:CBRS",
   "sector": "Semiconductores",
@@ -169,6 +211,12 @@
   "alias": [
    "Cerebras Systems"
   ]
+ },
+ {
+  "nombre": "CIE Automotive",
+  "ticker": "BME:CIE",
+  "sector": "Automóvil",
+  "en_universo": false
  },
  {
   "nombre": "Cintas",
@@ -213,6 +261,12 @@
   "nombre": "Delivery Hero",
   "ticker": "XETR:DHER",
   "sector": "Tecnología",
+  "en_universo": false
+ },
+ {
+  "nombre": "DTE Energy",
+  "ticker": "NYSE:DTE",
+  "sector": "Eléctricas, renovables y redes",
   "en_universo": false
  },
  {
@@ -399,6 +453,12 @@
   "en_universo": false
  },
  {
+  "nombre": "MACOM",
+  "ticker": "NASDAQ:MTSI",
+  "sector": "Semiconductores",
+  "en_universo": false
+ },
+ {
   "nombre": "MasterBrand",
   "ticker": "NYSE:MBC",
   "sector": "Construcción e infraestructuras",
@@ -441,6 +501,12 @@
   "en_universo": false
  },
  {
+  "nombre": "PNC Financial Services",
+  "ticker": "NYSE:PNC",
+  "sector": "Banca",
+  "en_universo": false
+ },
+ {
   "nombre": "Prim",
   "ticker": "BME:PRM",
   "sector": "Salud y farmacia",
@@ -470,6 +536,12 @@
  {
   "nombre": "Renta 4",
   "ticker": "BME:R4",
+  "sector": "Seguros y servicios financieros",
+  "en_universo": false
+ },
+ {
+  "nombre": "Robinhood",
+  "ticker": "NASDAQ:HOOD",
   "sector": "Seguros y servicios financieros",
   "en_universo": false
  },
@@ -535,6 +607,12 @@
   "mercado": "Otros"
  },
  {
+  "nombre": "Textron",
+  "ticker": "NYSE:TXT",
+  "sector": "Industria, defensa y aeroespacial",
+  "en_universo": false
+ },
+ {
   "nombre": "Tikehau Capital",
   "ticker": "EURONEXT:TKO",
   "sector": "Seguros y servicios financieros",
@@ -555,6 +633,12 @@
   "alias": [
    "Toyota Motor"
   ]
+ },
+ {
+  "nombre": "Traton",
+  "ticker": "XETR:8TRA",
+  "sector": "Automóvil",
+  "en_universo": false
  },
  {
   "nombre": "TSMC",
@@ -579,6 +663,12 @@
   "en_universo": false
  },
  {
+  "nombre": "United Airlines",
+  "ticker": "NASDAQ:UAL",
+  "sector": "Transporte y turismo",
+  "en_universo": false
+ },
+ {
   "nombre": "UPS",
   "ticker": "NYSE:UPS",
   "sector": "Transporte y turismo",
@@ -594,6 +684,12 @@
   "nombre": "Veolia",
   "ticker": "EURONEXT:VIE",
   "sector": "Eléctricas, renovables y redes",
+  "en_universo": false
+ },
+ {
+  "nombre": "Vertiv",
+  "ticker": "NYSE:VRT",
+  "sector": "Industria, defensa y aeroespacial",
   "en_universo": false
  },
  {

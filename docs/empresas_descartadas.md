@@ -36,3 +36,9 @@ Criterios generales de alta y descarte:
 | Condis | — | No cotiza | 28/10/2026 |
 | OPay | — | No cotiza | 28/10/2026 |
 | Virtualware | EURONEXT:ALVIR | Cotiza en mercado de crecimiento | 28/10/2026 |
+| Aktia Bank | OMXHEX:AKTIA | Pequeña extranjera | 28/10/2026 |
+| Morguard | TSX:MRC | Pequeña extranjera | 28/10/2026 |
+| Wendy's | NASDAQ:WEN | Pequeña extranjera | 28/10/2026 |
+| Corticeira Amorim | EURONEXT:COR | Pequeña extranjera | 28/10/2026 |
+| HomeTrust Bancshares | NYSE:HTB | Banco regional de EE. UU. | 28/10/2026 |
+| Versant Media | NASDAQ:VSNT | Pequeña (menos de ~4.000 M) | 28/10/2026 |
