@@ -18,7 +18,7 @@ los catálogos **exactamente** como aparecen allí (con sus tildes, mayúsculas,
 
 Ejecuta los comandos desde `C:\Bolsa` con `.venv\Scripts\python.exe`.
 
-1. Lee `docs/criterios_clasificacion.md`.
+1. Lee `docs/criterios_clasificacion.md` y `docs/empresas_descartadas.md` (empresas que no se anotan ni se proponen).
 2. Exporta un lote: `.venv\Scripts\python.exe clasificacion\pendientes.py --lote 100`
    (si te indican una partición, añade `--particion k/n`). Si dice que no quedan pendientes, ve al paso 7.
 3. Lee el fichero `clasificacion\lotes\pendiente_<n>.json` y clasifica **titular a titular**:
@@ -29,15 +29,17 @@ Ejecuta los comandos desde `C:\Bolsa` con `.venv\Scripts\python.exe`.
    - Para cada noticia decide `relevante`. Si no lo es, solo `motivo_no_relevante`. Si lo es, `tema`, `origen` y
      una o varias `afectaciones` (`ambito`, `objeto`, `sector`, `valor`).
    - Empresas: usa el nombre de la pista o de la tabla `empresas` (el script acepta nombre, alias o ticker). Solo se
-     anotan empresas **cotizadas** (aclaración d). Si una cotizada no existe en la tabla, ponla igualmente en la
-     afectación y añádela a `empresas_nuevas` con sector y ticker propuestos (formato TradingView, p. ej. `NYSE:XYZ`;
-     `null` si no lo sabes) y `en_universo` según los criterios.
+     anotan empresas **cotizadas** (aclaración d) y **dadas de alta** en la tabla (sección 14). Si una cotizada no existe
+     en la tabla y no está en `docs/empresas_descartadas.md`, añádela a `empresas_nuevas` con sector y ticker propuestos
+     (formato TradingView, p. ej. `NYSE:XYZ`; `null` si no lo sabes) y `en_universo` según los criterios, pero **no la
+     pongas en las afectaciones**: anota los demás objetos o, si solo trata de ella, no relevante con motivo Otros.
+     Pon en `empresas_nuevas` también `"articulos": [ids]` con las noticias que la nombran.
 4. Escribe `clasificacion\lotes\clasificado_<n>.json` (mismo `<n>`) con este formato. `version_criterios` es la que
    trae el fichero `pendiente_<n>.json` (la vigente en `docs/criterios_clasificacion.md`):
    ```json
    {
      "lote": 7,
-     "version_criterios": "v3.8",
+     "version_criterios": "v3.9",
      "clasificaciones": [
        {"articulo_id": 123, "relevante": true, "tema": "Resultados", "origen": "Hecho (empresa o dato oficial)",
         "afectaciones": [

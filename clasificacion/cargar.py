@@ -2,7 +2,7 @@
 
 Formato de entrada:
 {
-  "lote": 7, "version_criterios": "v3.8",
+  "lote": 7, "version_criterios": "v3.9",
   "clasificaciones": [
     {"articulo_id": 123, "relevante": true, "tema": "Resultados", "origen": "Hecho (empresa o dato oficial)",
      "afectaciones": [{"ambito": "Empresa", "objeto": "Santander", "sector": "Banca", "valor": 1}]},
@@ -14,7 +14,10 @@ Formato de entrada:
 
 Validación (si un artículo no la pasa, no se carga y se lista en <fichero>.rechazados.json):
   catálogos exactos · valor entre -2 y 2 · sector obligatorio en Sector y Empresa (y vacío en Global y Mercado) ·
-  empresa existente o anotada en empresas_nuevas · relevante con ≥1 afectación · no relevante con motivo.
+  empresa dada de alta en la tabla `empresas` (v3.9: ninguna afectación de Empresa sin empresa_id) · relevante con
+  ≥1 afectación · no relevante con motivo.
+Las empresas_nuevas se acumulan como propuestas (con los artículos que las nombran) aunque su afectación no se cargue;
+las de docs/empresas_descartadas.md no se proponen.
 Los válidos se guardan con metodo 'manual' y version_criterios; si ya había clasificación, se sustituye.
 
 Uso:  python clasificacion/cargar.py clasificacion/lotes/clasificado_7.json
@@ -30,6 +33,13 @@ from comun import (AMBITOS, LOTES, OBJETOS_GLOBAL, VERSION_CRITERIOS, IndiceEmpr
                    conectar, todas)
 
 PROPUESTAS = LOTES / "empresas_nuevas_propuestas.json"
+DESCARTADAS = LOTES.parent.parent / "docs" / "empresas_descartadas.md"
+
+
+def descartadas() -> set[str]:
+    """Claves de las empresas de la primera columna de la tabla de docs/empresas_descartadas.md."""
+    filas = [ln.split("|")[1].strip() for ln in DESCARTADAS.read_text("utf-8").splitlines() if ln.startswith("| ")]
+    return {clave(n) for n in filas[1:]}  # la primera fila es la cabecera
 
 
 def validar(c: dict, cat: dict, idx: IndiceEmpresas, nuevas: dict, ids_validos: set[int]) -> tuple[list[str], list]:
@@ -84,8 +94,12 @@ def validar(c: dict, cat: dict, idx: IndiceEmpresas, nuevas: dict, ids_validos: 
                     empresa_id, obj = emp["id"], emp["nombre"]
                     if sec != emp["sector"]:
                         err.append(f"{p} {obj} es del sector {emp['sector']!r}, no {sec!r}")
-                elif clave(obj) not in nuevas:
-                    err.append(f"{p} empresa desconocida {obj!r}: usar el nombre de la tabla o anotarla en empresas_nuevas")
+                elif clave(obj) in nuevas:
+                    err.append(f"{p} {obj!r} aún no está dada de alta: queda propuesta, pero su afectación no se carga "
+                               "(anota los demás objetos o, si solo trata de ella, no relevante · Otros)")
+                else:
+                    err.append(f"{p} empresa desconocida {obj!r}: usar el nombre de la tabla; si es cotizada y no está "
+                               "descartada, proponerla en empresas_nuevas sin anotarla")
         if (amb, obj) in vistos:
             err.append(f"{p} afectación repetida ({amb} · {obj})")
         vistos.add((amb, obj))
@@ -111,9 +125,9 @@ def main() -> int:
     db = conectar()
     cat = catalogos(db)
     idx = IndiceEmpresas(todas(db, "empresas", "id,nombre,alias,ticker,sector"))
-    nuevas = {}
+    nuevas, fuera = {}, descartadas()
     for e in datos.get("empresas_nuevas") or []:
-        if e.get("nombre") and not idx.buscar(e["nombre"], e.get("ticker")):
+        if e.get("nombre") and not idx.buscar(e["nombre"], e.get("ticker")) and clave(e["nombre"]) not in fuera:
             nuevas[clave(e["nombre"])] = e
     clasif = datos.get("clasificaciones") or []
     ids = [c.get("articulo_id") for c in clasif if isinstance(c.get("articulo_id"), int)]
@@ -121,7 +135,8 @@ def main() -> int:
     for i in range(0, len(ids), 100):
         validos |= {r["id"] for r in db.table("articulos").select("id").in_("id", ids[i:i + 100]).execute().data}
 
-    cargados, rechazados, usadas = 0, [], {}
+    cargados, rechazados = 0, []
+    usadas = dict(nuevas)  # todas las propuestas se acumulan, se haya cargado o no la noticia
     ahora = datetime.now(timezone.utc).isoformat()
     for c in clasif:
         errores, afs = validar(c, cat, idx, nuevas, validos)
@@ -140,9 +155,6 @@ def main() -> int:
         if afs:
             db.table("afectaciones").insert([{**a, "articulo_id": aid, "metodo": "manual",
                                               "version_criterios": VERSION_CRITERIOS} for a in afs]).execute()
-        for a in afs:
-            if a["ambito"] == "Empresa" and a["empresa_id"] is None:
-                usadas[clave(a["objeto"])] = nuevas[clave(a["objeto"])]
         cargados += 1
 
     if rechazados:
@@ -152,12 +164,13 @@ def main() -> int:
     if usadas:  # acumula las propuestas para que el usuario las apruebe
         previas = json.loads(PROPUESTAS.read_text("utf-8")) if PROPUESTAS.exists() else {}
         for k, e in usadas.items():
-            previas.setdefault(k, {**e, "lotes": []})
+            previas.setdefault(k, {**e, "lotes": [], "articulos": []})
             previas[k]["lotes"] = sorted(set(previas[k]["lotes"]) | {datos.get("lote")})
+            previas[k]["articulos"] = sorted(set(previas[k].get("articulos", [])) | set(e.get("articulos") or []))
         PROPUESTAS.write_text(json.dumps(previas, ensure_ascii=False, indent=1), "utf-8")
 
     print(f"Lote {datos.get('lote')}: cargados {cargados} · rechazados {len(rechazados)} · "
-          f"empresas nuevas usadas {len(usadas)}")
+          f"empresas nuevas propuestas {len(usadas)}")
     for r in rechazados:
         print(f"  RECHAZADO {r['clasificacion'].get('articulo_id')}: {'; '.join(r['errores'])}")
     for e in usadas.values():

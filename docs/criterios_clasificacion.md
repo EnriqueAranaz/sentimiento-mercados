@@ -1,9 +1,9 @@
 # Criterios de clasificación de titulares
 
-**Versión de criterios: `v3.8`** (modelo del Excel `referencia/clasificacion_titulares_2026-10-26_v3.xlsx`, 26/10/2026,
-más las aclaraciones de las secciones 9 a 13). Es el valor que va en `version_criterios`.
+**Versión de criterios: `v3.9`** (modelo del Excel `referencia/clasificacion_titulares_2026-10-26_v3.xlsx`, 26/10/2026,
+más las aclaraciones de las secciones 9 a 14). Es el valor que va en `version_criterios`.
 Este documento es la **única fuente de criterios** del agente clasificador. Las secciones 1 a 7 son copia íntegra
-de la hoja *Criterios* del Excel; la sección 8 son ejemplos reales del Excel, clasificados a mano; las secciones 9 a 13
+de la hoja *Criterios* del Excel; la sección 8 son ejemplos reales del Excel, clasificados a mano; las secciones 9 a 14
 son aclaraciones posteriores, que **prevalecen** sobre lo anterior si hay conflicto (la más reciente sobre las demás).
 **Principio de la v3.5 (sección 12): el precio narrado no es noticia.**
 Los nombres de ámbitos, objetos de Global, sectores, temas, orígenes y motivos deben usarse **exactamente** como aparecen aquí.
@@ -239,7 +239,7 @@ identificable**. Catástrofes, sucesos y flujos de mercancías sin efecto de mer
 
 **d) Solo empresas cotizadas.** Las afectaciones de Empresa son solo para cotizadas. Las no cotizadas que aparecen en
 una noticia relevante no se anotan. Si la noticia solo trata de no cotizadas: no relevante, motivo **Empresa no cotizada**
-(una empresa que prepara su salida a bolsa todavía no cotiza).
+(una empresa que prepara su salida a bolsa todavía no cotiza). Las cotizadas **descartadas** siguen la sección 14.
 - *Carrefour estudia la compra de Condis para crecer en Cataluña* → Relevante · *Fusiones y OPAs* · *Rumor / según fuentes* · Empresa · Carrefour · Consumo y distribución → **0** (Condis no se anota)
 - *Las gasolineras de Moeve amplían el plazo de su programa de descuento* → No relevante · **Empresa no cotizada**
 - *OPay, respaldada por SoftBank, prevé una valoración de hasta 4.400 millones de dólares en su salida a bolsa en EEUU* → No relevante · **Empresa no cotizada**
@@ -393,3 +393,20 @@ Estos ejemplos de secciones anteriores ya no se aplican tal como están escritos
 - Análisis técnico incluye también divergencias y rotaciones entre sectores o mercados ("¿Rotación o antesala de una venta generalizada?", "La extrema divergencia entre tecnología y finanzas…"). Si el titular no tiene vocabulario técnico (soporte, resistencia, directriz, sesgo, sobrevendido, patrón, divergencia, rotación, señales alcistas/bajistas) ni causa, va a Precio sin causa.
 - Afectaciones de Empresa: solo si la empresa está nombrada en el titular o en el resumen. Los símbolos de TradingView sirven para detectar, nunca generan una afectación por sí solos. Si el titular nombra un grupo ("los operadores de telecomunicaciones estadounidenses"), se anota el Sector.
 - El ejemplo de la regla 10 d con "pese a" ("Los rendimientos del Tesoro repuntan pese a las menores apuestas de subida de tipos") se ha sustituido por uno con nexo causal, porque ese titular ahora es Precio sin causa.
+
+## 14. v3.9 Empresas descartadas (prevalece sobre todo lo anterior)
+
+Las empresas de `docs/empresas_descartadas.md` son cotizadas que se decidió no dar de alta: microcotizadas, bancos
+regionales de EE. UU. y pequeñas de menos de ~4.000 M. Léelo antes de clasificar.
+- Si la noticia **solo** trata de una empresa descartada: no relevante, motivo **Fuera de alcance (Latam, India…)**.
+  - *Woodlands Financial Services Company (WDFN) declara un dividendo trimestral de $0.34* → No relevante · **Fuera de alcance (Latam, India…)**
+  - *SES (SES) amplía hasta 2040 su acuerdo de capacidad con CANAL+* → No relevante · **Fuera de alcance (Latam, India…)** (las dos están descartadas)
+- Si tiene **otros objetos**, se anotan esos y la empresa descartada no.
+  - *Iberdrola y MediaMarkt firman un PPA en España* → Empresa · Iberdrola → **1** (Ceconomy, matriz de MediaMarkt, no se anota)
+  - *La FTC presentará una demanda para bloquear la operación entre Cintas y UniFirst, según informa Semafor* → Empresa · Cintas → **-1** (UniFirst no se anota)
+- Las descartadas **no se proponen** en `empresas_nuevas`.
+- **Empresas nuevas (v3.9).** Una cotizada que no está en la tabla `empresas` se sigue proponiendo en `empresas_nuevas`,
+  pero su afectación **no se escribe** hasta que esté dada de alta: `cargar.py` rechaza cualquier afectación de Empresa
+  sin empresa_id. Si la noticia tiene otros objetos, anota esos. Si solo trata de la empresa nueva, déjala como
+  no relevante con motivo **Otros**. `cargar.py` guarda el id de la noticia en la propuesta, para reclasificarla cuando
+  se apruebe.

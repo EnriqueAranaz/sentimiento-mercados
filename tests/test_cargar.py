@@ -3,7 +3,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "clasificacion"))
 
-from cargar import validar  # noqa: E402
+from cargar import descartadas, validar  # noqa: E402
 from comun import IndiceEmpresas, clave  # noqa: E402
 
 CAT = {
@@ -21,14 +21,29 @@ def _v(c):
     return validar(c, CAT, IDX, NUEVAS, {1, 2, 3})
 
 
-def test_relevante_valido_con_alias_y_empresa_nueva():
+def test_relevante_valido_con_alias():
     err, afs = _v({"articulo_id": 1, "relevante": True, "tema": "Fusiones y OPAs", "origen": "Rumor / según fuentes",
                    "afectaciones": [{"ambito": "Empresa", "objeto": "Banco Santander", "sector": "Banca", "valor": 1},
-                                    {"ambito": "Empresa", "objeto": "Condis", "sector": "Consumo y distribución", "valor": 0},
                                     {"ambito": "Global", "objeto": "Petróleo", "sector": None, "valor": -1}]})
     assert err == []
     assert afs[0]["empresa_id"] == 1 and afs[0]["objeto"] == "Santander"
-    assert afs[1]["empresa_id"] is None
+
+
+def test_empresa_sin_dar_de_alta_se_rechaza():
+    # v3.9: ninguna afectación de Empresa sin empresa_id, aunque la empresa venga propuesta en empresas_nuevas
+    err, _ = _v({"articulo_id": 1, "relevante": True, "tema": "Fusiones y OPAs", "origen": "Rumor / según fuentes",
+                 "afectaciones": [{"ambito": "Empresa", "objeto": "Santander", "sector": "Banca", "valor": 1},
+                                  {"ambito": "Empresa", "objeto": "Condis", "sector": "Consumo y distribución", "valor": 0}]})
+    assert any("aún no está dada de alta" in e for e in err)
+    err, _ = _v({"articulo_id": 1, "relevante": True, "tema": "Mercado", "origen": "Mercado",
+                 "afectaciones": [{"ambito": "Empresa", "objeto": "UniFirst", "sector": "Industria, defensa y aeroespacial",
+                                   "valor": -1}]})
+    assert any("empresa desconocida" in e for e in err)
+
+
+def test_lista_de_descartadas():
+    d = descartadas()
+    assert len(d) == 14 and clave("UniFirst") in d and clave("Canal+") in d and clave("Empresa") not in d
 
 
 def test_empresa_nombrada_excluye_sector():
