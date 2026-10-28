@@ -39,6 +39,10 @@ def test_empresa_nombrada_excluye_sector():
     err, _ = _v({"articulo_id": 1, "relevante": True, "tema": "Mercado", "origen": "Mercado",
                  "afectaciones": [{"ambito": "Sector", "objeto": "Banca", "sector": "Banca", "valor": -1}]})
     assert err == []
+    err, _ = _v({"articulo_id": 1, "relevante": True, "tema": "Mercado", "origen": "Mercado",
+                 "afectaciones": [{"ambito": "Empresa", "objeto": "Santander", "sector": "Banca", "valor": -1},
+                                  {"ambito": "Sector", "objeto": "Tecnología", "sector": "Tecnología", "valor": -1}]})
+    assert err == []  # v3.8: un Sector distinto del de la empresa puede convivir
 
 
 def test_no_relevante_necesita_motivo_valido():

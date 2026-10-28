@@ -2,7 +2,8 @@
 
 Genera exports/snapshot_AAAA-MM-DD_HHMM.xlsx (hora de Madrid) con:
   - "resumen": filas por tabla, artículos por fuente y día, y las últimas 10 ejecuciones.
-  - una hoja por cada tabla del esquema public (se descubren solas vía la API de Supabase).
+  - una hoja por cada tabla y vista del esquema public (se descubren solas vía la API de Supabase);
+    v_no_relevantes y v_cobertura salen como "no_relevantes" y "cobertura", de la fecha más reciente a la más antigua.
 
 Las fechas se convierten a hora de Madrid y se guardan como fechas de Excel (dd/mm/aaaa hh:mm:ss).
 
@@ -32,6 +33,9 @@ FORMATO_FECHA = "dd/mm/yyyy hh:mm:ss"
 LOTE = 1000  # máximo de filas que devuelve la API por petición
 NEGRITA = Font(bold=True)
 TITULO = Font(bold=True, size=13)
+# Vistas con nombre de hoja propio y orden (más reciente primero): {vista: (hoja, columnas de orden)}.
+HOJAS_VISTA = {"v_no_relevantes": ("no_relevantes", ("publicado_en", "articulo_id")),
+               "v_cobertura": ("cobertura", ("dia",))}
 
 
 class Api:
@@ -163,9 +167,13 @@ def main() -> int:
     wb.active.title = "resumen"
 
     for tabla, columnas in esquema.items():
-        ws = wb.create_sheet(tabla[:31])  # límite de Excel para nombres de hoja
+        hoja, orden = HOJAS_VISTA.get(tabla, (tabla, None))
+        filas = datos[tabla]
+        if orden:
+            filas = sorted(filas, key=lambda f: tuple(str(f.get(c) or "") for c in orden), reverse=True)
+        ws = wb.create_sheet(hoja[:31])  # límite de Excel para nombres de hoja
         nombres = list(columnas)
-        escribir_tabla(ws, 1, nombres, [[celda(f.get(c), columnas[c]) for c in nombres] for f in datos[tabla]])
+        escribir_tabla(ws, 1, nombres, [[celda(f.get(c), columnas[c]) for c in nombres] for f in filas])
         ws.freeze_panes = "A2"
         ws.auto_filter.ref = ws.dimensions
         ajustar_anchos(ws)

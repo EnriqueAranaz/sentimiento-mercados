@@ -2,7 +2,7 @@
 
 Formato de entrada:
 {
-  "lote": 7, "version_criterios": "v3.7",
+  "lote": 7, "version_criterios": "v3.8",
   "clasificaciones": [
     {"articulo_id": 123, "relevante": true, "tema": "Resultados", "origen": "Hecho (empresa o dato oficial)",
      "afectaciones": [{"ambito": "Empresa", "objeto": "Santander", "sector": "Banca", "valor": 1}]},
@@ -90,9 +90,10 @@ def validar(c: dict, cat: dict, idx: IndiceEmpresas, nuevas: dict, ids_validos: 
             err.append(f"{p} afectación repetida ({amb} · {obj})")
         vistos.add((amb, obj))
         afs.append({"ambito": amb, "objeto": obj, "sector": sec, "empresa_id": empresa_id, "valor": val})
-    ambitos = {a["ambito"] for a in afs}
-    if {"Empresa", "Sector"} <= ambitos:
-        err.append("si el titular nombra una empresa, la afectación va a la empresa y no lleva Sector (criterios 11 e)")
+    sectores_empresa = {a["sector"] for a in afs if a["ambito"] == "Empresa"}
+    for a in afs:
+        if a["ambito"] == "Sector" and a["sector"] in sectores_empresa:
+            err.append(f"una empresa nombrada no lleva además Sector · {a['sector']}, el suyo (criterios 11 e)")
     return err, afs
 
 

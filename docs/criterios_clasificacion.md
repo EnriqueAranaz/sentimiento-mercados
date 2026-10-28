@@ -1,6 +1,6 @@
 # Criterios de clasificación de titulares
 
-**Versión de criterios: `v3.7`** (modelo del Excel `referencia/clasificacion_titulares_2026-10-26_v3.xlsx`, 26/10/2026,
+**Versión de criterios: `v3.8`** (modelo del Excel `referencia/clasificacion_titulares_2026-10-26_v3.xlsx`, 26/10/2026,
 más las aclaraciones de las secciones 9 a 13). Es el valor que va en `version_criterios`.
 Este documento es la **única fuente de criterios** del agente clasificador. Las secciones 1 a 7 son copia íntegra
 de la hoja *Criterios* del Excel; la sección 8 son ejemplos reales del Excel, clasificados a mano; las secciones 9 a 13
@@ -323,13 +323,16 @@ similares cuentan como nombrar un grupo de valores tecnológicos → **Sector ·
 **Fuera de alcance (Latam, India…)**.
 - *Jaguar va a retirar del mercado unos 94 000 vehículos en EEUU por un problema con la cámara de visión trasera, según la NHTSA* → No relevante · **Fuera de alcance (Latam, India…)**
 
-**e) Empresa nombrada, siempre a la empresa.** Si el titular nombra específicamente una empresa, la afectación se
-atribuye a esa empresa **siempre**, y esa noticia no lleva afectación de **Sector** (de ningún sector), aunque el
-titular mencione también el sector ("las tecnológicas", "la banca", "las telecos"…). El ámbito Sector queda para
-noticias del sector en conjunto que no nombran ninguna empresa. Mercados y objetos de Global se anotan igual que antes.
+**e) Empresa nombrada, siempre a la empresa (redacción v3.8).** Si el titular nombra específicamente una empresa, la
+afectación se atribuye a esa empresa **siempre**, y esa noticia no lleva afectación del **Sector al que pertenece esa
+empresa** (sería contar dos veces lo mismo), aunque el titular mencione también ese sector ("las tecnológicas", "la
+banca", "las telecos"…). Una Empresa y un Sector **distinto** sí pueden convivir en la misma noticia. La empresa que en
+el titular solo es la **causa** y tendría tono 0 no se anota (p. ej. *Los operadores de telecomunicaciones
+estadounidenses se tambalean tras conocerse que SpaceX…* → Sector · Telecomunicaciones → **-1**, sin SpaceX).
+Mercados y objetos de Global se anotan igual que antes.
 - *El alto costo de la IA pasa la cuenta a Meta y a otras acciones tecnológicas* → Empresa · Meta · Tecnología → **-1** (sin Sector · Tecnología)
 - *JP Morgan recorta Telefónica a 'infraponderar' y alerta del riesgo de crédito en las telecos* → Empresa · Telefónica · Telecomunicaciones → **-1** (sin Sector · Telecomunicaciones)
-- *Enagás y Amadeus lideran la semana en el Ibex; Solaria se desploma y la banca sufre* → Empresa · Enagás → **1** · Empresa · Amadeus → **1** · Empresa · Solaria → **-2** (sin Sector · Banca)
+- *Enagás y Amadeus lideran la semana en el Ibex; Solaria se desploma y la banca sufre* → Empresa · Enagás → **1** · Empresa · Amadeus → **1** · Empresa · Solaria → **-2** · Sector · Banca → **-1** (desde v3.8: ninguna de las empresas nombradas es un banco)
 
 **f) Cotizadas japonesas.** Quedan **Fuera de alcance (Latam, India…)**, salvo las grandes mundiales del universo
 (Toyota…, sección 10 c). Japón sigue siendo un objeto de Mercado válido para noticias de su bolsa o su economía.
@@ -375,7 +378,7 @@ Estos ejemplos de secciones anteriores ya no se aplican tal como están escritos
 - 10 a, *Las tecnológicas moderan su caída en Asia y el crudo toca máximos de cinco meses* → No relevante · **Precio sin causa**.
 - La definición de **Mercado** en la sección 5 ("movimientos de precio y crónicas de mercado sin un hecho concreto detrás") queda sustituida por la de esta sección: un movimiento sin causa ya no es relevante.
 
-## 13. v3.6–v3.7 Nexo causal y objetos (prevalece sobre todo lo anterior)
+## 13. v3.6–v3.8 Nexo causal y objetos (prevalece sobre todo lo anterior)
 
 - Una causa solo cuenta si hay un nexo causal explícito: "por", "tras", "ante", "debido a", "a causa de", "por miedo/temor a", "golpeado/lastrado/impulsado/arrastrado por" + una variable distinta del objeto, o construcciones del tipo "X tumba/hunde/dispara/castiga/amenaza a Y" ("el petróleo amenaza el rebote" es causa) o "X aviva/agrava/mantiene los temores/la alerta".
 - **"Con", "mientras" y similares (v3.7)** no son causa por sí mismos: decide lo que va detrás.
@@ -383,6 +386,8 @@ Estos ejemplos de secciones anteriores ya no se aplican tal como están escritos
   - Un **precio o nivel de otra variable**, o una **atención genérica** → acompañamiento, Precio sin causa si no hay otro nexo. Ejemplos: "Ligeras caídas en las Bolsas europeas con el petróleo imparable", "El Ibex pierde los 19.000 puntos con el petróleo por encima de los 116 dólares", "Europa apunta a la baja mientras la financiación de la IA concentra las miradas".
   - Un hecho que empuja **en sentido contrario** al movimiento equivale a "pese a" → Precio sin causa. Ejemplo: "El petróleo alcanza los 117 dólares mientras Trump mueve ficha para elevar la producción".
 - Siguen sin ser causa: "pese a", "a la espera de", "pendientes de", "con la mira en", "en una jornada de". Ejemplo: "El petróleo cede pese a la escalada militar" → Precio sin causa.
+- **Temor o esperanza con nombre (v3.8).** Si tras "con/mientras" va un temor o una esperanza con nombre que cambia en el sentido del movimiento, es causa: "Wall Street anticipa caídas mientras crece el temor a un pinchazo en la burbuja de la IA", "El Brent toca los 116 dólares mientras se desvanece la esperanza de paz en Oriente Medio" → relevantes. La atención o la espera genérica no lo es: "mientras la OPI de Anthropic pone la atención en…", "dividida entre…", "mientras los operadores esperan…", "El crudo mira a los 110 dólares mientras…" → Precio sin causa.
+- **Empresa y Sector (v3.8).** La regla 11 e solo prohíbe anotar en la misma noticia una Empresa y el Sector al que pertenece esa empresa. Una Empresa y un Sector distinto pueden convivir. La empresa que en el titular solo es la causa y tendría tono 0 no se anota. Si el titular nombra un grupo ("los operadores de telecomunicaciones estadounidenses"), se anota ese Sector aunque se nombre también la empresa que lo causa.
 - **El objeto de acompañamiento no se anota (v3.7)**, aunque la noticia sea relevante por otra causa: en "…y con el petróleo a 116 dólares" eso es precio narrado del petróleo, no una afectación de Petróleo. Esto deja superado el ejemplo 8.1 n.º 3 en cuanto a la afectación de acompañamiento.
 - Ejemplos con causa (relevantes): "Los bonos dan un respiro, pero el 5% de EE. UU. y la deuda francesa mantienen la alerta"; "La tecnología china se desploma: ¿una señal de alerta para las bolsas mundiales?" (opinión sobre Global · Mercados; la caída de la tecnología china en sí no se anota).
 - Análisis técnico incluye también divergencias y rotaciones entre sectores o mercados ("¿Rotación o antesala de una venta generalizada?", "La extrema divergencia entre tecnología y finanzas…"). Si el titular no tiene vocabulario técnico (soporte, resistencia, directriz, sesgo, sobrevendido, patrón, divergencia, rotación, señales alcistas/bajistas) ni causa, va a Precio sin causa.
