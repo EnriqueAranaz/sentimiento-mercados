@@ -431,4 +431,9 @@ regionales de EE. UU. y pequeñas de menos de ~4.000 M. Léelo antes de clasific
 - **En Resultados manda la cifra, no el verbo.** El umbral de la escala (beneficio +20 % o más → 2; −20 % o peor → -2)
   prevalece sobre el verbo del titular. La regla 10 f ("mismo dato, distinto verbo") queda para los datos macro.
   - *Aena dispara un 12% su beneficio aupada por el récord de tráfico y el alza de las tasas* → Empresa · Aena → **1**
+- **Cobro de dividendos.** Las noticias sobre fechas o trámites para cobrar un dividendo ya anunciado no son
+  relevantes: **Agenda / convocatoria** si solo dan la fecha, **Finanzas personales** si explican qué hacer para
+  cobrarlo. El anuncio de un dividendo nuevo, o de un cambio en el dividendo, sí es relevante.
+  - *Último día para cobrar los dividendos de Inditex y Santander* → No relevante · **Agenda / convocatoria**
+  - *Inditex y Santander reparten 4.500 millones en dividendos: ¿qué hay que hacer para cobrarlos?* → No relevante · **Finanzas personales**
 
