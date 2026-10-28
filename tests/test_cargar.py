@@ -78,3 +78,12 @@ def test_version_criterios_unica_y_documentada():
     assert comun.VERSION_CRITERIOS is reglas.VERSION_CRITERIOS
     cabecera = (Path(__file__).resolve().parent.parent / "docs" / "criterios_clasificacion.md").read_text("utf-8")[:400]
     assert f"`{reglas.VERSION_CRITERIOS}`" in cabecera
+
+
+def test_alias_informa_exige_mayuscula():
+    from ingesta.reglas import compilar_alias, detectar
+
+    alias = compilar_alias([{"id": 9, "nombre": "Informa", "alias": ["Informa", "Informa plc"]}])
+    pista = lambda t: [d["objeto"] for d in detectar({"titulo": t}, alias, {})[0] if d["tipo"] == "empresa"]  # noqa: E731
+    assert pista("La CNMV informa de una sanción a un bróker") == []
+    assert pista("Informa sube tras mejorar sus previsiones") == ["Informa"]

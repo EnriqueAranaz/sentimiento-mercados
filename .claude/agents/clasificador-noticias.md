@@ -37,7 +37,7 @@ Ejecuta los comandos desde `C:\Bolsa` con `.venv\Scripts\python.exe`.
    ```json
    {
      "lote": 7,
-     "version_criterios": "v3.6",
+     "version_criterios": "v3.7",
      "clasificaciones": [
        {"articulo_id": 123, "relevante": true, "tema": "Resultados", "origen": "Hecho (empresa o dato oficial)",
         "afectaciones": [

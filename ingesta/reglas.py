@@ -18,10 +18,10 @@ from dataclasses import dataclass
 
 log = logging.getLogger("ingesta.reglas")
 
-VERSION_CRITERIOS = "v3.6"  # única fuente de la versión de criterios (docs/criterios_clasificacion.md); clasificacion/comun.py la importa
+VERSION_CRITERIOS = "v3.7"  # única fuente de la versión de criterios (docs/criterios_clasificacion.md); clasificacion/comun.py la importa
 
 # Alias que también son palabras comunes en español: solo cuentan escritos con la mayúscula del nombre.
-ALIAS_SENSIBLES = {"Meta", "Dia", "DIA", "Visa", "Colonial", "Acciona", "Continental", "BAT", "Orange", "ING"}
+ALIAS_SENSIBLES = {"Meta", "Dia", "DIA", "Visa", "Colonial", "Acciona", "Continental", "BAT", "Orange", "ING", "Informa"}
 
 MERCADOS = [  # (objeto, patrón sobre el titular normalizado en minúsculas)
     ("Ibex 35", r"\bibex\b"),
