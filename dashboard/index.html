@@ -9,13 +9,20 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
 <script src="config.js"></script>
 <style>
-  /* Panel de lectura: tarjetas por sector, detalle con gráfico y tablas. Tokens claros y oscuros. */
+  /* Panel de lectura: índice, sectores, detalle y descartes. Tokens claros y oscuros. */
   :root {
     --color-bg: #f6f7f8; --color-panel: #ffffff; --color-fg: #1b1f24; --color-fg-muted: #5f6b76;
     --color-border-line: #dde2e7; --color-ok: #1f7a4d; --color-bad: #b4372f; --chart-1: #2f6f9f;
     --cds-chart-grid: #e8ecef; --cds-chart-axis: #9aa5ae; --cds-chart-muted: #b9c2c9; --cds-chart-status-critical: #c8463c;
     --cds-surface-popover: #ffffff; --cds-border: #d3d9de; --cds-shadow-popover: 0 4px 16px rgba(20, 30, 40, .12);
     --cds-text-secondary: #5f6b76;
+    /* series categóricas (validadas: paleta de referencia, slots 1-5) y gris para "resto" */
+    --serie-1: #2a78d6; --serie-2: #eb6834; --serie-3: #1baf7a; --serie-4: #eda100; --serie-5: #e87ba4; --serie-resto: #9aa5ae;
+    /* polaridad (divergencia): azul / rojo */
+    --polo-pos: #2a78d6; --polo-neg: #d03b3b;
+    /* bandas del índice (fondo): de rojo a verde pasando por gris */
+    --banda-1: #f3d6d3; --banda-2: #f8e8e6; --banda-3: #f0f1f2; --banda-4: #e3f1e8; --banda-5: #cfe8d9;
+    --aviso-bg: #fff4dc; --aviso-borde: #e0a400;
     --font-sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
     --font-serif: "Source Serif 4", Georgia, "Times New Roman", serif;
     --fs-caption: .8rem; --fs-body: .95rem; --fs-heading: 1.05rem; --fs-title: 1.9rem; --fw-medium: 500;
@@ -29,7 +36,12 @@
       --color-border-line: #2c3238; --color-ok: #5cc28c; --color-bad: #ef7d73; --chart-1: #6aa8d8;
       --cds-chart-grid: #262c31; --cds-chart-axis: #56616a; --cds-chart-muted: #4a545c; --cds-chart-status-critical: #e5675d;
       --cds-surface-popover: #22272c; --cds-border: #353c43; --cds-shadow-popover: 0 4px 16px rgba(0, 0, 0, .45);
-      --cds-text-secondary: #98a3ad; color-scheme: dark;
+      --cds-text-secondary: #98a3ad;
+      --serie-1: #3987e5; --serie-2: #d95926; --serie-3: #199e70; --serie-4: #c98500; --serie-5: #d55181; --serie-resto: #6b767f;
+      --polo-pos: #3987e5; --polo-neg: #e66767;
+      --banda-1: #3a2523; --banda-2: #2c2322; --banda-3: #23272b; --banda-4: #1f2d25; --banda-5: #21382b;
+      --aviso-bg: #3a3018; --aviso-borde: #c98500;
+      color-scheme: dark;
     }
   }
   :root[data-theme="dark"] {
@@ -37,8 +49,14 @@
     --color-border-line: #2c3238; --color-ok: #5cc28c; --color-bad: #ef7d73; --chart-1: #6aa8d8;
     --cds-chart-grid: #262c31; --cds-chart-axis: #56616a; --cds-chart-muted: #4a545c; --cds-chart-status-critical: #e5675d;
     --cds-surface-popover: #22272c; --cds-border: #353c43; --cds-shadow-popover: 0 4px 16px rgba(0, 0, 0, .45);
-    --cds-text-secondary: #98a3ad; color-scheme: dark;
+    --cds-text-secondary: #98a3ad;
+    --serie-1: #3987e5; --serie-2: #d95926; --serie-3: #199e70; --serie-4: #c98500; --serie-5: #d55181; --serie-resto: #6b767f;
+    --polo-pos: #3987e5; --polo-neg: #e66767;
+    --banda-1: #3a2523; --banda-2: #2c2322; --banda-3: #23272b; --banda-4: #1f2d25; --banda-5: #21382b;
+    --aviso-bg: #3a3018; --aviso-borde: #c98500;
+    color-scheme: dark;
   }
+  [hidden] { display: none !important; }
   * { box-sizing: border-box; }
   body { margin: 0; background: var(--color-bg); color: var(--color-fg); font-family: var(--font-sans); font-size: var(--fs-body); }
   .sm { max-width: 1280px; margin: 0 auto; padding-block: 1.5rem 3rem;
@@ -48,59 +66,82 @@
   .sm-head h1 { font-family: var(--font-serif); font-weight: 400; font-size: var(--fs-title); margin: 0; text-wrap: balance; }
   .sm-take { color: var(--color-fg-muted); margin: var(--gap-xs) 0 0; }
   .sm-take b { color: var(--color-fg); font-weight: var(--fw-medium); }
-  .sm-estado { font-size: var(--fs-caption); color: var(--color-fg-muted); }
+  .sm-estado { font-size: var(--fs-caption); color: var(--color-fg-muted); text-align: right; }
   .sm-estado button, .sm-ctrl button, .sm-orden button { font: inherit; font-size: var(--fs-caption); color: var(--color-fg); background: none; cursor: pointer;
     border: 1px solid var(--color-border-line); border-radius: var(--radius); padding: var(--pad-xs) var(--pad-sm); }
   .sm-error { background: var(--color-panel); border: 1px solid var(--color-bad); border-radius: var(--radius); padding: var(--pad-lg); }
-  .sm-tabs { display: flex; gap: var(--gap-xs); border-bottom: 1px solid var(--color-border-line); }
+  .sm-aviso { background: var(--aviso-bg); border: 1px solid var(--aviso-borde); border-radius: var(--radius); padding: var(--pad-sm) var(--pad-md); }
+  .sm-aviso b { font-weight: var(--fw-medium); }
+  .sm-tabs { display: flex; flex-wrap: wrap; gap: var(--gap-xs); border-bottom: 1px solid var(--color-border-line); }
   .sm-tabs button { font: inherit; color: var(--color-fg-muted); background: none; cursor: pointer;
     border: 0; border-bottom: 2px solid transparent; padding: var(--pad-sm) var(--pad-md); margin-bottom: -1px; }
   .sm-tabs button[aria-selected="true"] { color: var(--color-fg); border-bottom-color: var(--color-fg); }
-  button:focus-visible, select:focus-visible, a:focus-visible { outline: 2px solid var(--chart-1); outline-offset: 2px; }
+  button:focus-visible, select:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid var(--chart-1); outline-offset: 2px; }
   .sm-page { display: grid; gap: var(--gap-lg); }
   .sm-ctrl { display: flex; flex-wrap: wrap; gap: var(--gap-md); align-items: end; }
   .sm-ctrl label { display: grid; gap: var(--gap-xs); font-size: var(--fs-caption); color: var(--color-fg-muted); }
+  .sm-ctrl label.chk { display: flex; align-items: center; gap: var(--gap-xs); color: var(--color-fg); padding-bottom: var(--pad-xs); }
   .sm-ctrl select { width: 16rem; max-width: 100%; font: inherit; color: var(--color-fg);
     padding: var(--pad-xs) var(--pad-sm); border: 1px solid var(--color-border-line); border-radius: var(--radius); background: var(--color-panel); }
+  .sm-ctrl select.corto { width: 11rem; }
   .sm-orden { display: flex; flex-wrap: wrap; gap: var(--gap-xs); align-items: center; font-size: var(--fs-caption); color: var(--color-fg-muted); }
   .sm-orden button[aria-pressed="true"] { background: var(--color-fg); color: var(--color-bg); border-color: var(--color-fg); }
   .sm-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr)); gap: var(--gap-md); }
   .sm-card { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--radius); padding: var(--pad-lg); min-width: 0; }
   .sm-tile .lab { font-size: var(--fs-caption); color: var(--color-fg-muted); }
   .sm-tile .val { font-family: var(--font-serif); font-size: var(--fs-title); font-variant-numeric: tabular-nums; margin-top: var(--gap-xs); }
+  .sm-tile .sub { font-size: var(--fs-caption); color: var(--color-fg-muted); margin-top: var(--gap-xs); font-variant-numeric: tabular-nums; }
   .sm-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr)); gap: var(--gap-md); }
   .sm-card h2, .sm-sec h2, .sm-enlaces h2 { font-size: var(--fs-heading); font-weight: var(--fw-medium); margin: 0; }
   .sm-note { font-size: var(--fs-caption); color: var(--color-fg-muted); margin: var(--gap-xs) 0 var(--gap-md); }
   .sm-sec { display: grid; gap: var(--gap-sm); }
   .sm-sec .sm-note { margin: 0; }
   .sm-mapa { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 13rem), 1fr)); gap: var(--gap-md); }
-  .sm-mapa.peq { grid-template-columns: repeat(auto-fill, minmax(min(100%, 10rem), 1fr)); }
-  .sm-sc { display: grid; gap: var(--gap-xs); text-align: left; font: inherit; color: var(--color-fg); cursor: pointer; background: var(--color-panel);
+  .sm-mapa.peq { grid-template-columns: repeat(auto-fill, minmax(min(100%, 11rem), 1fr)); }
+  .sm-sc { display: grid; gap: var(--gap-xs); align-content: start; text-align: left; font: inherit; color: var(--color-fg); cursor: pointer; background: var(--color-panel);
     border: 1px solid var(--color-border-line); border-radius: var(--radius); padding: var(--pad-md); min-width: 0; }
   .sm-sc:hover { border-color: var(--color-fg); }
   .sm-sc .nom { font-weight: var(--fw-medium); line-height: 1.25; min-height: 2.5em; }
   .sm-sc .tono { font-family: var(--font-serif); font-size: var(--fs-title); font-variant-numeric: tabular-nums; }
-  .sm-sc .det { font-size: var(--fs-caption); color: var(--color-fg-muted); font-variant-numeric: tabular-nums; }
+  .sm-sc .det, .sm-sc .lin { font-size: var(--fs-caption); color: var(--color-fg-muted); font-variant-numeric: tabular-nums; }
+  .sm-sc .lin { color: var(--color-fg); }
   .sm-sc .spark { height: 28px; }
   .sm-sc.vacio { cursor: default; opacity: .55; }
   .sm-sc.vacio:hover { border-color: var(--color-border-line); }
-  .sm-leyenda { display: flex; align-items: center; gap: var(--gap-sm); font-size: var(--fs-caption); color: var(--color-fg-muted); }
+  .sm-sc.pocos .tono { color: var(--color-fg-muted); }
+  .etq { display: inline-block; font-size: .72rem; color: var(--color-fg-muted); border: 1px solid var(--color-border-line);
+    border-radius: 999px; padding: 0 .45rem; margin-left: var(--gap-xs); white-space: nowrap; font-weight: 400; }
+  .sm-leyenda { display: flex; align-items: center; gap: var(--gap-sm); font-size: var(--fs-caption); color: var(--color-fg-muted); flex-wrap: wrap; }
   .sm-leyenda .barra { width: 8rem; height: 8px; border-radius: 4px; }
-  .sm-chart { position: relative; min-height: 240px; }
-  .sm-tip { position: absolute; pointer-events: none; background: var(--cds-surface-popover); border: 1px solid var(--cds-border);
+  .sm-leyenda .sw { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 4px; vertical-align: -1px; }
+  .sm-leyenda .ln { display: inline-block; width: 18px; height: 0; border-top: 2px solid; margin-right: 4px; vertical-align: 3px; }
+  .sm-leyenda .ln.dash { border-top-style: dashed; }
+  .sm-chart { position: relative; min-height: 120px; }
+  .sm-tip { position: absolute; pointer-events: none; background: var(--cds-surface-popover); border: 1px solid var(--cds-border); z-index: 2;
     border-radius: var(--radius); box-shadow: var(--cds-shadow-popover); padding: var(--pad-xs) var(--pad-sm); font-size: var(--fs-caption); white-space: nowrap; }
   .sm-tip .d { color: var(--cds-text-secondary); }
   .sm-scroll { max-height: 24rem; overflow: auto; }
+  .sm-scroll.alto { max-height: 36rem; }
   table.sm-t { width: 100%; border-collapse: collapse; font-size: var(--fs-caption); font-variant-numeric: tabular-nums; }
   .sm-t th { position: sticky; top: 0; background: var(--color-panel); text-align: left; color: var(--color-fg-muted); font-weight: var(--fw-medium); padding: var(--pad-xs); }
+  .sm-t th button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+  .sm-t th button[aria-pressed="true"] { color: var(--color-fg); text-decoration: underline; }
   .sm-t td { padding: var(--pad-xs); border-top: 1px solid var(--color-border-line); vertical-align: top; }
   .sm-t .num { text-align: right; white-space: nowrap; }
   .sm-t tr.clic { cursor: pointer; }
   .sm-t tr.clic:hover td { background: var(--cds-chart-grid); }
+  .sm-t tr.resumen td { font-weight: var(--fw-medium); border-top: 2px solid var(--color-border-line); }
+  .sm-t tr.gris td { color: var(--color-fg-muted); }
   .sm-t a { color: inherit; text-decoration: none; }
   .sm-t a:hover { text-decoration: underline; }
   .sm .pos { color: var(--color-ok); }
   .sm .neg { color: var(--color-bad); }
+  .sm-idx { display: grid; grid-template-columns: minmax(0, 20rem) minmax(0, 1fr); gap: var(--gap-md); align-items: stretch; }
+  @media (max-width: 760px) { .sm-idx { grid-template-columns: 1fr; } }
+  .sm-aguja { display: grid; justify-items: center; align-content: start; gap: var(--gap-xs); }
+  .sm-aguja .val { font-family: var(--font-serif); font-size: 2.6rem; font-variant-numeric: tabular-nums; line-height: 1; }
+  .sm-aguja .sub { font-size: var(--fs-caption); color: var(--color-fg-muted); text-align: center; }
+  .sm-nota { font-size: var(--fs-caption); color: var(--color-fg-muted); border-left: 3px solid var(--color-border-line); padding: var(--pad-xs) var(--pad-sm); margin: 0; }
   .sm-enlaces { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr)); gap: var(--gap-md);
     border-top: 1px solid var(--color-border-line); padding-top: var(--pad-lg); }
   .sm-enlaces h2 { margin-bottom: var(--gap-sm); }
@@ -115,80 +156,199 @@
   <header class="sm-head">
     <div>
       <h1>Sentimiento de mercados</h1>
-      <p class="sm-take">Tono de los titulares de prensa económica, de −2 (muy negativo) a +2 (muy positivo).</p>
+      <p class="sm-take">Tono de los titulares de prensa económica desde el 22/10/2026, por día de mercado (el fin de semana cuenta para el lunes).</p>
     </div>
     <div class="sm-estado"><span id="sm-estado">Cargando…</span> <button id="sm-recargar" type="button">Actualizar</button></div>
   </header>
-
+  <div class="sm-aviso" id="sm-aviso" role="status" hidden></div>
   <div class="sm-error" id="sm-error" hidden></div>
-
   <nav class="sm-tabs" role="tablist">
-    <button id="tab-sectores" role="tab" type="button" aria-selected="true">Sectores</button>
+    <button id="tab-indice" role="tab" type="button" aria-selected="true">Índice</button>
+    <button id="tab-sectores" role="tab" type="button" aria-selected="false">Sectores</button>
     <button id="tab-detalle" role="tab" type="button" aria-selected="false">Detalle</button>
+    <button id="tab-descartes" role="tab" type="button" aria-selected="false">Descartes y cobertura</button>
   </nav>
 
-  <!-- ============ PANTALLA INICIAL: SECTORES ============ -->
-  <div class="sm-page" id="sectores">
+  <!-- ============ ÍNDICE ============ -->
+  <div class="sm-page" id="indice">
+    <div class="sm-ctrl">
+      <label for="ix-alcance">Alcance <select id="ix-alcance"></select></label>
+      <span class="sm-note" id="ix-ventana" style="margin:0"></span>
+    </div>
+    <div class="sm-idx">
+      <section class="sm-card sm-aguja">
+        <h2 style="justify-self:start">Narrativa</h2>
+        <div id="ix-aguja" style="width:100%"></div>
+        <div class="val" id="ix-aguja-val">—</div>
+        <div class="sub" id="ix-aguja-sub"></div>
+      </section>
+      <div class="sm-tiles" id="ix-tiles"></div>
+    </div>
+    <section class="sm-card">
+      <h2>Índice por día de mercado</h2>
+      <p class="sm-note">0 a 100, donde 50 es neutro. Los días no publicados cortan la línea (no se rellenan). Punto hueco = ventana incompleta.</p>
+      <div class="sm-leyenda" id="ix-leyenda"></div>
+      <div class="sm-chart" id="ix-chart"></div>
+    </section>
+    <section class="sm-card" id="ix-div-card">
+      <h2>Divergencia por día</h2>
+      <p class="sm-note">Compara narrativa y hechos sobre los mismos objetos (empresas, sectores, mercados). Bajo 0 = la prensa es más negativa que los hechos sobre esos objetos.</p>
+      <div class="sm-chart" id="ix-div"></div>
+    </section>
+    <section class="sm-card">
+      <h2 id="ix-tabla-titulo">Último día</h2>
+      <p class="sm-note">Componentes de −1 a +1: C1 mercado (40), C2 empresas y sectores (30), C3 amplitud (15), C4 intensidad (15). Si un componente tiene menos de 5 datos se omite y su peso se reparte.</p>
+      <div class="sm-scroll">
+        <table class="sm-t" id="ix-tabla">
+          <thead><tr><th>Línea</th><th class="num">Índice</th><th class="num">C1</th><th class="num">C2</th><th class="num">C3</th><th class="num">C4</th>
+            <th>Usados</th><th class="num">Afectaciones</th><th class="num">Unidades</th><th class="num">Ventana</th><th>Criterios</th><th>Estado</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+    <section class="sm-card">
+      <h2>Sectores · último índice publicado</h2>
+      <p class="sm-note">Ventana de 20 días de mercado. Pulsa una fila para verla arriba. Los no publicados van al final como «sin dato».</p>
+      <div class="sm-scroll alto">
+        <table class="sm-t" id="ix-sectores">
+          <thead><tr><th><button type="button" data-orden="nombre">Sector</button></th>
+            <th class="num"><button type="button" data-orden="narrativa" aria-pressed="true">Narrativa</button></th>
+            <th class="num"><button type="button" data-orden="hechos">Hechos</button></th>
+            <th class="num"><button type="button" data-orden="total">Total</button></th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+    <p class="sm-nota" id="ix-bandas-nota"></p>
+    <p class="sm-nota">Narrativa = opinión, rumor y mercado con causa. Hechos = hechos y analistas. Divergencia = comparación sobre los mismos objetos. Escala absoluta; bandas provisionales.</p>
+  </div>
+
+  <!-- ============ SECTORES ============ -->
+  <div class="sm-page" id="sectores" hidden>
     <div class="sm-ctrl" style="justify-content: space-between;">
+      <div class="sm-orden" role="group" aria-label="Periodo" data-grupo="periodo">
+        <span>Periodo</span>
+        <button type="button" data-periodo="5" aria-pressed="true">Últimos 5 días</button>
+        <button type="button" data-periodo="20" aria-pressed="false">Últimos 20 días</button>
+        <button type="button" data-periodo="todo" aria-pressed="false">Todo desde el 22/10</button>
+      </div>
       <div class="sm-orden" role="group" aria-label="Ordenar">
         <span>Ordenar por</span>
-        <button type="button" data-orden="peor" aria-pressed="true">Peor sentimiento</button>
-        <button type="button" data-orden="mejor" aria-pressed="false">Mejor sentimiento</button>
+        <button type="button" data-orden="peor" aria-pressed="true">Peor tono</button>
+        <button type="button" data-orden="mejor" aria-pressed="false">Mejor tono</button>
+        <button type="button" data-orden="narrativa" aria-pressed="false">Narrativa</button>
         <button type="button" data-orden="noticias" aria-pressed="false">Más noticias</button>
         <button type="button" data-orden="neg" aria-pressed="false">% negativas</button>
       </div>
-      <div class="sm-leyenda"><span>−1</span><span class="barra" id="sm-barra"></span><span>+1</span></div>
     </div>
+    <div class="sm-leyenda"><span>Color del tono medio:</span><span>−1</span><span class="barra" id="sm-barra"></span><span>+1</span>
+      <span>(el tono va de −2 a +2; el color satura en ±1). Gris con «pocos datos» = menos de 10 afectaciones.</span></div>
     <section class="sm-sec">
       <h2>Sectores</h2>
-      <p class="sm-note">Cada tarjeta suma las noticias del sector en conjunto y las de sus empresas. Pulsa una para ver el detalle.</p>
+      <p class="sm-note">Cada tarjeta suma las afectaciones del sector en conjunto y las de sus empresas del universo. Pulsa una para ver el detalle.</p>
       <div class="sm-mapa" id="sm-mapa"></div>
     </section>
     <section class="sm-sec">
       <h2>Mercados y global</h2>
-      <p class="sm-note">Índices o regiones, y lo que mueve a todos los mercados (petróleo, materias primas, divisas…).</p>
+      <p class="sm-note">Índices o regiones, y lo que afecta a todos los mercados (Global · Mercados y Economía).</p>
       <div class="sm-mapa peq" id="sm-mapa-mg"></div>
+    </section>
+    <section class="sm-sec">
+      <h2>Materias primas y divisas</h2>
+      <p class="sm-note">Tono sobre su precio, no sobre las bolsas; fuera del índice.</p>
+      <div class="sm-mapa peq" id="sm-mapa-mp"></div>
     </section>
   </div>
 
   <!-- ============ DETALLE ============ -->
   <div class="sm-page" id="detalle" hidden>
-    <p class="sm-take"><b class="sm-m" data-field="nombre">—</b>: tono medio <b class="sm-m" data-field="media">—</b> en
-      <b class="sm-m" data-field="n">—</b> noticias; <b class="sm-m" data-field="pct_neg">—</b> % negativas.</p>
+    <p class="sm-take" id="dt-frase">—</p>
+    <div class="sm-ctrl">
+      <div class="sm-orden" role="group" aria-label="Periodo" data-grupo="periodo">
+        <span>Periodo</span>
+        <button type="button" data-periodo="5" aria-pressed="true">Últimos 5 días</button>
+        <button type="button" data-periodo="20" aria-pressed="false">Últimos 20 días</button>
+        <button type="button" data-periodo="todo" aria-pressed="false">Todo desde el 22/10</button>
+      </div>
+    </div>
     <div class="sm-ctrl">
       <label for="sm-sector">Sector <select id="sm-sector"></select></label>
       <label for="sm-empresa">Empresa <select id="sm-empresa"></select></label>
       <button id="sm-todo" type="button">Ver todo</button>
+      <label class="chk"><input type="checkbox" id="sm-fuera"> Incluir empresas fuera del universo</label>
     </div>
-    <div class="sm-tiles">
-      <div class="sm-card sm-tile"><div class="lab">Noticias</div><div class="val sm-m" data-field="n">—</div></div>
-      <div class="sm-card sm-tile"><div class="lab">Tono medio (−2 a +2)</div><div class="val sm-m" data-field="media">—</div></div>
-      <div class="sm-card sm-tile"><div class="lab">% negativas</div><div class="val sm-m" data-field="pct_neg">—</div></div>
-      <div class="sm-card sm-tile"><div class="lab">% positivas</div><div class="val sm-m" data-field="pct_pos">—</div></div>
-    </div>
+    <div class="sm-tiles" id="dt-tiles"></div>
     <div class="sm-grid">
       <section class="sm-card">
         <h2>Tono medio por día</h2>
-        <p class="sm-note">Media del tono de las noticias de cada día (fecha de publicación, hora de Madrid).</p>
+        <p class="sm-note">Media del tono de las afectaciones de cada día de mercado (−2 a +2). Debajo, noticias por día.</p>
         <div class="sm-chart" id="sm-chart"></div>
       </section>
       <section class="sm-card">
         <h2 id="sm-rank-titulo">Por sector</h2>
-        <p class="sm-note">Pulsa una fila para verla en detalle.</p>
+        <p class="sm-note">Pulsa una fila para verla en detalle. «Pocos datos» = menos de 10 afectaciones.</p>
         <div class="sm-scroll">
           <table class="sm-t" id="sm-rank">
-            <thead><tr><th>Nombre</th><th class="num">Noticias</th><th class="num">Tono medio</th><th class="num">% negativas</th></tr></thead>
+            <thead><tr><th>Nombre</th><th class="num">Noticias</th><th class="num">Afectaciones</th><th class="num">Tono medio</th><th class="num">% negativas</th></tr></thead>
             <tbody></tbody>
           </table>
         </div>
       </section>
     </div>
     <section class="sm-card">
+      <h2>Por origen</h2>
+      <p class="sm-note">Del objeto y periodo seleccionados. Narrativa = Opinión + Rumor + Mercado; hechos = Hecho + Analista.</p>
+      <table class="sm-t" id="dt-origen">
+        <thead><tr><th>Origen</th><th class="num">Noticias</th><th class="num">Afectaciones</th><th class="num">Tono medio</th><th class="num">% negativas</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </section>
+    <section class="sm-card">
       <h2>Últimos titulares</h2>
-      <p class="sm-note">Cada noticia con el tono que le asignó la clasificación hacia el objeto de la fila. Pulsa el titular para abrir la noticia.</p>
+      <p class="sm-note">Una fila por noticia, con todos sus objetos y el tono hacia cada uno. Pulsa el titular para abrir la noticia.</p>
+      <div class="sm-ctrl" style="margin-bottom: var(--gap-sm)">
+        <label for="dt-f-origen">Origen <select id="dt-f-origen" class="corto"></select></label>
+      </div>
       <div class="sm-scroll">
         <table class="sm-t" id="sm-tit">
-          <thead><tr><th>Día</th><th>Fuente</th><th>Titular</th><th>Objeto</th><th class="num">Tono</th></tr></thead>
+          <thead><tr><th>Día</th><th>Fuente</th><th>Origen</th><th>Titular</th><th>Objetos</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <!-- ============ DESCARTES Y COBERTURA ============ -->
+  <div class="sm-page" id="descartes" hidden>
+    <div class="sm-tiles" id="dc-tiles"></div>
+    <section class="sm-card">
+      <h2>No relevantes por motivo y día</h2>
+      <p class="sm-note">Número de noticias no relevantes por día de mercado. Los motivos menos frecuentes van juntos en «Resto de motivos»; el detalle está en la tabla.</p>
+      <div class="sm-leyenda" id="dc-leyenda"></div>
+      <div class="sm-chart" id="dc-chart"></div>
+    </section>
+    <section class="sm-card">
+      <h2>No relevantes por fuente y motivo</h2>
+      <p class="sm-note">Desde el 22/10.</p>
+      <div class="sm-scroll"><table class="sm-t" id="dc-cruce"><thead></thead><tbody></tbody></table></div>
+    </section>
+    <section class="sm-card">
+      <h2>% clasificado por día</h2>
+      <p class="sm-note">Noticias clasificadas sobre capturadas, todas las fuentes. En rojo, los días por debajo del 90 %.</p>
+      <div class="sm-chart" id="dc-cob"></div>
+    </section>
+    <section class="sm-card">
+      <h2>Titulares no relevantes</h2>
+      <p class="sm-note">Últimos 30 días, del más reciente al más antiguo.</p>
+      <div class="sm-ctrl" style="margin-bottom: var(--gap-sm)">
+        <label for="dc-f-dia">Día <select id="dc-f-dia" class="corto"></select></label>
+        <label for="dc-f-fuente">Fuente <select id="dc-f-fuente" class="corto"></select></label>
+        <label for="dc-f-motivo">Motivo <select id="dc-f-motivo"></select></label>
+        <span class="sm-note" id="dc-f-n" style="margin:0"></span>
+      </div>
+      <div class="sm-scroll alto">
+        <table class="sm-t" id="dc-tit">
+          <thead><tr><th>Día</th><th>Fuente</th><th>Titular</th><th>Motivo</th></tr></thead>
           <tbody></tbody>
         </table>
       </div>
@@ -224,31 +384,69 @@
     </section>
   </footer>
 </div>
-
 <script>
 (() => {
+  // ---------- Constantes ----------
+  const FECHA_INICIO = '2026-10-22';   // la misma que clasificacion/indice.py
+  // Bandas PROVISIONALES del índice: se recalibrarán con 2-3 meses de datos.
+  const BANDAS = [
+    { desde: 0, hasta: 20, nombre: 'Miedo extremo', color: '--banda-1' },
+    { desde: 20, hasta: 40, nombre: 'Miedo', color: '--banda-2' },
+    { desde: 40, hasta: 60, nombre: 'Neutral', color: '--banda-3' },
+    { desde: 60, hasta: 80, nombre: 'Optimismo', color: '--banda-4' },
+    { desde: 80, hasta: 100, nombre: 'Euforia', color: '--banda-5' },
+  ];
+  const MIN_COLOR = 10;        // afectaciones mínimas para colorear una tarjeta o fila
+  const MIN_LINEA = 5;         // afectaciones mínimas para mostrar narrativa / hechos en una tarjeta
+  const MIN_COBERTURA = 90;    // % clasificado mínimo de un día
+  const MATERIAS = new Set(['Petróleo', 'Materias primas', 'Divisas']);
+  const ORIGENES = ['Hecho (empresa o dato oficial)', 'Analista', 'Rumor / según fuentes', 'Opinión / prensa', 'Mercado'];
+  const NARRATIVA = new Set(['Opinión / prensa', 'Rumor / según fuentes', 'Mercado']);
+  const HECHOS = new Set(['Hecho (empresa o dato oficial)', 'Analista']);
   const SECTORES = ['Banca', 'Seguros y servicios financieros', 'Petróleo y gas', 'Eléctricas, renovables y redes', 'Tecnología',
     'Semiconductores', 'Telecomunicaciones', 'Inmobiliario', 'Construcción e infraestructuras', 'Automóvil', 'Transporte y turismo',
     'Consumo y distribución', 'Lujo, moda y cosmética', 'Salud y farmacia', 'Industria, defensa y aeroespacial',
     'Materiales, química y minería', 'Medios y entretenimiento'];
+  const ALCANCES = [['general', 'General'], ['espana', 'España'], ['europa', 'Europa'], ['eeuu', 'EE. UU.']];
+  const LINEAS = [['narrativa', 'Narrativa', '--serie-1', false], ['hechos', 'Hechos', '--serie-2', false], ['total', 'Total', '--serie-resto', true]];
+
   const fmt = new Intl.NumberFormat('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const fmt1 = new Intl.NumberFormat('es-ES', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
   const fmtInt = new Intl.NumberFormat('es-ES');
   const signo = (v) => (v > 0 ? 'pos' : v < 0 ? 'neg' : '');
+  const conSigno = (v, f = fmt) => (v > 0 ? '+' : v < 0 ? '−' : '') + f.format(Math.abs(v));
   const diaCorto = (d) => d.slice(8, 10) + '/' + d.slice(5, 7);
   const token = (n) => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
   const $ = (id) => document.getElementById(id);
+  const el = (tag, txt, cls) => { const x = document.createElement(tag); if (txt != null) x.textContent = txt; if (cls) x.className = cls; return x; };
+  const num = (v) => (v == null ? null : Number(v));
+  const media = (xs) => (xs.length ? xs.reduce((s, v) => s + v, 0) / xs.length : null);
+  const corto = (o) => o.replace(' (empresa o dato oficial)', '').replace(' / según fuentes', '');
 
-  // ---------- Estado ----------
-  const estado = { vista: 'sectores', sel: 'todo', orden: 'peor', afect: [], resumen: [], diario: [] };
+  // Días de mercado (lunes a viernes) entre dos fechas ISO, ambas incluidas.
+  function diasMercado(desde, hasta) {
+    const out = [];
+    for (let d = new Date(desde + 'T12:00:00Z'); d <= new Date(hasta + 'T12:00:00Z'); d.setUTCDate(d.getUTCDate() + 1)) {
+      const w = d.getUTCDay();
+      if (w !== 0 && w !== 6) out.push(d.toISOString().slice(0, 10));
+    }
+    return out;
+  }
+
+  // ---------- Estado y navegación ----------
+  const VISTAS = ['indice', 'sectores', 'detalle', 'descartes'];
+  const estado = { vista: 'indice', sel: 'todo', orden: 'peor', periodo: '5', fuera: false, alcance: 'general',
+    ordenSect: 'narrativa', datos: null };
   const leerHash = () => {
     const h = decodeURIComponent(location.hash.slice(1));
-    if (h.startsWith('detalle')) { estado.vista = 'detalle'; const s = h.split('/')[1]; if (s) estado.sel = s; }
-    else estado.vista = 'sectores';
+    const [v, s] = h.split('/');
+    if (VISTAS.includes(v)) estado.vista = v;
+    if (v === 'detalle' && s) estado.sel = h.slice('detalle/'.length);
   };
   const ir = (vista, sel) => {
     estado.vista = vista; if (sel) estado.sel = sel;
     try {  // al abrir el fichero con doble clic (file://) algunos navegadores no dejan cambiar la dirección
-      history.replaceState(null, '', '#' + (vista === 'detalle' ? 'detalle/' + encodeURIComponent(estado.sel) : 'sectores'));
+      history.replaceState(null, '', '#' + (vista === 'detalle' ? 'detalle/' + encodeURIComponent(estado.sel) : vista));
     } catch (e) { /* sin enlace directo a la vista; la página funciona igual */ }
     dibujar();
   };
@@ -267,234 +465,598 @@
           Range: `${desde}-${desde + 999}`, 'Range-Unit': 'items' } });
         if (!r.ok) {
           const txt = await r.text();
-          throw new Error(`Supabase respondió ${r.status}. ${r.status === 401 || r.status === 403 || txt.includes('permission')
-            ? '¿Has ejecutado sql/004_lectura_panel.sql y usas la clave publishable?' : ''} Detalle: ${txt.slice(0, 200)}`);
+          throw new Error(`Supabase respondió ${r.status} al leer ${ruta.split('?')[0]}. ${r.status === 401 || r.status === 403 || txt.includes('permission')
+            ? '¿Están ejecutadas las migraciones sql/004 a sql/009 y usas la clave publishable?' : ''} Detalle: ${txt.slice(0, 200)}`);
         }
         const lote = await r.json();
         filas.push(...lote);
         if (lote.length < 1000) return filas;
       }
     };
-    const [afect, arts] = await Promise.all([
-      leer('v_afectaciones?select=id,articulo_id,dia,fuente,titulo,ambito,objeto,sector,en_universo,valor,origen,tema&order=id.asc'),
-      leer('articulos?select=id,url&order=id.asc'),
+    const desde = `dia_mercado=gte.${FECHA_INICIO}`;
+    const [afect, arts, noRel, cob, vIndice, indice] = await Promise.all([
+      leer(`v_afectaciones?select=id,articulo_id,dia_mercado,fuente,titulo,ambito,objeto,sector,en_universo,valor,origen&${desde}&order=id.asc`),
+      leer(`articulos?select=id,url&publicado_en=gte.${FECHA_INICIO}T00:00:00Z&order=id.asc`),
+      leer(`v_no_relevantes?select=articulo_id,dia_mercado,publicado_en,fuente,titulo,motivo_no_relevante&${desde}&order=publicado_en.desc`),
+      leer(`v_cobertura?select=dia_mercado,fuente,n_articulos,n_clasificados,n_relevantes,n_no_relevantes&${desde}&order=dia.asc`),
+      leer('v_indice?select=*&order=dia_mercado.asc'),
+      leer('indice_sentimiento?select=*&version_indice=eq.1.1&order=dia_mercado.asc'),
     ]);
     const urls = new Map(arts.map((a) => [a.id, a.url]));
-    for (const a of afect) a.url = urls.get(a.articulo_id) || null;
-    return afect;
-  }
-
-  function calcular(afectaciones) {
-    const g = new Map(), gd = new Map();
-    const add = (clave, tipo, nombre, sector, v) => {
-      let r = g.get(clave);
-      if (!r) { r = { clave, tipo, nombre, sector, n: 0, s: 0, neg: 0, pos: 0 }; g.set(clave, r); }
-      r.n += 1; r.s += v; if (v < 0) r.neg += 1; if (v > 0) r.pos += 1;
-    };
-    const addD = (clave, dia, v) => {
-      const k = clave + '|' + dia;
-      let r = gd.get(k);
-      if (!r) { r = { clave, dia, n: 0, s: 0 }; gd.set(k, r); }
-      r.n += 1; r.s += v;
-    };
-    for (const a of afectaciones) {
-      const v = Number(a.valor), dia = String(a.dia).slice(0, 10);
-      const claves = [['todo', 'todo', 'Todo', null]];
-      if (a.sector) claves.push(['s:' + a.sector, 'sector', a.sector, a.sector]);
-      if (a.ambito === 'Empresa') claves.push(['e:' + a.objeto, 'empresa', a.objeto, a.sector]);
-      if (a.ambito === 'Mercado') claves.push(['m:' + a.objeto, 'mercado', a.objeto, null]);
-      if (a.ambito === 'Global') claves.push(['g:' + a.objeto, 'global', a.objeto, null]);
-      for (const [c, t, n, s] of claves) { add(c, t, n, s, v); addD(c, dia, v); }
+    for (const a of afect) { a.url = urls.get(a.articulo_id) || null; a.valor = Number(a.valor); }
+    for (const a of noRel) a.url = urls.get(a.articulo_id) || null;
+    // Cobertura por día de mercado (todas las fuentes juntas)
+    const porDia = new Map();
+    for (const c of cob) {
+      const r = porDia.get(c.dia_mercado) || { dia: c.dia_mercado, n: 0, clas: 0, rel: 0, norel: 0 };
+      r.n += c.n_articulos; r.clas += c.n_clasificados; r.rel += c.n_relevantes; r.norel += c.n_no_relevantes;
+      porDia.set(c.dia_mercado, r);
     }
-    estado.resumen = [...g.values()].map((r) => ({ clave: r.clave, tipo: r.tipo, nombre: r.nombre, sector: r.sector, n: r.n,
-      media: r.s / r.n, pct_neg: Math.round((r.neg / r.n) * 100), pct_pos: Math.round((r.pos / r.n) * 100) }));
-    estado.diario = [...gd.values()].map((r) => ({ clave: r.clave, dia: r.dia, n: r.n, media: r.s / r.n }));
+    const coberturaDia = [...porDia.values()].sort((a, b) => a.dia.localeCompare(b.dia))
+      .map((r) => ({ ...r, pct: r.n ? (100 * r.clas) / r.n : null }));
+    const ultimo = [...afect.map((a) => a.dia_mercado), ...coberturaDia.map((c) => c.dia)].sort().pop() || FECHA_INICIO;
+    return { afect, noRel, cob, coberturaDia, vIndice, indice, dias: diasMercado(FECHA_INICIO, ultimo), ultimo };
   }
 
-  // ---------- Pantalla de sectores ----------
-  function tinte(media) {
-    const panel = token('--color-panel');
-    const c = media < 0 ? token('--color-bad') : token('--color-ok');
-    if (!media) return panel;
-    return d3.interpolateRgb(panel, c)(Math.min(1, Math.abs(media)) * 0.45);
+  // ---------- Cálculos comunes ----------
+  const esMateria = (a) => a.ambito === 'Global' && MATERIAS.has(a.objeto);
+  const enUniverso = (a) => a.ambito !== 'Empresa' || a.en_universo === true;
+  function diasPeriodo() {
+    const d = estado.datos.dias;
+    return estado.periodo === 'todo' ? d : d.slice(-Number(estado.periodo));
   }
+  function delPeriodo(incluirFuera) {
+    const dias = new Set(diasPeriodo());
+    return estado.datos.afect.filter((a) => dias.has(a.dia_mercado) && (incluirFuera || enUniverso(a)));
+  }
+  // Clave de objeto: todo · s:sector · e:empresa · m:mercado · g:global
+  function coincide(a, clave) {
+    if (clave === 'todo') return !esMateria(a);
+    const t = clave.slice(0, 2), o = clave.slice(2);
+    if (t === 's:') return a.sector === o;
+    if (t === 'e:') return a.ambito === 'Empresa' && a.objeto === o;
+    if (t === 'm:') return a.ambito === 'Mercado' && a.objeto === o;
+    if (t === 'g:') return a.ambito === 'Global' && a.objeto === o;
+    return false;
+  }
+  function stats(afs) {
+    const vs = afs.map((a) => a.valor);
+    const lin = (set) => { const x = afs.filter((a) => set.has(a.origen)).map((a) => a.valor); return { n: x.length, media: media(x) }; };
+    return { afect: afs.length, noticias: new Set(afs.map((a) => a.articulo_id)).size, media: media(vs),
+      pct_neg: afs.length ? Math.round((100 * vs.filter((v) => v < 0).length) / afs.length) : null,
+      pct_pos: afs.length ? Math.round((100 * vs.filter((v) => v > 0).length) / afs.length) : null,
+      narr: lin(NARRATIVA), hech: lin(HECHOS), pocos: afs.length < MIN_COLOR };
+  }
+  function nombreClave(clave) {
+    if (clave === 'todo') return 'Todo';
+    const o = clave.slice(2);
+    return { 's:': o, 'e:': o, 'm:': 'Mercado · ' + o, 'g:': 'Global · ' + o }[clave.slice(0, 2)] || o;
+  }
+  function tinte(m) {
+    const panel = token('--color-panel');
+    if (m == null || !m) return panel;
+    return d3.interpolateRgb(panel, m < 0 ? token('--color-bad') : token('--color-ok'))(Math.min(1, Math.abs(m)) * 0.45);
+  }
+  function tooltip(cont) {
+    const tip = el('div', null, 'sm-tip'); tip.hidden = true; cont.append(tip);
+    return {
+      show(ev, lineas) {
+        tip.replaceChildren(...lineas.map((t, i) => el('div', t, i === 0 ? 'd' : null)));
+        tip.hidden = false;
+        const [px, py] = d3.pointer(ev, cont);
+        tip.style.left = Math.max(0, Math.min(px + 12, cont.clientWidth - tip.offsetWidth - 4)) + 'px';
+        tip.style.top = Math.max(0, py - tip.offsetHeight - 8) + 'px';
+      },
+      hide() { tip.hidden = true; },
+    };
+  }
+  const textoEje = (sel) => sel.attr('fill', 'var(--color-fg-muted)').style('font-size', 'var(--fs-caption)');
+  function ejeFechas(svg, x, dias, y0, W) {
+    const ancho = x.bandwidth ? x.bandwidth() : 0;
+    const paso = Math.max(1, Math.ceil((dias.length * 44) / W));
+    textoEje(svg.append('g').selectAll('text').data(dias.filter((d, i) => i % paso === 0 || i === dias.length - 1)).join('text')
+      .attr('x', (d) => x(d) + ancho / 2).attr('y', y0).attr('text-anchor', 'middle').text(diaCorto));
+  }
+
+  // ---------- Cabecera común ----------
+  function cabecera() {
+    const { coberturaDia, afect, dias, ultimo } = estado.datos;
+    const u = coberturaDia.find((c) => c.dia === ultimo);
+    $('sm-estado').textContent = `Leído a las ${new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })} · `
+      + `último día de mercado ${diaCorto(ultimo)}: ${u && u.pct != null ? fmt1.format(u.pct) + ' % clasificado' : 'sin noticias'} · `
+      + `${fmtInt.format(afect.length)} afectaciones desde el ${diaCorto(FECHA_INICIO)}`;
+    const ult5 = new Set(dias.slice(-5));
+    const bajos = coberturaDia.filter((c) => ult5.has(c.dia) && c.pct != null && c.pct < MIN_COBERTURA);
+    const aviso = $('sm-aviso');
+    aviso.hidden = !bajos.length;
+    if (bajos.length) {
+      aviso.replaceChildren(el('b', 'Faltan noticias por clasificar: lanza /clasificar. '),
+        document.createTextNode(bajos.map((c) => `${diaCorto(c.dia)} ${fmt1.format(c.pct)} %`).join(' · ')
+          + ' (por debajo del 90 %; el índice de esos días no se publica).'));
+    }
+  }
+
+  // ---------- Pantalla: ÍNDICE ----------
+  const banda = (v) => BANDAS.find((b) => v >= b.desde && v <= b.hasta) || BANDAS[2];
+  function pantallaIndice() {
+    const { vIndice, indice, dias } = estado.datos;
+    const sel = $('ix-alcance');
+    if (!sel.options.length) {
+      sel.append(...ALCANCES.map(([v, n]) => new Option(n, v)));
+      const g = document.createElement('optgroup'); g.label = 'Sectores (ventana de 20 días)';
+      g.append(...SECTORES.slice().sort((a, b) => a.localeCompare(b, 'es')).map((s) => new Option(s, 'sector:' + s)));
+      sel.append(g);
+      sel.addEventListener('change', () => { estado.alcance = sel.value; dibujar(); });
+    }
+    sel.value = estado.alcance;
+    const alcance = estado.alcance, esSector = alcance.startsWith('sector:');
+    const filas = vIndice.filter((r) => r.alcance === alcance).sort((a, b) => a.dia_mercado.localeCompare(b.dia_mercado));
+    $('ix-ventana').textContent = esSector ? 'Ventana de 20 días de mercado. Los sectores no tienen divergencia.'
+      : 'Ventana de 5 días de mercado.';
+    const ultimoPub = (campo) => [...filas].reverse().find((r) => r[campo] != null);
+    // Aguja con la narrativa
+    const n = ultimoPub('indice_narrativa');
+    aguja($('ix-aguja'), n ? num(n.indice_narrativa) : null);
+    $('ix-aguja-val').textContent = n ? fmt1.format(num(n.indice_narrativa)) : 'sin dato';
+    $('ix-aguja-sub').textContent = n ? `${banda(num(n.indice_narrativa)).nombre} (provisional) · ${diaCorto(n.dia_mercado)} · ${fmtInt.format(n.n_narrativa)} afectaciones`
+      + (n.dias_con_datos < n.ventana_dias ? ` · ventana incompleta: ${n.dias_con_datos} de ${n.ventana_dias} días` : '')
+      : 'Ningún día publicado para este alcance.';
+    // Tarjetas: hechos, total, divergencia
+    const tile = (lab, val, sub) => { const c = el('div', null, 'sm-card sm-tile'); c.append(el('div', lab, 'lab'), el('div', val, 'val'), el('div', sub, 'sub')); return c; };
+    const h = ultimoPub('indice_hechos'), t = ultimoPub('indice_total'), dv = ultimoPub('divergencia');
+    const tiles = [
+      tile('Hechos', h ? fmt1.format(num(h.indice_hechos)) : 'sin dato', h ? `${diaCorto(h.dia_mercado)} · ${fmtInt.format(h.n_hechos)} afectaciones` : ''),
+      tile('Total (informativo)', t ? fmt1.format(num(t.indice_total)) : 'sin dato', t ? `${diaCorto(t.dia_mercado)} · ${fmtInt.format(t.n_total)} afectaciones` : ''),
+    ];
+    if (!esSector) {
+      const d = tile('Divergencia', dv ? conSigno(num(dv.divergencia), fmt1) : 'sin dato',
+        dv ? `${diaCorto(dv.dia_mercado)} · ${fmtInt.format(dv.n_unidades_divergencia)} objetos comunes` : 'menos de 5 objetos comunes');
+      if (dv) d.querySelector('.val').classList.add(signo(num(dv.divergencia)));
+      tiles.push(d);
+    }
+    $('ix-tiles').replaceChildren(...tiles);
+    // Leyenda y gráfico de líneas
+    $('ix-leyenda').replaceChildren(...LINEAS.map(([, nom, c, dash]) => {
+      const s = el('span'); const l = el('span', null, 'ln' + (dash ? ' dash' : '')); l.style.borderTopColor = `var(${c})`; s.append(l, nom); return s;
+    }), el('span', '○ ventana incompleta'));
+    graficoIndice($('ix-chart'), filas, dias);
+    $('ix-div-card').hidden = esSector;
+    if (!esSector) graficoDivergencia($('ix-div'), filas, dias);
+    // Tabla del último día
+    const ultDia = indice.filter((r) => r.alcance === alcance).map((r) => r.dia_mercado).sort().pop();
+    $('ix-tabla-titulo').textContent = 'Último día' + (ultDia ? ` (${diaCorto(ultDia)})` : '');
+    const c4 = (v) => (v == null ? '—' : conSigno(num(v)));
+    $('ix-tabla').tBodies[0].replaceChildren(...LINEAS.map(([l, nom]) => {
+      const r = indice.find((x) => x.alcance === alcance && x.linea === l && x.dia_mercado === ultDia);
+      const tr = el('tr');
+      if (!r) { tr.append(el('td', nom), el('td', '—', 'num')); return tr; }
+      tr.append(el('td', nom), el('td', r.publicado ? fmt1.format(num(r.valor)) : '—', 'num'),
+        el('td', c4(r.c1), 'num'), el('td', c4(r.c2), 'num'), el('td', c4(r.c3), 'num'), el('td', c4(r.c4), 'num'),
+        el('td', (r.componentes_usados || []).map((x) => x.toUpperCase()).join(', ') || '—'),
+        el('td', fmtInt.format(r.n_afectaciones), 'num'), el('td', fmtInt.format(r.n_unidades), 'num'),
+        el('td', `${r.dias_con_datos ?? '?'} de ${r.ventana_dias} días`, 'num'),
+        el('td', r.versiones_criterios || '—'), el('td', r.publicado ? 'publicado' : r.motivo_no_publicado));
+      if (!r.publicado) tr.className = 'gris';
+      return tr;
+    }));
+    // Banda provisional
+    $('ix-bandas-nota').textContent = 'Bandas PROVISIONALES (se recalibrarán con 2-3 meses de datos): '
+      + BANDAS.map((b) => `${b.desde}-${b.hasta} ${b.nombre.toLowerCase()}`).join(' · ') + '.';
+    tablaSectoresIndice();
+  }
+  function aguja(cont, valor) {
+    cont.replaceChildren();
+    const W = 260, H = 140, cx = W / 2, cy = 128, R = 112, r0 = 84;
+    const svg = d3.select(cont).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img')
+      .attr('aria-label', valor == null ? 'Sin dato' : `Narrativa ${fmt1.format(valor)} sobre 100`);
+    const ang = d3.scaleLinear([0, 100], [-Math.PI / 2, Math.PI / 2]);
+    const arco = d3.arc().innerRadius(r0).outerRadius(R).padAngle(0.012).cornerRadius(3);
+    svg.append('g').attr('transform', `translate(${cx},${cy})`).selectAll('path').data(BANDAS).join('path')
+      .attr('d', (b) => arco({ startAngle: ang(b.desde), endAngle: ang(b.hasta) })).attr('fill', (b) => `var(${b.color})`)
+      .attr('stroke', 'var(--color-border-line)').attr('stroke-width', 0.5);
+    textoEje(svg.append('g').selectAll('text').data([0, 50, 100]).join('text')
+      .attr('x', (v) => cx + (R + 0) * Math.sin(ang(v)) * (v === 50 ? 0 : 1.0)).attr('y', (v) => (v === 50 ? cy - R - 4 : cy + 12))
+      .attr('text-anchor', (v) => (v === 0 ? 'start' : v === 100 ? 'end' : 'middle')).text((v) => v));
+    if (valor == null) return;
+    const a = ang(valor);
+    svg.append('line').attr('x1', cx).attr('y1', cy).attr('x2', cx + (R - 6) * Math.sin(a)).attr('y2', cy - (R - 6) * Math.cos(a))
+      .attr('stroke', 'var(--color-fg)').attr('stroke-width', 3).attr('stroke-linecap', 'round');
+    svg.append('circle').attr('cx', cx).attr('cy', cy).attr('r', 6).attr('fill', 'var(--color-fg)');
+  }
+  function graficoIndice(cont, filas, dias) {
+    cont.replaceChildren();
+    const W = cont.clientWidth || 800, H = 280, m = { t: 12, r: 70, b: 26, l: 34 };
+    const svg = d3.select(cont).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`);
+    const x = d3.scalePoint(dias, [m.l + 10, W - m.r]);
+    const y = d3.scaleLinear([0, 100], [H - m.b, m.t]);
+    svg.append('g').selectAll('rect').data(BANDAS).join('rect').attr('x', m.l).attr('width', W - m.r - m.l + 40)
+      .attr('y', (b) => y(b.hasta)).attr('height', (b) => y(b.desde) - y(b.hasta)).attr('fill', (b) => `var(${b.color})`).attr('opacity', 0.6);
+    textoEje(svg.append('g').selectAll('text').data([0, 20, 40, 50, 60, 80, 100]).join('text').attr('x', m.l - 6).attr('y', (d) => y(d))
+      .attr('dy', '0.32em').attr('text-anchor', 'end').text((d) => d));
+    svg.append('line').attr('x1', m.l).attr('x2', W - m.r + 40).attr('y1', y(50)).attr('y2', y(50)).attr('stroke', 'var(--cds-chart-axis)').attr('stroke-dasharray', '2 3');
+    ejeFechas(svg, x, dias, H - 6, W);
+    const porDia = new Map(filas.map((r) => [r.dia_mercado, r]));
+    for (const [l, nom, color, dash] of LINEAS) {
+      const pts = dias.map((d) => { const r = porDia.get(d); return { d, r, v: r ? num(r['indice_' + l]) : null }; });
+      svg.append('path').datum(pts).attr('fill', 'none').attr('stroke', `var(${color})`).attr('stroke-width', dash ? 1.5 : 2)
+        .attr('stroke-dasharray', dash ? '5 4' : null).attr('opacity', dash ? 0.8 : 1).attr('stroke-linejoin', 'round').attr('stroke-linecap', 'round')
+        .attr('d', d3.line().defined((p) => p.v != null).x((p) => x(p.d)).y((p) => y(p.v)));
+      if (!dash) {
+        svg.append('g').selectAll('circle').data(pts.filter((p) => p.v != null)).join('circle')
+          .attr('cx', (p) => x(p.d)).attr('cy', (p) => y(p.v)).attr('r', 4)
+          .attr('fill', (p) => (p.r.dias_con_datos < p.r.ventana_dias ? 'var(--color-panel)' : `var(${color})`))
+          .attr('stroke', `var(${color})`).attr('stroke-width', 2);
+      }
+      const ult = dash ? null : pts.filter((p) => p.v != null).pop();  // el total (discontinuo) va solo en la leyenda
+      if (ult) textoEje(svg.append('text').attr('x', x(ult.d) + 8).attr('y', y(ult.v)).attr('dy', '0.32em').text(`${nom} ${fmt1.format(ult.v)}`))
+        .attr('fill', 'var(--color-fg)');
+    }
+    // Capa de hover: línea vertical y tooltip por día
+    const tip = tooltip(cont);
+    const guia = svg.append('line').attr('y1', m.t).attr('y2', H - m.b).attr('stroke', 'var(--cds-chart-axis)').attr('opacity', 0);
+    svg.append('rect').attr('x', m.l).attr('y', m.t).attr('width', W - m.l - m.r + 40).attr('height', H - m.t - m.b).attr('fill', 'transparent')
+      .on('mousemove', (ev) => {
+        const [px] = d3.pointer(ev);
+        const d = dias.reduce((a, b) => (Math.abs(x(b) - px) < Math.abs(x(a) - px) ? b : a));
+        const r = porDia.get(d);
+        guia.attr('x1', x(d)).attr('x2', x(d)).attr('opacity', 1);
+        const lineas = [diaCorto(d)];
+        if (!r) lineas.push('sin filas');
+        else {
+          for (const [l, nom] of LINEAS) lineas.push(`${nom}: ${r['indice_' + l] != null ? fmt1.format(num(r['indice_' + l])) : 'sin dato'} (${fmtInt.format(r['n_' + l] || 0)} afect.)`);
+          if (r.dias_con_datos < r.ventana_dias) lineas.push(`ventana incompleta: ${r.dias_con_datos} de ${r.ventana_dias} días`);
+        }
+        tip.show(ev, lineas);
+      })
+      .on('mouseleave', () => { guia.attr('opacity', 0); tip.hide(); });
+  }
+  function graficoDivergencia(cont, filas, dias) {
+    cont.replaceChildren();
+    const W = cont.clientWidth || 800, H = 180, m = { t: 10, r: 8, b: 26, l: 34 };
+    const svg = d3.select(cont).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`);
+    const porDia = new Map(filas.map((r) => [r.dia_mercado, r]));
+    const vals = filas.map((r) => num(r.divergencia)).filter((v) => v != null);
+    const lim = Math.max(10, Math.ceil(d3.max(vals.map(Math.abs)) / 10) * 10 || 10);
+    const x = d3.scaleBand(dias, [m.l, W - m.r]).padding(0.35);
+    const y = d3.scaleLinear([-lim, lim], [H - m.b, m.t]);
+    svg.append('g').selectAll('line').data(y.ticks(4)).join('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', (d) => y(d)).attr('y2', (d) => y(d))
+      .attr('stroke', (d) => (d === 0 ? 'var(--cds-chart-axis)' : 'var(--cds-chart-grid)'));
+    textoEje(svg.append('g').selectAll('text').data(y.ticks(4)).join('text').attr('x', m.l - 6).attr('y', (d) => y(d)).attr('dy', '0.32em')
+      .attr('text-anchor', 'end').text((d) => (d > 0 ? '+' + d : d)));
+    ejeFechas(svg, x, dias, H - 6, W);
+    const tip = tooltip(cont);
+    const datos = dias.map((d) => ({ d, r: porDia.get(d) })).filter((p) => p.r && p.r.divergencia != null);
+    svg.append('g').selectAll('rect').data(datos).join('rect').attr('x', (p) => x(p.d)).attr('width', x.bandwidth())
+      .attr('y', (p) => Math.min(y(num(p.r.divergencia)), y(0))).attr('height', (p) => Math.max(1, Math.abs(y(num(p.r.divergencia)) - y(0)))).attr('rx', 3)
+      .attr('fill', (p) => (num(p.r.divergencia) < 0 ? 'var(--polo-neg)' : 'var(--polo-pos)'))
+      .on('mousemove', (ev, p) => tip.show(ev, [diaCorto(p.d), `Divergencia ${conSigno(num(p.r.divergencia), fmt1)} puntos`,
+        `${fmtInt.format(p.r.n_unidades_divergencia)} objetos comunes`]))
+      .on('mouseleave', () => tip.hide());
+    const sinDato = dias.filter((d) => { const r = porDia.get(d); return !r || r.divergencia == null; });
+    textoEje(svg.append('g').selectAll('text').data(sinDato).join('text').attr('x', (d) => x(d) + x.bandwidth() / 2).attr('y', y(0) - 4)
+      .attr('text-anchor', 'middle').text('—'));
+  }
+  function tablaSectoresIndice() {
+    const { vIndice } = estado.datos;
+    const filas = SECTORES.map((s) => {
+      const rs = vIndice.filter((r) => r.alcance === 'sector:' + s).sort((a, b) => b.dia_mercado.localeCompare(a.dia_mercado));
+      const ult = (l) => { const r = rs.find((x) => x['indice_' + l] != null); return r ? { v: num(r['indice_' + l]), n: r['n_' + l], dia: r.dia_mercado } : null; };
+      return { s, narrativa: ult('narrativa'), hechos: ult('hechos'), total: ult('total') };
+    });
+    const o = estado.ordenSect;
+    filas.sort((a, b) => {
+      if (o === 'nombre') return a.s.localeCompare(b.s, 'es');
+      if (!a[o] !== !b[o]) return a[o] ? -1 : 1;
+      return a[o] && b[o] ? b[o].v - a[o].v : a.s.localeCompare(b.s, 'es');
+    });
+    const ultimo = estado.datos.ultimo;
+    const celda = (x) => el('td', x ? fmt1.format(x.v) + ` (${fmtInt.format(x.n)})` + (x.dia !== ultimo ? ` · ${diaCorto(x.dia)}` : '') : 'sin dato', 'num');
+    $('ix-sectores').tBodies[0].replaceChildren(...filas.map((f) => {
+      const tr = el('tr', null, 'clic' + (f.narrativa || f.hechos || f.total ? '' : ' gris'));
+      tr.append(el('td', f.s), celda(f.narrativa), celda(f.hechos), celda(f.total));
+      tr.addEventListener('click', () => { estado.alcance = 'sector:' + f.s; dibujar(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
+      return tr;
+    }));
+    document.querySelectorAll('#ix-sectores th button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.orden === o)));
+  }
+  document.querySelectorAll('#ix-sectores th button').forEach((b) => b.addEventListener('click', () => { estado.ordenSect = b.dataset.orden; tablaSectoresIndice(); }));
+
+  // ---------- Pantalla: SECTORES ----------
   function chispa(cont, serie) {
     cont.replaceChildren();
-    if (serie.length < 2) return;
+    if (serie.filter((d) => d.media != null).length < 2) return;
     const W = cont.clientWidth || 160, H = 28;
     const x = d3.scalePoint(serie.map((d) => d.dia), [2, W - 2]);
     const y = d3.scaleLinear([-2, 2], [H - 2, 2]);
     const svg = d3.select(cont).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).attr('aria-hidden', 'true');
     svg.append('line').attr('x1', 0).attr('x2', W).attr('y1', y(0)).attr('y2', y(0)).attr('stroke', 'var(--cds-chart-grid)');
     svg.append('path').datum(serie).attr('fill', 'none').attr('stroke', 'var(--color-fg-muted)').attr('stroke-width', 1.5)
-      .attr('stroke-linecap', 'round').attr('stroke-linejoin', 'round').attr('d', d3.line().x((d) => x(d.dia)).y((d) => y(d.media)));
-    const u = serie[serie.length - 1];
+      .attr('stroke-linecap', 'round').attr('stroke-linejoin', 'round')
+      .attr('d', d3.line().defined((d) => d.media != null).x((d) => x(d.dia)).y((d) => y(d.media)));
+    const u = serie.filter((d) => d.media != null).pop();
     svg.append('circle').attr('cx', x(u.dia)).attr('cy', y(u.media)).attr('r', 2.5).attr('fill', 'var(--color-fg)');
   }
-  function tarjeta(clave, nombre, fila, serie) {
-    const b = document.createElement('button');
-    b.type = 'button'; b.className = 'sm-sc';
-    const nom = document.createElement('div'); nom.className = 'nom'; nom.textContent = nombre;
-    b.append(nom);
-    if (!fila) {
-      b.classList.add('vacio'); b.disabled = true;
-      const t = document.createElement('div'); t.className = 'det'; t.textContent = 'Sin noticias en el periodo';
-      b.append(t); return b;
+  function tarjeta(clave, nombre, afs, dias) {
+    const b = el('button', null, 'sm-sc'); b.type = 'button';
+    const nom = el('div', nombre, 'nom'); b.append(nom);
+    if (!afs.length) {
+      b.classList.add('vacio'); b.disabled = true; b.append(el('div', 'Sin noticias en el periodo', 'det')); return b;
     }
-    b.style.background = tinte(fila.media);
-    const tono = document.createElement('div');
-    tono.className = 'tono ' + signo(fila.media);
-    tono.textContent = (fila.media > 0 ? '+' : '') + fmt.format(fila.media);
-    const det = document.createElement('div'); det.className = 'det';
-    det.textContent = `${fmtInt.format(fila.n)} noticias · ${fila.pct_neg} % negativas`;
-    const sp = document.createElement('div'); sp.className = 'spark';
-    b.append(tono, det, sp);
-    b.setAttribute('aria-label', `${nombre}: tono medio ${fmt.format(fila.media)}, ${fila.n} noticias. Ver detalle`);
+    const s = stats(afs);
+    if (s.pocos) { b.classList.add('pocos'); nom.append(el('span', 'pocos datos', 'etq')); } else b.style.background = tinte(s.media);
+    const lin = (nomL, x) => `${nomL} ${x.n >= MIN_LINEA ? conSigno(x.media) : '—'} (${x.n})`;
+    b.append(el('div', conSigno(s.media), 'tono ' + (s.pocos ? '' : signo(s.media))),
+      el('div', `${lin('narrativa', s.narr)} · ${lin('hechos', s.hech)}`, 'lin'),
+      el('div', `${fmtInt.format(s.noticias)} noticias · ${fmtInt.format(s.afect)} afectaciones · ${s.pct_neg} % negativas`, 'det'));
+    const sp = el('div', null, 'spark'); b.append(sp);
+    const serie = dias.map((d) => ({ dia: d, media: media(afs.filter((a) => a.dia_mercado === d).map((a) => a.valor)) }));
+    b.setAttribute('aria-label', `${nombre}: tono medio ${fmt.format(s.media)}, ${s.noticias} noticias. Ver detalle`);
     b.addEventListener('click', () => ir('detalle', clave));
     requestAnimationFrame(() => chispa(sp, serie));
+    b._s = s;
     return b;
   }
-  function ordenar(lista) {
+  function ordenar(tarjetas) {
+    const v = (t) => t._s;
     const f = {
-      peor: (a, b) => a.fila.media - b.fila.media || b.fila.n - a.fila.n,
-      mejor: (a, b) => b.fila.media - a.fila.media || b.fila.n - a.fila.n,
-      noticias: (a, b) => b.fila.n - a.fila.n,
-      neg: (a, b) => b.fila.pct_neg - a.fila.pct_neg || b.fila.n - a.fila.n,
+      peor: (a, b) => v(a).media - v(b).media,
+      mejor: (a, b) => v(b).media - v(a).media,
+      noticias: (a, b) => v(b).noticias - v(a).noticias,
+      neg: (a, b) => v(b).pct_neg - v(a).pct_neg,
+      narrativa: (a, b) => {
+        const na = v(a).narr.n >= MIN_LINEA ? v(a).narr.media : null, nb = v(b).narr.n >= MIN_LINEA ? v(b).narr.media : null;
+        if ((na == null) !== (nb == null)) return na == null ? 1 : -1;
+        return (na ?? 0) - (nb ?? 0);
+      },
     }[estado.orden];
-    return [...lista.filter((x) => x.fila).sort(f), ...lista.filter((x) => !x.fila)];
+    const grupo = (t) => (!t._s ? 2 : t._s.pocos ? 1 : 0);   // con datos · pocos datos · vacías
+    return tarjetas.sort((a, b) => grupo(a) - grupo(b) || (grupo(a) < 2 ? f(a, b) || v(b).afect - v(a).afect : 0));
   }
   function pantallaSectores() {
-    const porClave = new Map(estado.resumen.map((r) => [r.clave, r]));
-    const series = d3.group(estado.diario, (d) => d.clave);
-    const serie = (k) => (series.get(k) || []).slice().sort((a, b) => a.dia.localeCompare(b.dia));
-    $('sm-mapa').replaceChildren(...ordenar(SECTORES.map((s) => ({ clave: 's:' + s, nombre: s, fila: porClave.get('s:' + s) })))
-      .map((x) => tarjeta(x.clave, x.nombre, x.fila, serie(x.clave))));
-    $('sm-mapa-mg').replaceChildren(...ordenar(estado.resumen.filter((r) => r.tipo === 'mercado' || r.tipo === 'global')
-      .map((r) => ({ clave: r.clave, nombre: r.nombre, fila: r }))).map((x) => tarjeta(x.clave, x.nombre, x.fila, serie(x.clave))));
+    const afs = delPeriodo(false), dias = diasPeriodo();
+    const t = (clave, nombre) => tarjeta(clave, nombre, afs.filter((a) => coincide(a, clave)), dias);
+    $('sm-mapa').replaceChildren(...ordenar(SECTORES.map((s) => t('s:' + s, s))));
+    const objetos = (ambito, filtro) => [...new Set(afs.filter((a) => a.ambito === ambito && filtro(a)).map((a) => a.objeto))];
+    $('sm-mapa-mg').replaceChildren(...ordenar([
+      ...objetos('Mercado', () => true).map((o) => t('m:' + o, o)),
+      ...objetos('Global', (a) => !esMateria(a)).map((o) => t('g:' + o, o)),
+    ]));
+    $('sm-mapa-mp').replaceChildren(...ordenar([...MATERIAS].map((o) => t('g:' + o, o))));
     $('sm-barra').style.background = `linear-gradient(90deg, ${tinte(-1)}, ${tinte(0)}, ${tinte(1)})`;
   }
-  document.querySelectorAll('.sm-orden button').forEach((b) => b.addEventListener('click', () => {
-    estado.orden = b.dataset.orden;
-    document.querySelectorAll('.sm-orden button').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
-    dibujar();
-  }));
 
-  // ---------- Detalle ----------
+  // ---------- Pantalla: DETALLE ----------
   const selSector = $('sm-sector'), selEmpresa = $('sm-empresa'), chart = $('sm-chart'), rank = $('sm-rank'), tit = $('sm-tit');
   selSector.addEventListener('change', () => ir('detalle', selSector.value ? 's:' + selSector.value : 'todo'));
   selEmpresa.addEventListener('change', () => ir('detalle', selEmpresa.value ? 'e:' + selEmpresa.value : (selSector.value ? 's:' + selSector.value : 'todo')));
   $('sm-todo').addEventListener('click', () => ir('detalle', 'todo'));
+  $('sm-fuera').addEventListener('change', (e) => { estado.fuera = e.target.checked; dibujar(); });
+  $('dt-f-origen').addEventListener('change', () => titulares());
   rank.addEventListener('click', (e) => { const tr = e.target.closest('tr[data-key]'); if (tr) ir('detalle', tr.dataset.key); });
-
   function detalle() {
-    const sel = estado.sel, filas = estado.resumen;
-    const fila = filas.find((r) => r.clave === sel);
-    document.querySelectorAll('.sm-m').forEach((el) => {
-      el.classList.remove('pos', 'neg');
-      if (!fila) { el.textContent = '—'; return; }
-      const f = el.dataset.field, v = fila[f];
-      if (f === 'media') { el.textContent = fmt.format(v); if (signo(v)) el.classList.add(signo(v)); }
-      else if (f === 'n' || f === 'pct_neg' || f === 'pct_pos') el.textContent = fmtInt.format(v);
-      else el.textContent = v;
-    });
-    // selectores
-    const sector = fila && fila.sector ? fila.sector : '';
-    const sectores = filas.filter((r) => r.tipo === 'sector').sort((a, b) => a.nombre.localeCompare(b.nombre, 'es'));
-    selSector.replaceChildren(new Option('Todos los sectores', ''), ...sectores.map((r) => new Option(r.nombre, r.nombre)));
+    const sel = estado.sel, base = delPeriodo(estado.fuera), dias = diasPeriodo();
+    const afs = base.filter((a) => coincide(a, sel));
+    const s = stats(afs);
+    $('sm-fuera').checked = estado.fuera;
+    // Frase y tarjetas
+    const frase = $('dt-frase'); frase.replaceChildren();
+    frase.append(el('b', nombreClave(sel)), document.createTextNode(afs.length
+      ? `: tono medio ${conSigno(s.media)} en ${fmtInt.format(s.noticias)} noticias (${fmtInt.format(s.afect)} afectaciones); ${s.pct_neg} % negativas.`
+      : ': sin afectaciones en el periodo.'));
+    const tile = (lab, val, cls) => { const c = el('div', null, 'sm-card sm-tile'); c.append(el('div', lab, 'lab'), el('div', val, 'val ' + (cls || ''))); return c; };
+    $('dt-tiles').replaceChildren(tile('Noticias', fmtInt.format(s.noticias)), tile('Afectaciones', fmtInt.format(s.afect)),
+      tile('Tono medio (−2 a +2)', s.media == null ? '—' : conSigno(s.media), s.pocos ? '' : signo(s.media)),
+      tile('% negativas', s.pct_neg == null ? '—' : s.pct_neg + ' %'), tile('% positivas', s.pct_pos == null ? '—' : s.pct_pos + ' %'));
+    // Selectores
+    const sector = sel.startsWith('s:') ? sel.slice(2) : sel.startsWith('e:') ? (base.find((a) => coincide(a, sel)) || {}).sector || '' : '';
+    selSector.replaceChildren(new Option('Todos los sectores', ''), ...SECTORES.slice().sort((a, b) => a.localeCompare(b, 'es')).map((x) => new Option(x, x)));
     selSector.value = sector;
-    const empresas = filas.filter((r) => r.tipo === 'empresa' && (!sector || r.sector === sector)).sort((a, b) => a.nombre.localeCompare(b.nombre, 'es'));
-    selEmpresa.replaceChildren(new Option(sector ? 'Todas las de ' + sector : 'Todas las empresas', ''),
-      ...empresas.map((r) => new Option(`${r.nombre} (${r.n})`, r.nombre)));
-    selEmpresa.value = fila && fila.tipo === 'empresa' ? fila.nombre : '';
-    // ranking
-    let lista, titulo;
-    if (fila && (fila.tipo === 'sector' || fila.tipo === 'empresa')) {
-      lista = filas.filter((r) => r.tipo === 'empresa' && r.sector === fila.sector); titulo = 'Empresas de ' + fila.sector;
-    } else { lista = filas.filter((r) => r.tipo === 'sector'); titulo = 'Por sector'; }
-    lista.sort((a, b) => b.n - a.n || a.nombre.localeCompare(b.nombre, 'es'));
+    const empresas = d3.rollups(base.filter((a) => a.ambito === 'Empresa' && (!sector || a.sector === sector)), (v) => v.length, (a) => a.objeto)
+      .sort((a, b) => a[0].localeCompare(b[0], 'es'));
+    selEmpresa.replaceChildren(new Option(sector ? 'Todas las de ' + sector : 'Todas las empresas', ''), ...empresas.map(([e, n]) => new Option(`${e} (${n})`, e)));
+    selEmpresa.value = sel.startsWith('e:') ? sel.slice(2) : '';
+    // Ranking
+    let claves, titulo;
+    if (sector) { claves = [...new Set(base.filter((a) => a.ambito === 'Empresa' && a.sector === sector).map((a) => 'e:' + a.objeto))]; titulo = 'Empresas de ' + sector; }
+    else { claves = SECTORES.map((x) => 's:' + x); titulo = 'Por sector'; }
+    const filas = claves.map((k) => ({ k, s: stats(base.filter((a) => coincide(a, k))) })).filter((f) => f.s.afect);
+    filas.sort((a, b) => a.s.pocos - b.s.pocos || b.s.noticias - a.s.noticias || a.k.localeCompare(b.k, 'es'));
     $('sm-rank-titulo').textContent = titulo;
-    const td = (t, c) => { const x = document.createElement('td'); x.textContent = t; if (c) x.className = c; return x; };
-    rank.tBodies[0].replaceChildren(...lista.map((r) => {
-      const tr = document.createElement('tr'); tr.className = 'clic'; tr.dataset.key = r.clave;
-      tr.append(td(r.nombre), td(fmtInt.format(r.n), 'num'), td(fmt.format(r.media), 'num ' + signo(r.media)), td(r.pct_neg + ' %', 'num'));
-      if (r.clave === sel) tr.style.fontWeight = 'var(--fw-medium)';
+    rank.tBodies[0].replaceChildren(...filas.map(({ k, s: r }) => {
+      const tr = el('tr', null, 'clic' + (r.pocos ? ' gris' : '')); tr.dataset.key = k;
+      const n = el('td', nombreClave(k)); if (r.pocos) n.append(el('span', 'pocos datos', 'etq'));
+      tr.append(n, el('td', fmtInt.format(r.noticias), 'num'), el('td', fmtInt.format(r.afect), 'num'),
+        el('td', conSigno(r.media), 'num ' + (r.pocos ? '' : signo(r.media))), el('td', r.pct_neg + ' %', 'num'));
+      if (k === sel) tr.style.fontWeight = 'var(--fw-medium)';
       return tr;
     }));
-    // titulares
-    const pref = sel.slice(0, 2), obj = sel.slice(2);
-    let tl = estado.afect;
-    if (pref === 's:') tl = tl.filter((a) => a.sector === obj);
-    else if (pref === 'e:') tl = tl.filter((a) => a.ambito === 'Empresa' && a.objeto === obj);
-    else if (pref === 'm:') tl = tl.filter((a) => a.ambito === 'Mercado' && a.objeto === obj);
-    else if (pref === 'g:') tl = tl.filter((a) => a.ambito === 'Global' && a.objeto === obj);
-    tl = [...tl].sort((a, b) => String(b.dia).localeCompare(String(a.dia)) || b.id - a.id).slice(0, 60);
-    tit.tBodies[0].replaceChildren(...tl.map((a) => {
-      const tr = document.createElement('tr'); const v = Number(a.valor);
-      const celda = document.createElement('td');
-      if (a.url && /^https?:\/\//.test(a.url)) {
-        const link = document.createElement('a');
-        link.href = a.url; link.target = '_blank'; link.rel = 'noopener'; link.textContent = a.titulo;
-        celda.append(link);
-      } else celda.textContent = a.titulo;
-      tr.append(td(diaCorto(String(a.dia))), td(a.fuente), celda, td(a.objeto), td(v > 0 ? '+' + v : String(v), 'num ' + signo(v)));
+    // Por origen
+    const fila = (nom, xs, cls) => {
+      const r = stats(xs), tr = el('tr', null, cls || '');
+      tr.append(el('td', nom), el('td', fmtInt.format(r.noticias), 'num'), el('td', fmtInt.format(r.afect), 'num'),
+        el('td', r.media == null ? '—' : conSigno(r.media), 'num ' + signo(r.media)), el('td', r.pct_neg == null ? '—' : r.pct_neg + ' %', 'num'));
       return tr;
-    }));
-    grafico(estado.diario.filter((r) => r.clave === sel).sort((a, b) => a.dia.localeCompare(b.dia)));
+    };
+    $('dt-origen').tBodies[0].replaceChildren(...ORIGENES.map((o) => fila(corto(o), afs.filter((a) => a.origen === o))),
+      fila('Narrativa (Opinión + Rumor + Mercado)', afs.filter((a) => NARRATIVA.has(a.origen)), 'resumen'),
+      fila('Hechos (Hecho + Analista)', afs.filter((a) => HECHOS.has(a.origen))));
+    // Filtro de origen de los titulares
+    const fo = $('dt-f-origen');
+    if (!fo.options.length) fo.append(new Option('Todos', ''), ...ORIGENES.map((o) => new Option(corto(o), o)));
+    titulares();
+    grafico(afs, dias);
   }
-
-  function grafico(datos) {
+  function titulares() {
+    const sel = estado.sel, base = delPeriodo(estado.fuera), origen = $('dt-f-origen').value;
+    const ids = new Set(base.filter((a) => coincide(a, sel)).map((a) => a.articulo_id));
+    const porArt = d3.group(base.filter((a) => ids.has(a.articulo_id) && (!origen || a.origen === origen)), (a) => a.articulo_id);
+    const lista = [...porArt.values()].sort((a, b) => b[0].dia_mercado.localeCompare(a[0].dia_mercado) || b[0].articulo_id - a[0].articulo_id).slice(0, 80);
+    tit.tBodies[0].replaceChildren(...lista.map((afs) => {
+      const a = afs[0], tr = el('tr');
+      const celda = el('td');
+      if (a.url && /^https?:\/\//.test(a.url)) {
+        const link = el('a', a.titulo); link.href = a.url; link.target = '_blank'; link.rel = 'noopener'; celda.append(link);
+      } else celda.textContent = a.titulo;
+      const objs = el('td');
+      afs.forEach((x, i) => {
+        if (i) objs.append(document.createTextNode(' · '));
+        const v = x.valor;
+        objs.append(document.createTextNode(x.objeto + ' '), el('span', v > 0 ? '+' + v : v < 0 ? '−' + Math.abs(v) : '0', signo(v)));
+      });
+      tr.append(el('td', diaCorto(a.dia_mercado)), el('td', a.fuente), el('td', corto(a.origen)), celda, objs);
+      return tr;
+    }));
+  }
+  function grafico(afs, dias) {
     chart.replaceChildren();
-    if (!datos.length) return;
-    const W = chart.clientWidth || 600, H = 240, m = { t: 12, r: 8, b: 26, l: 30 };
+    if (!afs.length) { chart.append(el('p', 'Sin afectaciones en el periodo.', 'sm-note')); return; }
+    const W = chart.clientWidth || 600, H = 310, m = { t: 12, r: 8, b: 22, l: 30 }, hTono = 196, hN = 52;
     const svg = d3.select(chart).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`);
-    const x = d3.scaleBand(datos.map((d) => d.dia), [m.l, W - m.r]).padding(0.25);
-    const y = d3.scaleLinear([-2, 2], [H - m.b, m.t]);
+    const x = d3.scaleBand(dias, [m.l, W - m.r]).padding(0.25);
+    const y = d3.scaleLinear([-2, 2], [hTono, m.t]);
+    const datos = dias.map((d) => { const xs = afs.filter((a) => a.dia_mercado === d); return { d, n: xs.length, noticias: new Set(xs.map((a) => a.articulo_id)).size, media: media(xs.map((a) => a.valor)) }; });
     svg.append('g').selectAll('line').data([-2, -1, 0, 1, 2]).join('line').attr('x1', m.l).attr('x2', W - m.r)
       .attr('y1', (d) => y(d)).attr('y2', (d) => y(d)).attr('stroke', (d) => (d === 0 ? 'var(--cds-chart-axis)' : 'var(--cds-chart-grid)'));
-    svg.append('g').selectAll('text').data([-2, -1, 0, 1, 2]).join('text').attr('x', m.l - 6).attr('y', (d) => y(d)).attr('dy', '0.32em')
-      .attr('text-anchor', 'end').attr('fill', 'var(--color-fg-muted)').style('font-size', 'var(--fs-caption)').text((d) => (d > 0 ? '+' + d : d));
-    const paso = Math.max(1, Math.ceil((datos.length * 44) / (W - m.l - m.r)));
-    svg.append('g').selectAll('text').data(datos.filter((d, i) => i % paso === 0)).join('text')
-      .attr('x', (d) => x(d.dia) + x.bandwidth() / 2).attr('y', H - 6).attr('text-anchor', 'middle')
-      .attr('fill', 'var(--color-fg-muted)').style('font-size', 'var(--fs-caption)').text((d) => diaCorto(d.dia));
-    const tip = document.createElement('div'); tip.className = 'sm-tip'; tip.hidden = true; chart.append(tip);
-    svg.append('g').selectAll('rect').data(datos).join('rect').attr('x', (d) => x(d.dia)).attr('width', x.bandwidth())
+    textoEje(svg.append('g').selectAll('text').data([-2, -1, 0, 1, 2]).join('text').attr('x', m.l - 6).attr('y', (d) => y(d)).attr('dy', '0.32em')
+      .attr('text-anchor', 'end').text((d) => (d > 0 ? '+' + d : d)));
+    const yN = d3.scaleLinear([0, d3.max(datos, (d) => d.noticias) || 1], [hTono + 30 + hN, hTono + 30]);
+    textoEje(svg.append('text').attr('x', m.l - 6).attr('y', hTono + 30).attr('dy', '0.7em').attr('text-anchor', 'end').text(yN.domain()[1]));
+    svg.append('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', yN(0)).attr('y2', yN(0)).attr('stroke', 'var(--cds-chart-grid)');
+    ejeFechas(svg, x, dias, H - 4, W);
+    const tip = tooltip(chart);
+    const mostrar = (ev, d) => tip.show(ev, [diaCorto(d.d), d.n ? `Tono medio ${conSigno(d.media)} · ${fmtInt.format(d.n)} afectaciones` : 'sin afectaciones',
+      `${fmtInt.format(d.noticias)} noticias`]);
+    svg.append('g').selectAll('rect').data(datos.filter((d) => d.n)).join('rect').attr('x', (d) => x(d.d)).attr('width', x.bandwidth())
       .attr('y', (d) => Math.min(y(d.media), y(0))).attr('height', (d) => Math.max(1, Math.abs(y(d.media) - y(0)))).attr('rx', 3)
-      .attr('fill', (d) => (d.media < 0 ? 'var(--cds-chart-status-critical)' : d.media > 0 ? 'var(--chart-1)' : 'var(--cds-chart-muted)'))
-      .on('mousemove', (ev, d) => {
-        tip.hidden = false;
-        tip.innerHTML = '';
-        const a = document.createElement('div'); a.className = 'd'; a.textContent = diaCorto(d.dia);
-        const b = document.createElement('div'); b.textContent = `Tono medio ${fmt.format(d.media)} · ${fmtInt.format(d.n)} noticias`;
-        tip.append(a, b);
-        const [px, py] = d3.pointer(ev, chart);
-        tip.style.left = Math.min(px + 10, chart.clientWidth - tip.offsetWidth - 4) + 'px';
-        tip.style.top = Math.max(0, py - 40) + 'px';
-      })
-      .on('mouseleave', () => { tip.hidden = true; });
+      .attr('fill', (d) => (d.media < 0 ? 'var(--polo-neg)' : d.media > 0 ? 'var(--polo-pos)' : 'var(--cds-chart-muted)'))
+      .on('mousemove', mostrar).on('mouseleave', () => tip.hide());
+    svg.append('g').selectAll('rect').data(datos.filter((d) => d.noticias)).join('rect').attr('x', (d) => x(d.d)).attr('width', x.bandwidth())
+      .attr('y', (d) => yN(d.noticias)).attr('height', (d) => yN(0) - yN(d.noticias)).attr('rx', 2).attr('fill', 'var(--cds-chart-muted)')
+      .on('mousemove', mostrar).on('mouseleave', () => tip.hide());
+    textoEje(svg.append('text').attr('x', W - m.r).attr('y', hTono + 26).attr('text-anchor', 'end').text('noticias por día'));
+  }
+
+  // ---------- Pantalla: DESCARTES Y COBERTURA ----------
+  ['dc-f-dia', 'dc-f-fuente', 'dc-f-motivo'].forEach((id) => $(id).addEventListener('change', () => tablaNoRel()));
+  function pantallaDescartes() {
+    const { noRel, cob, coberturaDia, dias, ultimo } = estado.datos;
+    const u = coberturaDia.find((c) => c.dia === ultimo) || { n: 0, clas: 0, rel: 0, pct: null };
+    const tile = (lab, val, sub) => { const c = el('div', null, 'sm-card sm-tile'); c.append(el('div', lab, 'lab'), el('div', val, 'val'), el('div', sub, 'sub')); return c; };
+    $('dc-tiles').replaceChildren(
+      tile('% clasificado', u.pct == null ? '—' : fmt1.format(u.pct) + ' %', `${diaCorto(ultimo)} · ${fmtInt.format(u.clas)} de ${fmtInt.format(u.n)}`),
+      tile('% relevante', u.clas ? fmt1.format((100 * u.rel) / u.clas) + ' %' : '—', `${fmtInt.format(u.rel)} de ${fmtInt.format(u.clas)} clasificadas`),
+      tile('Noticias', fmtInt.format(u.n), `capturadas el ${diaCorto(ultimo)} (con el fin de semana si es lunes)`));
+    // Motivos: los 5 más frecuentes y el resto juntos
+    const tot = d3.rollups(noRel, (v) => v.length, (r) => r.motivo_no_relevante).sort((a, b) => b[1] - a[1]);
+    const top = tot.slice(0, 5).map((t) => t[0]);
+    const cat = (m) => (top.includes(m) ? m : 'Resto de motivos');
+    const series = [...top, ...(tot.length > 5 ? ['Resto de motivos'] : [])];
+    const colores = ['--serie-1', '--serie-2', '--serie-3', '--serie-4', '--serie-5', '--serie-resto'];
+    const color = (k) => `var(${colores[series.indexOf(k) < 5 ? series.indexOf(k) : 5]})`;
+    $('dc-leyenda').replaceChildren(...series.map((k) => { const s = el('span'); const w = el('span', null, 'sw'); w.style.background = color(k); s.append(w, k); return s; }));
+    const filas = dias.map((d) => { const r = { dia: d }; for (const k of series) r[k] = 0; for (const x of noRel) if (x.dia_mercado === d) r[cat(x.motivo_no_relevante)] += 1; return r; });
+    columnasApiladas($('dc-chart'), filas, series, color, dias);
+    // Fuente × motivo
+    const fuentes = [...new Set(cob.map((c) => c.fuente))].sort((a, b) => a.localeCompare(b, 'es'));
+    const cuenta = d3.rollup(noRel, (v) => v.length, (r) => r.motivo_no_relevante, (r) => r.fuente);
+    const head = el('tr'); head.append(el('th', 'Motivo'), ...fuentes.map((f) => el('th', f, 'num')), el('th', 'Total', 'num'));
+    $('dc-cruce').tHead.replaceChildren(head);
+    $('dc-cruce').tBodies[0].replaceChildren(...tot.map(([mot, n]) => {
+      const tr = el('tr'); tr.append(el('td', mot), ...fuentes.map((f) => el('td', fmtInt.format((cuenta.get(mot) || new Map()).get(f) || 0), 'num')), el('td', fmtInt.format(n), 'num'));
+      return tr;
+    }), (() => {
+      const tr = el('tr', null, 'resumen'); tr.append(el('td', 'Total'), ...fuentes.map((f) => el('td', fmtInt.format(noRel.filter((r) => r.fuente === f).length), 'num')),
+        el('td', fmtInt.format(noRel.length), 'num')); return tr;
+    })());
+    // Cobertura por día
+    graficoCobertura($('dc-cob'), coberturaDia.filter((c) => c.dia >= FECHA_INICIO), dias);
+    // Filtros de la tabla de titulares
+    const desde30 = new Date(ultimo + 'T12:00:00Z'); desde30.setUTCDate(desde30.getUTCDate() - 30);
+    estado.noRel30 = noRel.filter((r) => r.dia_mercado >= desde30.toISOString().slice(0, 10));
+    const llenar = (id, vals, todos) => { const s = $(id), v = s.value; s.replaceChildren(new Option(todos, ''), ...vals.map(([val, txt]) => new Option(txt, val))); s.value = vals.some(([x]) => x === v) ? v : ''; };
+    llenar('dc-f-dia', [...new Set(estado.noRel30.map((r) => r.dia_mercado))].sort().reverse().map((d) => [d, diaCorto(d)]), 'Todos');
+    llenar('dc-f-fuente', [...new Set(estado.noRel30.map((r) => r.fuente))].sort().map((f) => [f, f]), 'Todas');
+    llenar('dc-f-motivo', tot.map(([mot]) => [mot, mot]), 'Todos');
+    tablaNoRel();
+  }
+  function tablaNoRel() {
+    const d = $('dc-f-dia').value, f = $('dc-f-fuente').value, m = $('dc-f-motivo').value;
+    const lista = (estado.noRel30 || []).filter((r) => (!d || r.dia_mercado === d) && (!f || r.fuente === f) && (!m || r.motivo_no_relevante === m));
+    const MAX = 300;
+    $('dc-f-n').textContent = `${fmtInt.format(lista.length)} titulares` + (lista.length > MAX ? ` (se muestran los ${MAX} más recientes)` : '');
+    $('dc-tit').tBodies[0].replaceChildren(...lista.slice(0, MAX).map((r) => {
+      const tr = el('tr'), celda = el('td');
+      if (r.url && /^https?:\/\//.test(r.url)) { const a = el('a', r.titulo); a.href = r.url; a.target = '_blank'; a.rel = 'noopener'; celda.append(a); }
+      else celda.textContent = r.titulo;
+      tr.append(el('td', diaCorto(r.dia_mercado)), el('td', r.fuente), celda, el('td', r.motivo_no_relevante));
+      return tr;
+    }));
+  }
+  function columnasApiladas(cont, filas, series, color, dias) {
+    cont.replaceChildren();
+    const W = cont.clientWidth || 800, H = 240, m = { t: 12, r: 8, b: 26, l: 34 };
+    const svg = d3.select(cont).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`);
+    const pila = d3.stack().keys(series)(filas);
+    const x = d3.scaleBand(dias, [m.l, W - m.r]).padding(0.3);
+    const y = d3.scaleLinear([0, d3.max(filas, (r) => d3.sum(series, (k) => r[k])) || 1], [H - m.b, m.t]).nice();
+    svg.append('g').selectAll('line').data(y.ticks(4)).join('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', (d) => y(d)).attr('y2', (d) => y(d))
+      .attr('stroke', (d) => (d === 0 ? 'var(--cds-chart-axis)' : 'var(--cds-chart-grid)'));
+    textoEje(svg.append('g').selectAll('text').data(y.ticks(4)).join('text').attr('x', m.l - 6).attr('y', (d) => y(d)).attr('dy', '0.32em').attr('text-anchor', 'end').text((d) => d));
+    ejeFechas(svg, x, dias, H - 6, W);
+    const tip = tooltip(cont);
+    svg.append('g').selectAll('g').data(pila).join('g').attr('fill', (s) => color(s.key)).selectAll('rect')
+      .data((s) => s.map((p) => ({ ...p, key: s.key }))).join('rect')
+      .attr('x', (p) => x(p.data.dia)).attr('width', x.bandwidth()).attr('y', (p) => y(p[1])).attr('height', (p) => Math.max(0, y(p[0]) - y(p[1])))
+      .attr('stroke', 'var(--color-panel)').attr('stroke-width', 2)
+      .on('mousemove', (ev, p) => tip.show(ev, [diaCorto(p.data.dia), `${p.key}: ${fmtInt.format(p.data[p.key])}`,
+        `Total del día: ${fmtInt.format(d3.sum(series, (k) => p.data[k]))}`]))
+      .on('mouseleave', () => tip.hide());
+  }
+  function graficoCobertura(cont, filas, dias) {
+    cont.replaceChildren();
+    const W = cont.clientWidth || 800, H = 200, m = { t: 14, r: 28, b: 26, l: 48 };
+    const svg = d3.select(cont).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`);
+    const x = d3.scalePoint(dias, [m.l + 8, W - m.r - 8]);
+    const minimo = Math.min(80, Math.floor((d3.min(filas, (r) => r.pct) ?? 100) / 10) * 10);
+    const y = d3.scaleLinear([minimo, 100], [H - m.b, m.t]);
+    svg.append('g').selectAll('line').data(y.ticks(4)).join('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', (d) => y(d)).attr('y2', (d) => y(d)).attr('stroke', 'var(--cds-chart-grid)');
+    textoEje(svg.append('g').selectAll('text').data(y.ticks(4)).join('text').attr('x', m.l - 6).attr('y', (d) => y(d)).attr('dy', '0.32em').attr('text-anchor', 'end').text((d) => d + ' %'));
+    svg.append('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', y(MIN_COBERTURA)).attr('y2', y(MIN_COBERTURA))
+      .attr('stroke', 'var(--cds-chart-status-critical)').attr('stroke-dasharray', '4 3');
+    textoEje(svg.append('text').attr('x', W - m.r).attr('y', y(MIN_COBERTURA) - 4).attr('text-anchor', 'end').text('mínimo 90 %'));
+    ejeFechas(svg, x, dias, H - 6, W);
+    const pts = filas.filter((r) => r.pct != null && x(r.dia) != null);
+    svg.append('path').datum(pts).attr('fill', 'none').attr('stroke', 'var(--serie-1)').attr('stroke-width', 2)
+      .attr('d', d3.line().x((r) => x(r.dia)).y((r) => y(r.pct)));
+    const tip = tooltip(cont);
+    svg.append('g').selectAll('circle').data(pts).join('circle').attr('cx', (r) => x(r.dia)).attr('cy', (r) => y(r.pct)).attr('r', 4.5)
+      .attr('fill', (r) => (r.pct < MIN_COBERTURA ? 'var(--cds-chart-status-critical)' : 'var(--serie-1)')).attr('stroke', 'var(--color-panel)').attr('stroke-width', 2)
+      .on('mousemove', (ev, r) => tip.show(ev, [diaCorto(r.dia), `${fmt1.format(r.pct)} % clasificado`, `${fmtInt.format(r.clas)} de ${fmtInt.format(r.n)} noticias`,
+        ...(r.pct < MIN_COBERTURA ? ['por debajo del 90 %'] : [])]))
+      .on('mouseleave', () => tip.hide());
+    textoEje(svg.append('g').selectAll('text').data(pts.filter((r) => r.pct < MIN_COBERTURA)).join('text')
+      .attr('x', (r) => x(r.dia)).attr('y', (r) => y(r.pct) + 16).attr('text-anchor', 'middle').text((r) => fmt1.format(r.pct) + ' %'))
+      .attr('fill', 'var(--cds-chart-status-critical)');
   }
 
   // ---------- Dibujo y arranque ----------
+  document.querySelectorAll('[data-grupo="periodo"] button').forEach((b) => b.addEventListener('click', () => { estado.periodo = b.dataset.periodo; dibujar(); }));
+  document.querySelectorAll('.sm-orden[aria-label="Ordenar"] button').forEach((b) => b.addEventListener('click', () => { estado.orden = b.dataset.orden; dibujar(); }));
   function dibujar() {
-    $('sectores').hidden = estado.vista !== 'sectores';
-    $('detalle').hidden = estado.vista !== 'detalle';
-    $('tab-sectores').setAttribute('aria-selected', String(estado.vista === 'sectores'));
-    $('tab-detalle').setAttribute('aria-selected', String(estado.vista === 'detalle'));
-    if (!estado.afect.length) return;
-    if (estado.vista === 'sectores') pantallaSectores(); else detalle();
+    for (const v of VISTAS) { $(v).hidden = estado.vista !== v; $('tab-' + v).setAttribute('aria-selected', String(estado.vista === v)); }
+    document.querySelectorAll('[data-grupo="periodo"] button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.periodo === estado.periodo)));
+    document.querySelectorAll('.sm-orden[aria-label="Ordenar"] button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.orden === estado.orden)));
+    if (!estado.datos) return;
+    ({ indice: pantallaIndice, sectores: pantallaSectores, detalle, descartes: pantallaDescartes })[estado.vista]();
   }
-  $('tab-sectores').addEventListener('click', () => ir('sectores'));
-  $('tab-detalle').addEventListener('click', () => ir('detalle'));
+  for (const v of VISTAS) $('tab-' + v).addEventListener('click', () => ir(v));
   window.addEventListener('resize', () => { clearTimeout(window.__rz); window.__rz = setTimeout(dibujar, 150); });
-
   async function arrancar() {
     $('sm-estado').textContent = 'Cargando…';
     $('sm-error').hidden = true;
     try {
-      estado.afect = await cargar();
-      calcular(estado.afect);
-      const dias = estado.afect.map((a) => String(a.dia).slice(0, 10)).sort();
-      $('sm-estado').textContent = `${fmtInt.format(estado.afect.length)} afectaciones · ${diaCorto(dias[0])} a ${diaCorto(dias[dias.length - 1])} · leído a las ${new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })}`;
+      estado.datos = await cargar();
+      cabecera();
       dibujar();
     } catch (e) {
       $('sm-estado').textContent = 'Sin datos';
