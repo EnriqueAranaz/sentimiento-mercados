@@ -471,6 +471,20 @@ regionales de EE. UU. y pequeñas de menos de ~4.000 M. Léelo antes de clasific
   - **Pérdidas.** Pérdidas sin comparación con el periodo anterior → **-1**. Paso explícito de beneficio a pérdidas
     ("entra en pérdidas", "pasa a números rojos") → **-2**.
     - *Iberpapel pierde 6,4 millones hasta septiembre por los costes energéticos* → Empresa · Iberpapel → **-1**
+- **En Recomendación / análisis manda la cifra del potencial** o de la revisión del precio objetivo, con el mismo umbral
+  que en Resultados: potencial ≥ +20 % → **2**; positivo menor → **1**; ≤ −20 % → **-2**; negativo menor → **-1**. Sin
+  cifra: **±1** según la recomendación (comprar / sobreponderar o vender / infraponderar), **0** si es neutral o mantener.
+  Si el titular junta además otro hecho en el mismo sentido, la cifra manda igual. Precisiones:
+  - "Hasta X %" sin atribución clara a cada objeto = sin cifra (±1 por la recomendación).
+  - Un descuento o una infravaloración que el analista califica de injustificado cuenta como potencial.
+  - Las métricas automáticas de valoración (GF Value de GuruFocus y similares) no son un potencial de analista.
+  - Con un "pero" se mantiene el tope de ±1 (regla del "pero").
+  - *BofA corona a CaixaBank y Santander… con un potencial de hasta el 27%* → CaixaBank → **1** · Santander → **1**
+  - *BofA ve un descuento injustificado del 40% en Puig y mantiene comprar* → Empresa · Puig → **2**
+  - *Goldman recorta un 25% su objetivo del Kospi, pero todavía ve un potencial cercano al 60%* → Mercado · Corea → **1**
+  - *Santander bate previsiones y Bankinter ve un potencial del 26,6% en bolsa* → Empresa · Santander → **2**
+  - *Bankinter ve un potencial del 20,9% en EssilorLuxottica tras superar las previsiones* → Empresa · EssilorLuxottica → **2**
+  - *Raymond James apuesta por MACOM y apunta a los 300 dólares* (sin porcentaje) → Empresa · MACOM → **1**
 - **Protagonistas y contrapartes pasivas.** Los protagonistas de una operación (comprador, vendedor, la empresa que
   anuncia) se anotan aunque su tono sea 0. Las contrapartes pasivas (inquilino, cliente o socio de un contrato,
   accionista que se notifica, empresa que solo es la causa) no se anotan.
