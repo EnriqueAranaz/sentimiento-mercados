@@ -485,6 +485,9 @@ regionales de EE. UU. y pequeñas de menos de ~4.000 M. Léelo antes de clasific
   - *Santander bate previsiones y Bankinter ve un potencial del 26,6% en bolsa* → Empresa · Santander → **2**
   - *Bankinter ve un potencial del 20,9% en EssilorLuxottica tras superar las previsiones* → Empresa · EssilorLuxottica → **2**
   - *Raymond James apuesta por MACOM y apunta a los 300 dólares* (sin porcentaje) → Empresa · MACOM → **1**
+- **Advertencias o sanciones con muertes.** Si una advertencia de un regulador, una demanda o un problema de producto
+  menciona fallecimientos, es un hecho grave: **-2**, aunque no sea una multa ni una retirada.
+  - *La FDA emite una advertencia sobre las camas Medline tras dos fallecimientos y 16 lesiones graves* → Empresa · Medline → **-2**
 - **Compras y ventas de acciones de directivos o de inversores relevantes.** Que un directivo de la compañía, o un
   inversor ajeno relevante (un fondo activista, una empresa del sector, un inversor de referencia), compre acciones o
   tome una participación es una señal muy positiva: **+2**. Que las venda: **-2**. No entran las recompras de la propia
