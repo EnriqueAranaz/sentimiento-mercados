@@ -12,6 +12,8 @@ Criterios generales de alta y descarte:
   aunque sean pequeñas.
 - **Se descartan** las microcotizadas y las pequeñas extranjeras, los bancos regionales de EE. UU., las españolas de
   **BME Growth** o **Euronext Growth** (mercados de crecimiento) y las que no cotizan.
+- El criterio es el **tamaño**: se descartan los bancos regionales **pequeños** de EE. UU., no los bancos de EE. UU.
+  medianos o grandes (U.S. Bancorp o PNC se dan de alta).
 
 `clasificacion/cargar.py` lee la primera columna de esta tabla. Si se añade una empresa, hay que mantener el formato.
 

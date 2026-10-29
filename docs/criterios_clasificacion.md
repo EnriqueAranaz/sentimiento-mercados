@@ -34,7 +34,7 @@ Banca · Seguros y servicios financieros · Petróleo y gas · Eléctricas, reno
 |---|---|---|
 | **-2** | Muy negativo | Lenguaje fuerte o hechos graves: desplome, hundimiento, "implosiona", caída ≥5% (≥2% en un índice), liquidación, quiebra, profit warning, multa histórica, beneficio −20% o peor. |
 | **-1** | Negativo | Desfavorable normal: cae, baja, rebaja de recomendación, beneficio a la baja, dudas. |
-| **0** | Neutral | Informativo o mixto: dividendo ordinario, nombramientos, acuerdos sin valoración, "bate previsiones pero cae". |
+| **0** | Neutral | Informativo o mixto: dividendo ordinario, nombramientos, acuerdos sin valoración, resultados mixtos sin "pero" que incline la balanza. |
 | **1** | Positivo | Favorable normal: sube, eleva, supera previsiones, mejora de recomendación, contrato. |
 | **2** | Muy positivo | Lenguaje fuerte: se dispara, pulveriza, récord, beneficio +20% o más. |
 
@@ -316,7 +316,8 @@ similares cuentan como nombrar un grupo de valores tecnológicos → **Sector ·
 **b) Bonos sin país.** Global · Mercados con tema *Deuda y bonos* (no se crea un objeto nuevo).
 - *Regresa la rentabilidad de la deuda* → Relevante · *Deuda y bonos* · *Opinión / prensa* · Global · Mercados → **-1** (rentabilidad al alza, sección 10 d)
 
-**c) Fuerzas opuestas sobre el mismo objeto** en el titular: **0**.
+**c) Fuerzas opuestas sobre el mismo objeto** en el titular: **0**, salvo que un "pero" o un "aunque" ponga el peso
+en una de ellas (ver *"Pero" y "aunque"* en las aclaraciones del 28/10/2026).
 - *La deuda de EEUU, de amenaza para los mercados a refugio predilecto* → Mercado · EE. UU. → **0**
 
 **d) Filial cuya matriz cotizada está fuera de alcance** (Jaguar → Tata Motors, que cotiza en India): la noticia queda
@@ -424,13 +425,46 @@ regionales de EE. UU. y pequeñas de menos de ~4.000 M. Léelo antes de clasific
   **Rumor / según fuentes**.
   - *El BCE pausará las alzas de tipos ante la tensión en la deuda* (resumen: "Diferentes miembros del Consejo de
     Gobierno apuntan a diciembre…") → Hecho · Mercado · Europa → **1**
-- **Expectativas de tipos con fuerzas opuestas** (pausa ahora y subida después): **0**, por la regla 11 c. Es **-1** solo
-  si el titular pone el peso en la subida con "pero" o "aunque".
+- **"Pero" y "aunque".** Con fuerzas opuestas sobre el mismo objeto, el valor es **0** (regla 11 c), salvo que el
+  titular las una con "pero" o "aunque": entonces manda lo que va detrás, con valor **±1** en su sentido. Vale para
+  cualquier tema, también Resultados, aunque la cifra vaya en sentido contrario.
   - *PIMCO espera una pausa de la Fed en octubre y una subida de tipos en diciembre* → EE. UU. → **0**
   - *Los mercados prevén que la Fed pause hoy los tipos, aunque descuentan una subida en diciembre* → EE. UU. → **-1**
+  - *Endesa convence con sus resultados, pero los analistas ven la valoración exigente* → Empresa · Endesa → **-1**
+  - *Santander cae, pero los analistas no dudan…* → Empresa · Santander → **1**
+  - *La actividad mundial parece resistir, aunque se aprecia cierta inflexión* → Global · Economía → **-1**
+
+  Tres precisiones:
+  - **a) Mismo objeto con palabras distintas.** Si las dos partes hablan del mismo objeto con palabras distintas ("las
+    bolsas" / "el mercado"), es el mismo objeto: manda lo que va detrás, con ±1. La causa que trae la segunda parte se
+    anota aparte, con su propio tono, si tiene nexo explícito.
+    - *La IA impulsa las bolsas, pero el petróleo vuelve a poner en alerta al mercado* → Global · Mercados → **-1**;
+      Global · Petróleo → **1**
+  - **b) Lo que va detrás no tiene dirección** ("mirará a", "estará pendiente de", "a la espera de"): es atención, no
+    una fuerza opuesta. El tono sale solo de la primera parte (si es una cifra de resultados, manda la cifra).
+    - *Rovi prepara un trimestre sólido, pero la bolsa mirará a su guía de 2027* → Empresa · Rovi → **1**
+  - **c) El tope de ±1 se mantiene** aunque lo que va detrás sea muy grande por sí solo.
+    - *Meta bate previsiones con el impulso de Muse, pero deberá pagar 25.000 millones por Cambridge Analytica* →
+      Empresa · Meta → **-1**
+- **Origen de "X sube/cae tras sus resultados".** Si el titular trata del movimiento del precio tras los resultados
+  ("X sube / cae (con fuerza) / se hunde / se dispara tras sus resultados"), el origen es **Mercado**, y el valor sale
+  del movimiento (con intensificador → ±2). El origen es **Hecho** solo cuando el titular trata de las cifras ("X gana…",
+  "X eleva su beneficio…"). Si la caída es de un índice arrastrado por un componente, el índice no se anota.
+  - *BBVA cae con fuerza tras sus resultados: los expertos señalan la debilidad de España y Turquía* → Mercado · Empresa · BBVA → **-2**
+  - *El Ibex cae con fuerza arrastrado por los abultados recortes de BBVA tras resultados* → Mercado · Empresa · BBVA → **-1** (sin Ibex)
 - **En Resultados manda la cifra, no el verbo.** El umbral de la escala (beneficio +20 % o más → 2; −20 % o peor → -2)
-  prevalece sobre el verbo del titular. La regla 10 f ("mismo dato, distinto verbo") queda para los datos macro.
+  prevalece sobre el verbo del titular, salvo un "pero" o un "aunque" (punto anterior). La regla 10 f ("mismo dato,
+  distinto verbo") queda para los datos macro.
   - *Aena dispara un 12% su beneficio aupada por el récord de tráfico y el alza de las tasas* → Empresa · Aena → **1**
+  - **Pérdidas.** Pérdidas sin comparación con el periodo anterior → **-1**. Paso explícito de beneficio a pérdidas
+    ("entra en pérdidas", "pasa a números rojos") → **-2**.
+    - *Iberpapel pierde 6,4 millones hasta septiembre por los costes energéticos* → Empresa · Iberpapel → **-1**
+- **Protagonistas y contrapartes pasivas.** Los protagonistas de una operación (comprador, vendedor, la empresa que
+  anuncia) se anotan aunque su tono sea 0. Las contrapartes pasivas (inquilino, cliente o socio de un contrato,
+  accionista que se notifica, empresa que solo es la causa) no se anotan.
+  - *Intertek aprueba el acuerdo con EQT* → Intertek → **1** · EQT AB (compradora) → **0**
+  - No se anotan: Crédit Agricole como inquilina de Merlin, Alphabet en el PPA de Fortum, BlackRock como accionista
+    que se notifica.
 - **Cobro de dividendos.** Las noticias sobre fechas o trámites para cobrar un dividendo ya anunciado no son
   relevantes: **Agenda / convocatoria** si solo dan la fecha, **Finanzas personales** si explican qué hacer para
   cobrarlo. El anuncio de un dividendo nuevo, o de un cambio en el dividendo, sí es relevante.

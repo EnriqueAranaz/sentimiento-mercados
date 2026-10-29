@@ -204,6 +204,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Carlyle",
+  "ticker": "NASDAQ:CG",
+  "sector": "Seguros y servicios financieros",
+  "en_universo": false
+ },
+ {
   "nombre": "Cerebras",
   "ticker": "NASDAQ:CBRS",
   "sector": "Semiconductores",
@@ -236,6 +242,18 @@
  {
   "nombre": "City Holding",
   "ticker": "NASDAQ:CHCO",
+  "sector": "Banca",
+  "en_universo": false
+ },
+ {
+  "nombre": "Crédit Agricole",
+  "ticker": "EURONEXT:ACA",
+  "sector": "Banca",
+  "en_universo": false
+ },
+ {
+  "nombre": "Danske Bank",
+  "ticker": "OMXCOP:DANSKE",
   "sector": "Banca",
   "en_universo": false
  },
@@ -288,6 +306,12 @@
   "en_universo": false
  },
  {
+  "nombre": "EQT AB",
+  "ticker": "OMXSTO:EQT",
+  "sector": "Seguros y servicios financieros",
+  "en_universo": false
+ },
+ {
   "nombre": "EQT Corporation",
   "ticker": "NYSE:EQT",
   "sector": "Petróleo y gas",
@@ -309,6 +333,12 @@
   ]
  },
  {
+  "nombre": "FCC",
+  "ticker": "BME:FCC",
+  "sector": "Construcción e infraestructuras",
+  "en_universo": false
+ },
+ {
   "nombre": "FedEx",
   "ticker": "NYSE:FDX",
   "sector": "Transporte y turismo",
@@ -322,6 +352,12 @@
   "alias": [
    "FF EAI Robotics"
   ]
+ },
+ {
+  "nombre": "Flutter Entertainment",
+  "ticker": "NYSE:FLUT",
+  "sector": "Medios y entretenimiento",
+  "en_universo": false
  },
  {
   "nombre": "Fortum",
@@ -342,9 +378,21 @@
   "en_universo": false
  },
  {
+  "nombre": "Haleon",
+  "ticker": "LSE:HLN",
+  "sector": "Salud y farmacia",
+  "en_universo": false
+ },
+ {
   "nombre": "HeartBeam",
   "ticker": "NASDAQ:BEAT",
   "sector": "Salud y farmacia",
+  "en_universo": false
+ },
+ {
+  "nombre": "Heineken",
+  "ticker": "EURONEXT:HEIA",
+  "sector": "Consumo y distribución",
   "en_universo": false
  },
  {
@@ -363,6 +411,18 @@
   "nombre": "Hilton",
   "ticker": "NYSE:HLT",
   "sector": "Transporte y turismo",
+  "en_universo": false
+ },
+ {
+  "nombre": "Iberpapel",
+  "ticker": "BME:IBG",
+  "sector": "Materiales, química y minería",
+  "en_universo": false
+ },
+ {
+  "nombre": "IMI",
+  "ticker": "LSE:IMI",
+  "sector": "Industria, defensa y aeroespacial",
   "en_universo": false
  },
  {
@@ -483,6 +543,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Neste",
+  "ticker": "OMXHEX:NESTE",
+  "sector": "Petróleo y gas",
+  "en_universo": false
+ },
+ {
   "nombre": "Ovintiv",
   "ticker": "NYSE:OVV",
   "sector": "Petróleo y gas",
@@ -513,6 +579,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Prysmian",
+  "ticker": "MIL:PRY",
+  "sector": "Industria, defensa y aeroespacial",
+  "en_universo": false
+ },
+ {
   "nombre": "Range Resources",
   "ticker": "NYSE:RRC",
   "sector": "Petróleo y gas",
@@ -531,6 +603,12 @@
   "nombre": "Regeneron",
   "ticker": "NASDAQ:REGN",
   "sector": "Salud y farmacia",
+  "en_universo": false
+ },
+ {
+  "nombre": "Renault",
+  "ticker": "EURONEXT:RNO",
+  "sector": "Automóvil",
   "en_universo": false
  },
  {
@@ -590,6 +668,12 @@
  {
   "nombre": "Surgery Partners",
   "ticker": "NASDAQ:SGRY",
+  "sector": "Salud y farmacia",
+  "en_universo": false
+ },
+ {
+  "nombre": "Swedish Orphan Biovitrum",
+  "ticker": "OMXSTO:SOBI",
   "sector": "Salud y farmacia",
   "en_universo": false
  },
@@ -654,6 +738,12 @@
   "nombre": "Técnicas Reunidas",
   "ticker": "BME:TRE",
   "sector": "Construcción e infraestructuras",
+  "en_universo": false
+ },
+ {
+  "nombre": "U.S. Bancorp",
+  "ticker": "NYSE:USB",
+  "sector": "Banca",
   "en_universo": false
  },
  {
