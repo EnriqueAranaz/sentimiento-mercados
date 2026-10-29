@@ -446,12 +446,17 @@ regionales de EE. UU. y pequeñas de menos de ~4.000 M. Léelo antes de clasific
   - **c) El tope de ±1 se mantiene** aunque lo que va detrás sea muy grande por sí solo.
     - *Meta bate previsiones con el impulso de Muse, pero deberá pagar 25.000 millones por Cambridge Analytica* →
       Empresa · Meta → **-1**
-- **Origen de "X sube/cae tras sus resultados".** Si el titular trata del movimiento del precio tras los resultados
-  ("X sube / cae (con fuerza) / se hunde / se dispara tras sus resultados"), el origen es **Mercado**, y el valor sale
-  del movimiento (con intensificador → ±2). El origen es **Hecho** solo cuando el titular trata de las cifras ("X gana…",
-  "X eleva su beneficio…"). Si la caída es de un índice arrastrado por un componente, el índice no se anota.
+- **Origen de los movimientos de precio con causa.** Si el titular trata del movimiento del precio (cae, sube, se
+  hunde, se dispara, rebota, se desploma, "se estrella en Bolsa", "el mercado penaliza / castiga / premia"…), el origen
+  es **Mercado**, sea cual sea la causa: resultados, ventas, previsiones, una operación… El valor sale del movimiento
+  (con intensificador → ±2). El origen es **Hecho** solo cuando el titular trata de la cifra o del hecho en sí ("X
+  gana…", "X eleva su beneficio…", "el beneficio de X sube un 17 %"). Si la caída es de un índice arrastrado por un
+  componente, el índice no se anota.
   - *BBVA cae con fuerza tras sus resultados: los expertos señalan la debilidad de España y Turquía* → Mercado · Empresa · BBVA → **-2**
   - *El Ibex cae con fuerza arrastrado por los abultados recortes de BBVA tras resultados* → Mercado · Empresa · BBVA → **-1** (sin Ibex)
+  - *Kering cae con fuerza en Bolsa ante los malos datos de ventas de Gucci* → Mercado · Empresa · Kering → **-2**
+  - *Galp se hunde tras romper negociaciones con Moeve para fusionar sus negocios de petróleo* → Mercado · Empresa · Galp → **-2**
+  - *El beneficio de Barclays sube un 17% hasta septiembre…* → Hecho (trata de la cifra)
 - **En Resultados manda la cifra, no el verbo.** El umbral de la escala (beneficio +20 % o más → 2; −20 % o peor → -2)
   prevalece sobre el verbo del titular, salvo un "pero" o un "aunque" (punto anterior). La regla 10 f ("mismo dato,
   distinto verbo") queda para los datos macro.
