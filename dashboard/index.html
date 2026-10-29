@@ -18,6 +18,7 @@
     --cds-text-secondary: #5f6b76;
     /* series categóricas (validadas: paleta de referencia, slots 1-5) y gris para "resto" */
     --serie-1: #2a78d6; --serie-2: #eb6834; --serie-3: #1baf7a; --serie-4: #eda100; --serie-5: #e87ba4; --serie-resto: #9aa5ae;
+    --linea-total: #77828c;
     /* polaridad (divergencia): azul / rojo */
     --polo-pos: #2a78d6; --polo-neg: #d03b3b;
     /* bandas del índice (fondo): de rojo a verde pasando por gris */
@@ -38,6 +39,7 @@
       --cds-surface-popover: #22272c; --cds-border: #353c43; --cds-shadow-popover: 0 4px 16px rgba(0, 0, 0, .45);
       --cds-text-secondary: #98a3ad;
       --serie-1: #3987e5; --serie-2: #d95926; --serie-3: #199e70; --serie-4: #c98500; --serie-5: #d55181; --serie-resto: #6b767f;
+      --linea-total: #8e99a3;
       --polo-pos: #3987e5; --polo-neg: #e66767;
       --banda-1: #3a2523; --banda-2: #2c2322; --banda-3: #23272b; --banda-4: #1f2d25; --banda-5: #21382b;
       --aviso-bg: #3a3018; --aviso-borde: #c98500;
@@ -51,6 +53,7 @@
     --cds-surface-popover: #22272c; --cds-border: #353c43; --cds-shadow-popover: 0 4px 16px rgba(0, 0, 0, .45);
     --cds-text-secondary: #98a3ad;
     --serie-1: #3987e5; --serie-2: #d95926; --serie-3: #199e70; --serie-4: #c98500; --serie-5: #d55181; --serie-resto: #6b767f;
+    --linea-total: #8e99a3;
     --polo-pos: #3987e5; --polo-neg: #e66767;
     --banda-1: #3a2523; --banda-2: #2c2322; --banda-3: #23272b; --banda-4: #1f2d25; --banda-5: #21382b;
     --aviso-bg: #3a3018; --aviso-borde: #c98500;
@@ -136,8 +139,14 @@
   .sm-t a:hover { text-decoration: underline; }
   .sm .pos { color: var(--color-ok); }
   .sm .neg { color: var(--color-bad); }
-  .sm-idx { display: grid; grid-template-columns: minmax(0, 20rem) minmax(0, 1fr); gap: var(--gap-md); align-items: stretch; }
-  @media (max-width: 760px) { .sm-idx { grid-template-columns: 1fr; } }
+  .sm-idx { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)) minmax(0, 15rem); gap: var(--gap-md); align-items: stretch; }
+  .sm-idx .sm-tiles { grid-template-columns: 1fr; align-content: start; }
+  @media (max-width: 1000px) {
+    .sm-idx { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .sm-idx .sm-tiles { grid-column: 1 / -1; grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr)); }
+  }
+  @media (max-width: 640px) { .sm-idx { grid-template-columns: 1fr; } }
+  .sm-cab { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--gap-sm); }
   .sm-aguja { display: grid; justify-items: center; align-content: start; gap: var(--gap-xs); }
   .sm-aguja .val { font-family: var(--font-serif); font-size: 2.6rem; font-variant-numeric: tabular-nums; line-height: 1; }
   .sm-aguja .sub { font-size: var(--fs-caption); color: var(--color-fg-muted); text-align: center; }
@@ -178,20 +187,32 @@
     <div class="sm-idx">
       <section class="sm-card sm-aguja">
         <h2 style="justify-self:start">Narrativa</h2>
-        <div id="ix-aguja" style="width:100%"></div>
-        <div class="val" id="ix-aguja-val">—</div>
-        <div class="sub" id="ix-aguja-sub"></div>
+        <div id="ix-aguja-narrativa" style="width:100%"></div>
+        <div class="val" id="ix-aguja-narrativa-val">—</div>
+        <div class="sub" id="ix-aguja-narrativa-sub"></div>
+      </section>
+      <section class="sm-card sm-aguja">
+        <h2 style="justify-self:start">Hechos</h2>
+        <div id="ix-aguja-hechos" style="width:100%"></div>
+        <div class="val" id="ix-aguja-hechos-val">—</div>
+        <div class="sub" id="ix-aguja-hechos-sub"></div>
       </section>
       <div class="sm-tiles" id="ix-tiles"></div>
     </div>
     <section class="sm-card">
-      <h2>Índice por día de mercado</h2>
-      <p class="sm-note">0 a 100, donde 50 es neutro. Los días no publicados cortan la línea (no se rellenan). Punto hueco = ventana incompleta.</p>
+      <div class="sm-cab">
+        <h2 id="ix-chart-titulo">Índice por día de mercado</h2>
+        <div class="sm-orden" role="group" aria-label="Vista del índice" id="ix-vista">
+          <button type="button" data-vista="diario" aria-pressed="true">Diario</button>
+          <button type="button" data-vista="semanal" aria-pressed="false">Semanal</button>
+        </div>
+      </div>
+      <p class="sm-note"><span id="ix-chart-resumen"></span> 0 a 100, donde 50 es neutro. Los días no publicados cortan la línea (no se rellenan). <span id="ix-chart-hueco"></span></p>
       <div class="sm-leyenda" id="ix-leyenda"></div>
       <div class="sm-chart" id="ix-chart"></div>
     </section>
     <section class="sm-card" id="ix-div-card">
-      <h2>Divergencia por día</h2>
+      <h2 id="ix-div-titulo">Divergencia por día</h2>
       <p class="sm-note">Compara narrativa y hechos sobre los mismos objetos (empresas, sectores, mercados). Bajo 0 = la prensa es más negativa que los hechos sobre esos objetos.</p>
       <div class="sm-chart" id="ix-div"></div>
     </section>
@@ -232,6 +253,11 @@
         <button type="button" data-periodo="20" aria-pressed="false">Últimos 20 días</button>
         <button type="button" data-periodo="todo" aria-pressed="false">Todo desde el 22/10</button>
       </div>
+      <div class="sm-orden" role="group" aria-label="Minigráficas" data-grupo="agr">
+        <span>Minigráficas</span>
+        <button type="button" data-agr="dia" aria-pressed="true">Día</button>
+        <button type="button" data-agr="semana" aria-pressed="false">Semana</button>
+      </div>
       <div class="sm-orden" role="group" aria-label="Ordenar">
         <span>Ordenar por</span>
         <button type="button" data-orden="peor" aria-pressed="true">Peor tono</button>
@@ -270,6 +296,11 @@
         <button type="button" data-periodo="20" aria-pressed="false">Últimos 20 días</button>
         <button type="button" data-periodo="todo" aria-pressed="false">Todo desde el 22/10</button>
       </div>
+      <div class="sm-orden" role="group" aria-label="Agrupar" data-grupo="agr">
+        <span>Agrupar por</span>
+        <button type="button" data-agr="dia" aria-pressed="true">Día</button>
+        <button type="button" data-agr="semana" aria-pressed="false">Semana</button>
+      </div>
     </div>
     <div class="sm-ctrl">
       <label for="sm-sector">Sector <select id="sm-sector"></select></label>
@@ -280,8 +311,8 @@
     <div class="sm-tiles" id="dt-tiles"></div>
     <div class="sm-grid">
       <section class="sm-card">
-        <h2>Tono medio por día</h2>
-        <p class="sm-note">Media del tono de las afectaciones de cada día de mercado (−2 a +2). Debajo, noticias por día.</p>
+        <h2 id="sm-chart-titulo">Tono medio por día</h2>
+        <p class="sm-note" id="sm-chart-nota">Media del tono de las afectaciones de cada día de mercado (−2 a +2). Debajo, noticias por día.</p>
         <div class="sm-chart" id="sm-chart"></div>
       </section>
       <section class="sm-card">
@@ -408,7 +439,8 @@
     'Consumo y distribución', 'Lujo, moda y cosmética', 'Salud y farmacia', 'Industria, defensa y aeroespacial',
     'Materiales, química y minería', 'Medios y entretenimiento'];
   const ALCANCES = [['general', 'General'], ['espana', 'España'], ['europa', 'Europa'], ['eeuu', 'EE. UU.']];
-  const LINEAS = [['narrativa', 'Narrativa', '--serie-1', false], ['hechos', 'Hechos', '--serie-2', false], ['total', 'Total', '--serie-resto', true]];
+  const LINEAS = [['narrativa', 'Narrativa', '--serie-1', false], ['hechos', 'Hechos', '--serie-2', false], ['total', 'Total', '--linea-total', true]];
+  const CLAVE_VISTA = 'sm.vistaIndice';   // localStorage: Diario / Semanal del gráfico del índice
 
   const fmt = new Intl.NumberFormat('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   const fmt1 = new Intl.NumberFormat('es-ES', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
@@ -432,11 +464,24 @@
     }
     return out;
   }
+  // Semanas de lunes a viernes: se identifican por su lunes.
+  const lunes = (d) => { const x = new Date(d + 'T12:00:00Z'); x.setUTCDate(x.getUTCDate() - ((x.getUTCDay() + 6) % 7)); return x.toISOString().slice(0, 10); };
+  const etqSemana = (l) => 'sem. ' + diaCorto(l);
+  // La semana del último día con datos está en curso si ese día no es viernes.
+  const semanaEnCurso = () => { const u = estado.datos.ultimo; return new Date(u + 'T12:00:00Z').getUTCDay() === 5 ? null : lunes(u); };
 
   // ---------- Estado y navegación ----------
   const VISTAS = ['indice', 'sectores', 'detalle', 'descartes'];
+  const leerVista = () => { try { return localStorage.getItem(CLAVE_VISTA) === 'semanal' ? 'semanal' : 'diario'; } catch (e) { return 'diario'; } };
   const estado = { vista: 'indice', sel: 'todo', orden: 'peor', periodo: '5', fuera: false, alcance: 'general',
-    ordenSect: 'narrativa', datos: null };
+    ordenSect: 'narrativa', vistaIx: leerVista(), agr: null, datos: null };
+  // Día / Semana en Detalle y Sectores: si no se ha elegido, Día con 5 días y Semana con 20 días o todo.
+  const agrupa = () => estado.agr || (estado.periodo === '5' ? 'dia' : 'semana');
+  function cubos(dias) {
+    const sem = agrupa() === 'semana';
+    return { sem, claves: sem ? [...new Set(dias.map(lunes))] : dias, de: sem ? (a) => lunes(a.dia_mercado) : (a) => a.dia_mercado,
+      etq: sem ? etqSemana : diaCorto };
+  }
   const leerHash = () => {
     const h = decodeURIComponent(location.hash.slice(1));
     const [v, s] = h.split('/');
@@ -551,11 +596,11 @@
     };
   }
   const textoEje = (sel) => sel.attr('fill', 'var(--color-fg-muted)').style('font-size', 'var(--fs-caption)');
-  function ejeFechas(svg, x, dias, y0, W) {
+  function ejeFechas(svg, x, dias, y0, W, etq = diaCorto) {
     const ancho = x.bandwidth ? x.bandwidth() : 0;
-    const paso = Math.max(1, Math.ceil((dias.length * 44) / W));
+    const paso = Math.max(1, Math.ceil((dias.length * (etq === diaCorto ? 44 : 70)) / W));
     textoEje(svg.append('g').selectAll('text').data(dias.filter((d, i) => i % paso === 0 || i === dias.length - 1)).join('text')
-      .attr('x', (d) => x(d) + ancho / 2).attr('y', y0).attr('text-anchor', 'middle').text(diaCorto));
+      .attr('x', (d) => x(d) + ancho / 2).attr('y', y0).attr('text-anchor', 'middle').text(etq));
   }
 
   // ---------- Cabecera común ----------
@@ -589,23 +634,24 @@
       sel.addEventListener('change', () => { estado.alcance = sel.value; dibujar(); });
     }
     sel.value = estado.alcance;
-    const alcance = estado.alcance, esSector = alcance.startsWith('sector:');
+    const alcance = estado.alcance, esSector = alcance.startsWith('sector:'), semanal = estado.vistaIx === 'semanal';
     const filas = vIndice.filter((r) => r.alcance === alcance).sort((a, b) => a.dia_mercado.localeCompare(b.dia_mercado));
     $('ix-ventana').textContent = esSector ? 'Ventana de 20 días de mercado. Los sectores no tienen divergencia.'
       : 'Ventana de 5 días de mercado.';
     const ultimoPub = (campo) => [...filas].reverse().find((r) => r[campo] != null);
-    // Aguja con la narrativa
-    const n = ultimoPub('indice_narrativa');
-    aguja($('ix-aguja'), n ? num(n.indice_narrativa) : null);
-    $('ix-aguja-val').textContent = n ? fmt1.format(num(n.indice_narrativa)) : 'sin dato';
-    $('ix-aguja-sub').textContent = n ? `${banda(num(n.indice_narrativa)).nombre} (provisional) · ${diaCorto(n.dia_mercado)} · ${fmtInt.format(n.n_narrativa)} afectaciones`
-      + (n.dias_con_datos < n.ventana_dias ? ` · ventana incompleta: ${n.dias_con_datos} de ${n.ventana_dias} días` : '')
-      : 'Ningún día publicado para este alcance.';
-    // Tarjetas: hechos, total, divergencia
+    // Dos agujas iguales: narrativa y hechos
+    for (const [l, nom] of LINEAS.filter(([, , , dash]) => !dash)) {
+      const r = ultimoPub('indice_' + l), v = r ? num(r['indice_' + l]) : null;
+      aguja($('ix-aguja-' + l), v, nom);
+      $(`ix-aguja-${l}-val`).textContent = r ? fmt1.format(v) : 'sin dato';
+      $(`ix-aguja-${l}-sub`).textContent = r ? `${banda(v).nombre} (provisional) · ${diaCorto(r.dia_mercado)} · ${fmtInt.format(r['n_' + l])} afectaciones`
+        + (r.dias_con_datos < r.ventana_dias ? ` · ventana incompleta: ${r.dias_con_datos} de ${r.ventana_dias} días` : '')
+        : 'Ningún día publicado para este alcance.';
+    }
+    // Tarjetas: total y divergencia
     const tile = (lab, val, sub) => { const c = el('div', null, 'sm-card sm-tile'); c.append(el('div', lab, 'lab'), el('div', val, 'val'), el('div', sub, 'sub')); return c; };
-    const h = ultimoPub('indice_hechos'), t = ultimoPub('indice_total'), dv = ultimoPub('divergencia');
+    const t = ultimoPub('indice_total'), dv = ultimoPub('divergencia');
     const tiles = [
-      tile('Hechos', h ? fmt1.format(num(h.indice_hechos)) : 'sin dato', h ? `${diaCorto(h.dia_mercado)} · ${fmtInt.format(h.n_hechos)} afectaciones` : ''),
       tile('Total (informativo)', t ? fmt1.format(num(t.indice_total)) : 'sin dato', t ? `${diaCorto(t.dia_mercado)} · ${fmtInt.format(t.n_total)} afectaciones` : ''),
     ];
     if (!esSector) {
@@ -618,10 +664,18 @@
     // Leyenda y gráfico de líneas
     $('ix-leyenda').replaceChildren(...LINEAS.map(([, nom, c, dash]) => {
       const s = el('span'); const l = el('span', null, 'ln' + (dash ? ' dash' : '')); l.style.borderTopColor = `var(${c})`; s.append(l, nom); return s;
-    }), el('span', '○ ventana incompleta'));
-    graficoIndice($('ix-chart'), filas, dias);
+    }), el('span', semanal ? '○ semana en curso o ventana incompleta' : '○ ventana incompleta'));
+    $('ix-chart-titulo').textContent = semanal ? 'Índice por semana' : 'Índice por día de mercado';
+    $('ix-div-titulo').textContent = semanal ? 'Divergencia por semana' : 'Divergencia por día';
+    $('ix-chart-resumen').textContent = `Cada punto diario ya resume ${esSector ? 20 : 5} días de mercado; la vista semanal muestra un punto por semana sin solapamientos.`;
+    $('ix-chart-hueco').textContent = semanal
+      ? 'Cada semana toma el último día publicado de lunes a viernes. Punto hueco = semana en curso o ventana incompleta.'
+      : 'Punto hueco = ventana incompleta.';
+    document.querySelectorAll('#ix-vista button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.vista === estado.vistaIx)));
+    const [filasG, diasG, etq] = semanal ? [porSemana(filas, dias), [...new Set(dias.map(lunes))], etqSemana] : [filas, dias, diaCorto];
+    graficoIndice($('ix-chart'), filasG, diasG, etq);
     $('ix-div-card').hidden = esSector;
-    if (!esSector) graficoDivergencia($('ix-div'), filas, dias);
+    if (!esSector) graficoDivergencia($('ix-div'), filasG, diasG, etq);
     // Tabla del último día
     const ultDia = indice.filter((r) => r.alcance === alcance).map((r) => r.dia_mercado).sort().pop();
     $('ix-tabla-titulo').textContent = 'Último día' + (ultDia ? ` (${diaCorto(ultDia)})` : '');
@@ -644,11 +698,27 @@
       + BANDAS.map((b) => `${b.desde}-${b.hasta} ${b.nombre.toLowerCase()}`).join(' · ') + '.';
     tablaSectoresIndice();
   }
-  function aguja(cont, valor) {
+  // Semanal: una fila por semana con, para cada campo, el valor del último día publicado de esa semana.
+  function porSemana(filas, dias) {
+    const curso = semanaEnCurso();
+    const campos = [...LINEAS.map(([l]) => ['indice_' + l, 'n_' + l]), ['divergencia', 'n_unidades_divergencia']];
+    return [...new Set(dias.map(lunes))].map((l) => {
+      const de = filas.filter((r) => lunes(r.dia_mercado) === l).sort((a, b) => b.dia_mercado.localeCompare(a.dia_mercado));
+      const out = { dia_mercado: l, enCurso: l === curso };
+      for (const [v, n] of campos) {
+        const r = de.find((x) => x[v] != null);
+        if (r) Object.assign(out, { [v]: r[v], [n]: r[n], ['dia_' + v]: r.dia_mercado, ['inc_' + v]: r.dias_con_datos < r.ventana_dias });
+      }
+      return out;
+    });
+  }
+  // Punto hueco: semana en curso o ventana incompleta
+  const hueco = (r, campo) => r.enCurso || (r['inc_' + campo] ?? r.dias_con_datos < r.ventana_dias);
+  function aguja(cont, valor, nombre) {
     cont.replaceChildren();
     const W = 260, H = 140, cx = W / 2, cy = 128, R = 112, r0 = 84;
     const svg = d3.select(cont).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img')
-      .attr('aria-label', valor == null ? 'Sin dato' : `Narrativa ${fmt1.format(valor)} sobre 100`);
+      .attr('aria-label', valor == null ? `${nombre}: sin dato` : `${nombre} ${fmt1.format(valor)} sobre 100`);
     const ang = d3.scaleLinear([0, 100], [-Math.PI / 2, Math.PI / 2]);
     const arco = d3.arc().innerRadius(r0).outerRadius(R).padAngle(0.012).cornerRadius(3);
     svg.append('g').attr('transform', `translate(${cx},${cy})`).selectAll('path').data(BANDAS).join('path')
@@ -663,9 +733,9 @@
       .attr('stroke', 'var(--color-fg)').attr('stroke-width', 3).attr('stroke-linecap', 'round');
     svg.append('circle').attr('cx', cx).attr('cy', cy).attr('r', 6).attr('fill', 'var(--color-fg)');
   }
-  function graficoIndice(cont, filas, dias) {
+  function graficoIndice(cont, filas, dias, etq) {
     cont.replaceChildren();
-    const W = cont.clientWidth || 800, H = 280, m = { t: 12, r: 70, b: 26, l: 34 };
+    const W = cont.clientWidth || 800, H = 280, m = { t: 12, r: 100, b: 26, l: 34 };
     const svg = d3.select(cont).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`);
     const x = d3.scalePoint(dias, [m.l + 10, W - m.r]);
     const y = d3.scaleLinear([0, 100], [H - m.b, m.t]);
@@ -674,17 +744,17 @@
     textoEje(svg.append('g').selectAll('text').data([0, 20, 40, 50, 60, 80, 100]).join('text').attr('x', m.l - 6).attr('y', (d) => y(d))
       .attr('dy', '0.32em').attr('text-anchor', 'end').text((d) => d));
     svg.append('line').attr('x1', m.l).attr('x2', W - m.r + 40).attr('y1', y(50)).attr('y2', y(50)).attr('stroke', 'var(--cds-chart-axis)').attr('stroke-dasharray', '2 3');
-    ejeFechas(svg, x, dias, H - 6, W);
+    ejeFechas(svg, x, dias, H - 6, W, etq);
     const porDia = new Map(filas.map((r) => [r.dia_mercado, r]));
     for (const [l, nom, color, dash] of LINEAS) {
       const pts = dias.map((d) => { const r = porDia.get(d); return { d, r, v: r ? num(r['indice_' + l]) : null }; });
       svg.append('path').datum(pts).attr('fill', 'none').attr('stroke', `var(${color})`).attr('stroke-width', dash ? 1.5 : 2)
-        .attr('stroke-dasharray', dash ? '5 4' : null).attr('opacity', dash ? 0.8 : 1).attr('stroke-linejoin', 'round').attr('stroke-linecap', 'round')
+        .attr('stroke-dasharray', dash ? '6 4' : null).attr('stroke-linejoin', 'round').attr('stroke-linecap', 'round')
         .attr('d', d3.line().defined((p) => p.v != null).x((p) => x(p.d)).y((p) => y(p.v)));
       if (!dash) {
         svg.append('g').selectAll('circle').data(pts.filter((p) => p.v != null)).join('circle')
           .attr('cx', (p) => x(p.d)).attr('cy', (p) => y(p.v)).attr('r', 4)
-          .attr('fill', (p) => (p.r.dias_con_datos < p.r.ventana_dias ? 'var(--color-panel)' : `var(${color})`))
+          .attr('fill', (p) => (hueco(p.r, 'indice_' + l) ? 'var(--color-panel)' : `var(${color})`))
           .attr('stroke', `var(${color})`).attr('stroke-width', 2);
       }
       const ult = dash ? null : pts.filter((p) => p.v != null).pop();  // el total (discontinuo) va solo en la leyenda
@@ -700,17 +770,21 @@
         const d = dias.reduce((a, b) => (Math.abs(x(b) - px) < Math.abs(x(a) - px) ? b : a));
         const r = porDia.get(d);
         guia.attr('x1', x(d)).attr('x2', x(d)).attr('opacity', 1);
-        const lineas = [diaCorto(d)];
+        const lineas = [etq(d)];
         if (!r) lineas.push('sin filas');
         else {
-          for (const [l, nom] of LINEAS) lineas.push(`${nom}: ${r['indice_' + l] != null ? fmt1.format(num(r['indice_' + l])) : 'sin dato'} (${fmtInt.format(r['n_' + l] || 0)} afect.)`);
-          if (r.dias_con_datos < r.ventana_dias) lineas.push(`ventana incompleta: ${r.dias_con_datos} de ${r.ventana_dias} días`);
+          for (const [l, nom] of LINEAS) {
+            const v = r['indice_' + l], del = r['dia_indice_' + l];
+            lineas.push(`${nom}: ${v != null ? fmt1.format(num(v)) : 'sin dato'} (${fmtInt.format(r['n_' + l] || 0)} afect.${v != null && del ? ', del ' + diaCorto(del) : ''})`);
+          }
+          if (r.enCurso) lineas.push('semana en curso');
+          else if (r.dias_con_datos < r.ventana_dias) lineas.push(`ventana incompleta: ${r.dias_con_datos} de ${r.ventana_dias} días`);
         }
         tip.show(ev, lineas);
       })
       .on('mouseleave', () => { guia.attr('opacity', 0); tip.hide(); });
   }
-  function graficoDivergencia(cont, filas, dias) {
+  function graficoDivergencia(cont, filas, dias, etq) {
     cont.replaceChildren();
     const W = cont.clientWidth || 800, H = 180, m = { t: 10, r: 8, b: 26, l: 34 };
     const svg = d3.select(cont).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`);
@@ -723,14 +797,16 @@
       .attr('stroke', (d) => (d === 0 ? 'var(--cds-chart-axis)' : 'var(--cds-chart-grid)'));
     textoEje(svg.append('g').selectAll('text').data(y.ticks(4)).join('text').attr('x', m.l - 6).attr('y', (d) => y(d)).attr('dy', '0.32em')
       .attr('text-anchor', 'end').text((d) => (d > 0 ? '+' + d : d)));
-    ejeFechas(svg, x, dias, H - 6, W);
+    ejeFechas(svg, x, dias, H - 6, W, etq);
     const tip = tooltip(cont);
     const datos = dias.map((d) => ({ d, r: porDia.get(d) })).filter((p) => p.r && p.r.divergencia != null);
+    const color = (p) => (num(p.r.divergencia) < 0 ? 'var(--polo-neg)' : 'var(--polo-pos)');
     svg.append('g').selectAll('rect').data(datos).join('rect').attr('x', (p) => x(p.d)).attr('width', x.bandwidth())
       .attr('y', (p) => Math.min(y(num(p.r.divergencia)), y(0))).attr('height', (p) => Math.max(1, Math.abs(y(num(p.r.divergencia)) - y(0)))).attr('rx', 3)
-      .attr('fill', (p) => (num(p.r.divergencia) < 0 ? 'var(--polo-neg)' : 'var(--polo-pos)'))
-      .on('mousemove', (ev, p) => tip.show(ev, [diaCorto(p.d), `Divergencia ${conSigno(num(p.r.divergencia), fmt1)} puntos`,
-        `${fmtInt.format(p.r.n_unidades_divergencia)} objetos comunes`]))
+      .attr('fill', (p) => (p.r.enCurso ? 'var(--color-panel)' : color(p))).attr('stroke', (p) => (p.r.enCurso ? color(p) : null)).attr('stroke-width', 2)
+      .on('mousemove', (ev, p) => tip.show(ev, [etq(p.d), `Divergencia ${conSigno(num(p.r.divergencia), fmt1)} puntos`
+        + (p.r.dia_divergencia ? ` (del ${diaCorto(p.r.dia_divergencia)})` : ''),
+        `${fmtInt.format(p.r.n_unidades_divergencia)} objetos comunes`, ...(p.r.enCurso ? ['semana en curso'] : [])]))
       .on('mouseleave', () => tip.hide());
     const sinDato = dias.filter((d) => { const r = porDia.get(d); return !r || r.divergencia == null; });
     textoEje(svg.append('g').selectAll('text').data(sinDato).join('text').attr('x', (d) => x(d) + x.bandwidth() / 2).attr('y', y(0) - 4)
@@ -789,7 +865,8 @@
       el('div', `${lin('narrativa', s.narr)} · ${lin('hechos', s.hech)}`, 'lin'),
       el('div', `${fmtInt.format(s.noticias)} noticias · ${fmtInt.format(s.afect)} afectaciones · ${s.pct_neg} % negativas`, 'det'));
     const sp = el('div', null, 'spark'); b.append(sp);
-    const serie = dias.map((d) => ({ dia: d, media: media(afs.filter((a) => a.dia_mercado === d).map((a) => a.valor)) }));
+    const cb = cubos(dias);  // por día o por semana (media de las afectaciones de la semana)
+    const serie = cb.claves.map((k) => ({ dia: k, media: media(afs.filter((a) => cb.de(a) === k).map((a) => a.valor)) }));
     b.setAttribute('aria-label', `${nombre}: tono medio ${fmt.format(s.media)}, ${s.noticias} noticias. Ver detalle`);
     b.addEventListener('click', () => ir('detalle', clave));
     requestAnimationFrame(() => chispa(sp, serie));
@@ -909,23 +986,33 @@
   }
   function grafico(afs, dias) {
     chart.replaceChildren();
+    const cb = cubos(dias), unidad = cb.sem ? 'semana' : 'día';
+    $('sm-chart-titulo').textContent = `Tono medio por ${unidad}`;
+    $('sm-chart-nota').textContent = cb.sem
+      ? 'Media del tono de todas las afectaciones de cada semana, de lunes a viernes (−2 a +2). Debajo, noticias distintas por semana.'
+      : 'Media del tono de las afectaciones de cada día de mercado (−2 a +2). Debajo, noticias por día.';
     if (!afs.length) { chart.append(el('p', 'Sin afectaciones en el periodo.', 'sm-note')); return; }
     const W = chart.clientWidth || 600, H = 310, m = { t: 12, r: 8, b: 22, l: 30 }, hTono = 196, hN = 52;
     const svg = d3.select(chart).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`);
-    const x = d3.scaleBand(dias, [m.l, W - m.r]).padding(0.25);
+    const x = d3.scaleBand(cb.claves, [m.l, W - m.r]).padding(0.25);
     const y = d3.scaleLinear([-2, 2], [hTono, m.t]);
-    const datos = dias.map((d) => { const xs = afs.filter((a) => a.dia_mercado === d); return { d, n: xs.length, noticias: new Set(xs.map((a) => a.articulo_id)).size, media: media(xs.map((a) => a.valor)) }; });
+    const datos = cb.claves.map((d) => { const xs = afs.filter((a) => cb.de(a) === d); return { d, n: xs.length, noticias: new Set(xs.map((a) => a.articulo_id)).size, media: media(xs.map((a) => a.valor)) }; });
     svg.append('g').selectAll('line').data([-2, -1, 0, 1, 2]).join('line').attr('x1', m.l).attr('x2', W - m.r)
       .attr('y1', (d) => y(d)).attr('y2', (d) => y(d)).attr('stroke', (d) => (d === 0 ? 'var(--cds-chart-axis)' : 'var(--cds-chart-grid)'));
     textoEje(svg.append('g').selectAll('text').data([-2, -1, 0, 1, 2]).join('text').attr('x', m.l - 6).attr('y', (d) => y(d)).attr('dy', '0.32em')
       .attr('text-anchor', 'end').text((d) => (d > 0 ? '+' + d : d)));
-    const yN = d3.scaleLinear([0, d3.max(datos, (d) => d.noticias) || 1], [hTono + 30 + hN, hTono + 30]);
-    textoEje(svg.append('text').attr('x', m.l - 6).attr('y', hTono + 30).attr('dy', '0.7em').attr('text-anchor', 'end').text(yN.domain()[1]));
-    svg.append('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', yN(0)).attr('y2', yN(0)).attr('stroke', 'var(--cds-chart-grid)');
-    ejeFechas(svg, x, dias, H - 4, W);
+    // Eje de noticias: rejilla y rótulos en 0 y en el máximo redondeado
+    const yN = d3.scaleLinear([0, d3.max(datos, (d) => d.noticias) || 1], [hTono + 30 + hN, hTono + 30]).nice(2);
+    const marcas = [0, yN.domain()[1]];
+    svg.append('g').selectAll('line').data(marcas).join('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', (d) => yN(d)).attr('y2', (d) => yN(d))
+      .attr('stroke', (d) => (d === 0 ? 'var(--cds-chart-axis)' : 'var(--cds-chart-grid)'));
+    textoEje(svg.append('g').selectAll('text').data(marcas).join('text').attr('x', m.l - 6).attr('y', (d) => yN(d)).attr('dy', '0.32em')
+      .attr('text-anchor', 'end').text((d) => fmtInt.format(d)));
+    ejeFechas(svg, x, cb.claves, H - 4, W, cb.etq);
     const tip = tooltip(chart);
-    const mostrar = (ev, d) => tip.show(ev, [diaCorto(d.d), d.n ? `Tono medio ${conSigno(d.media)} · ${fmtInt.format(d.n)} afectaciones` : 'sin afectaciones',
-      `${fmtInt.format(d.noticias)} noticias`]);
+    const curso = cb.sem ? semanaEnCurso() : null;
+    const mostrar = (ev, d) => tip.show(ev, [cb.etq(d.d), d.n ? `Tono medio ${conSigno(d.media)} · ${fmtInt.format(d.n)} afectaciones` : 'sin afectaciones',
+      `${fmtInt.format(d.noticias)} noticias`, ...(d.d === curso ? ['semana en curso'] : [])]);
     svg.append('g').selectAll('rect').data(datos.filter((d) => d.n)).join('rect').attr('x', (d) => x(d.d)).attr('width', x.bandwidth())
       .attr('y', (d) => Math.min(y(d.media), y(0))).attr('height', (d) => Math.max(1, Math.abs(y(d.media) - y(0)))).attr('rx', 3)
       .attr('fill', (d) => (d.media < 0 ? 'var(--polo-neg)' : d.media > 0 ? 'var(--polo-pos)' : 'var(--cds-chart-muted)'))
@@ -933,7 +1020,7 @@
     svg.append('g').selectAll('rect').data(datos.filter((d) => d.noticias)).join('rect').attr('x', (d) => x(d.d)).attr('width', x.bandwidth())
       .attr('y', (d) => yN(d.noticias)).attr('height', (d) => yN(0) - yN(d.noticias)).attr('rx', 2).attr('fill', 'var(--cds-chart-muted)')
       .on('mousemove', mostrar).on('mouseleave', () => tip.hide());
-    textoEje(svg.append('text').attr('x', W - m.r).attr('y', hTono + 26).attr('text-anchor', 'end').text('noticias por día'));
+    textoEje(svg.append('text').attr('x', W - m.r).attr('y', hTono + 22).attr('text-anchor', 'end').text(`noticias por ${unidad}`));
   }
 
   // ---------- Pantalla: DESCARTES Y COBERTURA ----------
@@ -1040,11 +1127,19 @@
   }
 
   // ---------- Dibujo y arranque ----------
-  document.querySelectorAll('[data-grupo="periodo"] button').forEach((b) => b.addEventListener('click', () => { estado.periodo = b.dataset.periodo; dibujar(); }));
+  // Al cambiar de periodo, Día / Semana vuelve a su valor por defecto
+  document.querySelectorAll('[data-grupo="periodo"] button').forEach((b) => b.addEventListener('click', () => { estado.periodo = b.dataset.periodo; estado.agr = null; dibujar(); }));
+  document.querySelectorAll('[data-grupo="agr"] button').forEach((b) => b.addEventListener('click', () => { estado.agr = b.dataset.agr; dibujar(); }));
+  document.querySelectorAll('#ix-vista button').forEach((b) => b.addEventListener('click', () => {
+    estado.vistaIx = b.dataset.vista;
+    try { localStorage.setItem(CLAVE_VISTA, estado.vistaIx); } catch (e) { /* sin almacenamiento: la elección dura la sesión */ }
+    dibujar();
+  }));
   document.querySelectorAll('.sm-orden[aria-label="Ordenar"] button').forEach((b) => b.addEventListener('click', () => { estado.orden = b.dataset.orden; dibujar(); }));
   function dibujar() {
     for (const v of VISTAS) { $(v).hidden = estado.vista !== v; $('tab-' + v).setAttribute('aria-selected', String(estado.vista === v)); }
     document.querySelectorAll('[data-grupo="periodo"] button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.periodo === estado.periodo)));
+    document.querySelectorAll('[data-grupo="agr"] button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.agr === agrupa())));
     document.querySelectorAll('.sm-orden[aria-label="Ordenar"] button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.orden === estado.orden)));
     if (!estado.datos) return;
     ({ indice: pantallaIndice, sectores: pantallaSectores, detalle, descartes: pantallaDescartes })[estado.vista]();
