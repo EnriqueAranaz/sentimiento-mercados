@@ -457,6 +457,13 @@ regionales de EE. UU. y pequeñas de menos de ~4.000 M. Léelo antes de clasific
   - *Kering cae con fuerza en Bolsa ante los malos datos de ventas de Gucci* → Mercado · Empresa · Kering → **-2**
   - *Galp se hunde tras romper negociaciones con Moeve para fusionar sus negocios de petróleo* → Mercado · Empresa · Galp → **-2**
   - *El beneficio de Barclays sube un 17% hasta septiembre…* → Hecho (trata de la cifra)
+- **"Datos clave" y titulares que mezclan precio y datos.** En los "Datos clave" de TradingView, y en cualquier titular
+  que mezcle precio y datos, cada parte se evalúa por separado. El precio sin causa no se anota. Si no queda ningún
+  hecho ni cifra con dirección, la noticia es **Precio sin causa**.
+  - *Datos clave: AMD cae 8% y luego rebota; el margen operativo GAAP fue de 17%* → No relevante · **Precio sin causa**
+    (el movimiento no tiene causa y el margen, sin comparación, no tiene dirección)
+  - *Datos clave: HSBC Holdings (HSBA) cae a ~1,350p; lanza RedCoin* → Hecho · Empresa · HSBC → **0** (el precio se
+    ignora; se anota el hecho corporativo)
 - **En Resultados manda la cifra, no el verbo.** El umbral de la escala (beneficio +20 % o más → 2; −20 % o peor → -2)
   prevalece sobre el verbo del titular, salvo un "pero" o un "aunque" (punto anterior). La regla 10 f ("mismo dato,
   distinto verbo") queda para los datos macro.
