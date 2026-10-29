@@ -21,12 +21,20 @@ from pathlib import Path
 from comun import LOTES, MADRID, VERSION_CRITERIOS, conectar, todas
 
 
+def articulos(db) -> list[dict]:
+    """Artículos sin los duplicados (duplicado_de no nulo): no se clasifican ni cuentan como pendientes."""
+    arts = todas(db, "articulos", "id,fuente_id,seccion,publicado_en,titulo,resumen,simbolos,duplicado_de")
+    return [a for a in arts if a["duplicado_de"] is None]
+
+
 def pendientes(db) -> tuple[list[dict], dict]:
     clas = todas(db, "clasificacion", "articulo_id,metodo,motivo_no_relevante", orden="articulo_id")
     hechos = {c["articulo_id"] for c in clas
               if c["metodo"] == "manual" or c["motivo_no_relevante"] == "Cripto"}
-    arts = todas(db, "articulos", "id,fuente_id,seccion,publicado_en,titulo,resumen,simbolos")
+    arts = articulos(db)
     pend = [a for a in arts if a["id"] not in hechos]
+    ids = {a["id"] for a in arts}
+    clas = [c for c in clas if c["articulo_id"] in ids]  # sin las clasificaciones de los duplicados
     estado = {
         "articulos": len(arts),
         "clasificados_manual": sum(c["metodo"] == "manual" for c in clas),
@@ -62,7 +70,7 @@ def main() -> int:
             revisados = {c["articulo_id"] for c in todas(db, "clasificacion", "articulo_id,version_criterios",
                                                           orden="articulo_id")
                          if c["version_criterios"] == VERSION_CRITERIOS and not args.forzar}
-            todos = todas(db, "articulos", "id,fuente_id,seccion,publicado_en,titulo,resumen,simbolos")
+            todos = articulos(db)
             pend = [a for a in todos if a["id"] in elegidos and a["id"] not in revisados]
         else:
             pend = [a for a in pend if a["id"] in elegidos]

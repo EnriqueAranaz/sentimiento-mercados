@@ -28,6 +28,35 @@ class AlmacenSupabase:
             conocidas.update(r["url"] for r in res.data)
         return conocidas
 
+    def por_clave(self, fuente_id: int, claves: list[str]) -> dict[str, dict]:
+        """Artículos ya guardados con esas claves: {clave: {id, titulo}}."""
+        guardados: dict[str, dict] = {}
+        for i in range(0, len(claves), _LOTE):
+            res = (self.db.table("articulos").select("id,titulo,clave_fuente")
+                   .eq("fuente_id", fuente_id).in_("clave_fuente", claves[i:i + _LOTE]).execute())
+            guardados.update({r["clave_fuente"]: r for r in res.data})
+        return guardados
+
+    def actualizar_titular(self, articulo_id: int, titulo: str, resumen: str | None, anterior: str) -> dict:
+        """La fuente reescribió el artículo: titular y resumen nuevos (misma fecha) y vuelve a quedar pendiente."""
+        for tabla in ("afectaciones", "detecciones", "clasificacion"):
+            self.db.table(tabla).delete().eq("articulo_id", articulo_id).execute()
+        return (self.db.table("articulos")
+                .update({"titulo": titulo, "resumen": resumen, "titulo_anterior": anterior})
+                .eq("id", articulo_id).execute().data[0])
+
+    def recientes(self, fuente_id: int, desde: datetime) -> list[dict]:
+        """Artículos de la fuente publicados desde esa fecha (para detectar reenvíos por titular)."""
+        filas, inicio = [], 0
+        while True:
+            lote = (self.db.table("articulos").select("id,titulo,publicado_en,duplicado_de")
+                    .eq("fuente_id", fuente_id).gte("publicado_en", desde.isoformat())
+                    .order("id").range(inicio, inicio + 999).execute().data)
+            filas += lote
+            if len(lote) < 1000:
+                return filas
+            inicio += 1000
+
     def tiene_articulos(self, fuente_id: int) -> bool:
         res = self.db.table("articulos").select("id").eq("fuente_id", fuente_id).limit(1).execute()
         return bool(res.data)
@@ -87,6 +116,21 @@ class AlmacenLocal:
     def urls_conocidas(self, urls: list[str]) -> set[str]:
         return {u for u in urls if u in self.datos["articulos"]}
 
+    def por_clave(self, fuente_id: int, claves: list[str]) -> dict[str, dict]:
+        return {a["clave_fuente"]: a for a in self.datos["articulos"].values()
+                if a["fuente_id"] == fuente_id and a.get("clave_fuente") in claves}
+
+    def actualizar_titular(self, articulo_id: int, titulo: str, resumen: str | None, anterior: str) -> dict:
+        a = next(x for x in self.datos["articulos"].values() if x.get("id") == articulo_id)
+        a.update(titulo=titulo, resumen=resumen, titulo_anterior=anterior)
+        self.datos.setdefault("sin_clasificar", []).append(articulo_id)  # en Supabase se borra su clasificación
+        self._guardar()
+        return a
+
+    def recientes(self, fuente_id: int, desde: datetime) -> list[dict]:
+        return [a for a in self.datos["articulos"].values()
+                if a["fuente_id"] == fuente_id and datetime.fromisoformat(str(a["publicado_en"])) >= desde]
+
     def tiene_articulos(self, fuente_id: int) -> bool:
         return any(a["fuente_id"] == fuente_id for a in self.datos["articulos"].values())
 
@@ -98,6 +142,7 @@ class AlmacenLocal:
         nuevos = []
         for f in filas:
             if f["url"] not in self.datos["articulos"]:
+                f = {**f, "id": len(self.datos["articulos"]) + 1}
                 self.datos["articulos"][f["url"]] = f
                 nuevos.append(f)
         self._guardar()

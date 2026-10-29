@@ -14,6 +14,10 @@
 #   fecha_desde_articulo  (opcional) true: a los artículos nuevos sin fecha se les abre la página
 #                 (1 pet/s) para tomar la fecha real (article:published_time o JSON-LD datePublished)
 #   max_fechas_por_ejecucion  (opcional, 80 por defecto) tope de páginas de artículo abiertas por ejecución
+#   clave_url     (opcional) regex con un grupo: identificador del artículo en la URL (articulos.clave_fuente,
+#                 único por fuente). Si ya está guardado, la noticia no se vuelve a insertar (ingesta/duplicados.py)
+#   duplicado_por_titulo_h  (opcional) horas: un artículo con el mismo titular normalizado que otro de la fuente
+#                 en ese plazo se guarda con duplicado_de = el primero (las vistas lo excluyen)
 #   listados      lista de listados a recorrer, cada uno con:
 #       url           URL de la primera página
 #       url_pagina    (opcional) plantilla para páginas 2..N, con {n}
@@ -90,6 +94,7 @@ fuentes:
     activa: true
     motivo: "Fuente principal: archivo diario de Últimas (/noticias/ultimas/AAAA-MM-DD/N), completo y paginable (~35-40 noticias por día laborable). Agrupa por día de creación, así que las noticias programadas para días posteriores se recogen con el sitemap de noticias y los listados de sección. Las que llegan sin fecha toman la real de la página del artículo (JSON-LD datePublished)."
     fecha_desde_articulo: true
+    clave_url: '--(\d+)\.html$'   # el archivo y el sitemap dan la misma noticia con slugs distintos
     listados:
       - url_dia: https://www.bolsamania.com/noticias/ultimas/{fecha}
         url_dia_pagina: https://www.bolsamania.com/noticias/ultimas/{fecha}/{n}
@@ -139,6 +144,7 @@ fuentes:
     fecha_desde_articulo: true
     max_fechas_por_ejecucion: 150   # la primera lectura trae ~140 sin fecha; luego solo las nuevas
     excluir_titulo: '(?i)\bCB Premium\b|Servicio Premium|Capital ?Bolsa Premium'
+    clave_url: '--(\d+)\.html$'
     listados:
       - url_dia: https://www.bolsamania.com/capitalbolsa/noticias/minuto-a-minuto/{fecha}
         url_dia_pagina: https://www.bolsamania.com/capitalbolsa/noticias/minuto-a-minuto/{fecha}/{n}
@@ -187,6 +193,7 @@ fuentes:
     idioma: es
     activa: true
     motivo: "El HTML incluye (renderizado en servidor) un JSON con las últimas noticias (~110 entradas en varios bloques). 'Cargar más' requiere JavaScript, así que no hay paginación. La página de Reuters se probó y no aportaba URLs nuevas."
+    duplicado_por_titulo_h: 48   # Reuters reenvía la misma noticia con otro identificador
     listados:
       - url: https://es.tradingview.com/news/
         parser: tradingview_json

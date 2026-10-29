@@ -19,6 +19,7 @@ import yaml
 from dotenv import load_dotenv
 
 from .almacen import crear_almacen
+from .duplicados import guardar_articulos
 from .http import BloqueoError, ClienteEducado, RobotsError
 from .modelos import MADRID, Item
 from .parsers import PARSERS, SinNovedades, fecha_de_articulo
@@ -39,6 +40,7 @@ class Resultado:
     avisos: list[str] = field(default_factory=list)
     muestras: list[Item] = field(default_factory=list)
     insertados: list[dict] = field(default_factory=list)  # filas nuevas (con id), para las reglas
+    actualizados: list[dict] = field(default_factory=list)  # titular reescrito por la fuente: vuelven a pendientes
 
 
 def ahora() -> datetime:
@@ -239,8 +241,11 @@ def procesar_fuente(fuente: dict, fuente_id: int, cliente: ClienteEducado, almac
     if filas:
         try:
             conocidas = almacen.urls_conocidas([f["url"] for f in filas])
-            res.insertados = almacen.insertar_articulos(filas)
+            res.insertados, res.actualizados = guardar_articulos(filas, fuente, fuente_id, almacen)
             res.nuevos = len(res.insertados)
+            if res.actualizados:  # no es un error: va al log de la ejecución, no a ejecuciones.error_msg
+                log.info("%s · titulares reescritos por la fuente: %d artículos actualizados y de nuevo pendientes (%s)",
+                         fuente["nombre"], len(res.actualizados), ", ".join(str(a["id"]) for a in res.actualizados))
             nuevos = [it for it in vistos.values() if it.url not in conocidas]
             res.muestras = (nuevos or list(vistos.values()))[:n_muestras]
         except Exception as e:  # noqa: BLE001
@@ -276,6 +281,8 @@ def imprimir_resumen(resultados: list[Resultado], inactivas: list[dict]) -> None
         print(f"\n## {r.nombre} ({r.estado})")
         for a in r.avisos:
             print(f"   ! {a}")
+        if r.actualizados:
+            print(f"   · titulares reescritos: {len(r.actualizados)} ({', '.join(str(a['id']) for a in r.actualizados)})")
         for it in r.muestras:
             fecha = it.publicado_en.astimezone(MADRID).strftime("%d/%m %H:%M") if it.publicado_en else "sin fecha"
             print(f"   - [{fecha}] {it.titulo}")
@@ -328,7 +335,7 @@ def main(argv: list[str] | None = None) -> int:
     imprimir_resumen(resultados, inactivas)
 
     if not args.dry_run:
-        aplicar_reglas([f for r in resultados for f in r.insertados], almacen)
+        aplicar_reglas([f for r in resultados for f in r.insertados + r.actualizados if not f.get("duplicado_de")], almacen)
 
     alertas = fuentes_con_errores_seguidos(resultados, almacen)
     for nombre in alertas:
