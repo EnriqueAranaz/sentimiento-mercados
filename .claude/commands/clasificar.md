@@ -14,5 +14,9 @@ Cuando el agente termine, recalcula el índice de sentimiento (último paso; ver
 Y comprueba las empresas propuestas pendientes de decisión:
 `.venv\Scripts\python.exe clasificacion\decidir_empresas.py --estado`
 
+Y el tamaño de la base (plan gratuito: 500 MB):
+`.venv\Scripts\python.exe clasificacion\tamano_bd.py`
+
 Después muéstrame su informe: noticias clasificadas, pendientes que quedan, % de relevantes,
-reparto por origen, empresas nuevas propuestas y dudas, y la línea final de `indice.py` (filas y publicadas). Termina con un **aviso** visible con el número de empresas propuestas pendientes de decisión y de noticias afectadas (salida de `decidir_empresas.py --estado`), si hay alguna.
+reparto por origen, empresas nuevas propuestas y dudas, la línea final de `indice.py` (filas y publicadas) y la
+línea de `tamano_bd.py` (MB usados y %). Termina con un **aviso** visible con el número de empresas propuestas pendientes de decisión y de noticias afectadas (salida de `decidir_empresas.py --estado`), si hay alguna.

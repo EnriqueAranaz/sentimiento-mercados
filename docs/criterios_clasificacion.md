@@ -485,6 +485,13 @@ regionales de EE. UU. y pequeñas de menos de ~4.000 M. Léelo antes de clasific
   - *Santander bate previsiones y Bankinter ve un potencial del 26,6% en bolsa* → Empresa · Santander → **2**
   - *Bankinter ve un potencial del 20,9% en EssilorLuxottica tras superar las previsiones* → Empresa · EssilorLuxottica → **2**
   - *Raymond James apuesta por MACOM y apunta a los 300 dólares* (sin porcentaje) → Empresa · MACOM → **1**
+- **Compras y ventas de acciones de directivos o de inversores relevantes.** Que un directivo de la compañía, o un
+  inversor ajeno relevante (un fondo activista, una empresa del sector, un inversor de referencia), compre acciones o
+  tome una participación es una señal muy positiva: **+2**. Que las venda: **-2**. No entran las recompras de la propia
+  empresa (Corporativo, con su valor habitual) ni las notificaciones rutinarias de fondos índice al cruzar un umbral
+  (BlackRock con el 1 %): estas no se anotan (contraparte pasiva).
+  - *Botín compra acciones de Santander por 3,1 millones de euros* → Empresa · Santander → **2**
+  - *Datos clave: Air Liquide SA informa una participación de Elliott…* → Empresa · Air Liquide → **2**
 - **Protagonistas y contrapartes pasivas.** Los protagonistas de una operación (comprador, vendedor, la empresa que
   anuncia) se anotan aunque su tono sea 0. Las contrapartes pasivas (inquilino, cliente o socio de un contrato,
   accionista que se notifica, empresa que solo es la causa) no se anotan.

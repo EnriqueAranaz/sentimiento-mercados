@@ -44,3 +44,12 @@ Criterios generales de alta y descarte:
 | Corticeira Amorim | EURONEXT:COR | Pequeña extranjera | 28/10/2026 |
 | HomeTrust Bancshares | NYSE:HTB | Banco regional de EE. UU. | 28/10/2026 |
 | Versant Media | NASDAQ:VSNT | Pequeña (menos de ~4.000 M) | 28/10/2026 |
+| Eutelsat | EURONEXT:ETL | Pequeña extranjera | 29/10/2026 |
+| Werner Enterprises | NASDAQ:WERN | Pequeña extranjera | 29/10/2026 |
+| F&M Bank | OTC:FMBM | Banco regional pequeño de EE. UU. | 29/10/2026 |
+| Northeast Indiana Bancorp | OTC:NIDB | Banco regional pequeño de EE. UU. | 29/10/2026 |
+| Oxford Bank Corporation | OTC:OXBC | Banco regional pequeño de EE. UU. | 29/10/2026 |
+| CareView Communications | OTC:CRVW | Microcotizada | 29/10/2026 |
+| Fortune Minerals | TSX:FT | Microcotizada | 29/10/2026 |
+| Median Technologies | EURONEXT:ALMDT | Cotiza en mercado de crecimiento | 29/10/2026 |
+| Perrigo | NYSE:PRGO | Pequeña (menos de ~4.000 M) | 29/10/2026 |

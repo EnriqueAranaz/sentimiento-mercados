@@ -168,6 +168,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Blue Owl Capital",
+  "ticker": "NYSE:OWL",
+  "sector": "Seguros y servicios financieros",
+  "en_universo": false
+ },
+ {
   "nombre": "Boston Omaha",
   "ticker": "NYSE:BOC",
   "sector": "Medios y entretenimiento",
@@ -324,6 +330,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Eurobank",
+  "ticker": "ATHEX:EUROB",
+  "sector": "Banca",
+  "en_universo": false
+ },
+ {
   "nombre": "Faes Farma",
   "ticker": "BME:FAE",
   "sector": "Salud y farmacia",
@@ -357,6 +369,12 @@
   "nombre": "Flutter Entertainment",
   "ticker": "NYSE:FLUT",
   "sector": "Medios y entretenimiento",
+  "en_universo": false
+ },
+ {
+  "nombre": "Fortinet",
+  "ticker": "NASDAQ:FTNT",
+  "sector": "Tecnología",
   "en_universo": false
  },
  {
@@ -528,6 +546,12 @@
   "nombre": "Medifast",
   "ticker": "NYSE:MED",
   "sector": "Consumo y distribución",
+  "en_universo": false
+ },
+ {
+  "nombre": "Medline",
+  "ticker": "NASDAQ:MDLN",
+  "sector": "Salud y farmacia",
   "en_universo": false
  },
  {
@@ -703,6 +727,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Toast",
+  "ticker": "NYSE:TOST",
+  "sector": "Tecnología",
+  "en_universo": false
+ },
+ {
   "nombre": "Touchmark Bancshares",
   "ticker": "OTC:TMAK",
   "sector": "Banca",
@@ -756,6 +786,12 @@
   "nombre": "United Airlines",
   "ticker": "NASDAQ:UAL",
   "sector": "Transporte y turismo",
+  "en_universo": false
+ },
+ {
+  "nombre": "Universal Music Group",
+  "ticker": "EURONEXT:UMG",
+  "sector": "Medios y entretenimiento",
   "en_universo": false
  },
  {
