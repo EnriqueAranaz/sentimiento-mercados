@@ -29,6 +29,13 @@
   "en_universo": false
  },
  {
+  "nombre": "Aedas Homes",
+  "ticker": "BME:AEDAS",
+  "sector": "Inmobiliario",
+  "en_universo": false,
+  "nota": "Pendiente de exclusión (opa de Neinor, 30/10/2026): cuando deje de cotizar, pasarla a descartadas."
+ },
+ {
   "nombre": "AerCap",
   "ticker": "NYSE:AER",
   "sector": "Transporte y turismo",
@@ -396,6 +403,18 @@
   "en_universo": false
  },
  {
+  "nombre": "Global Dominion",
+  "ticker": "BME:DOM",
+  "sector": "Industria, defensa y aeroespacial",
+  "en_universo": false
+ },
+ {
+  "nombre": "Grupo Empresarial San José",
+  "ticker": "BME:GSJ",
+  "sector": "Construcción e infraestructuras",
+  "en_universo": false
+ },
+ {
   "nombre": "Haleon",
   "ticker": "LSE:HLN",
   "sector": "Salud y farmacia",
@@ -457,6 +476,15 @@
   "ticker": "BME:IMC",
   "sector": "Inmobiliario",
   "en_universo": false
+ },
+ {
+  "nombre": "Intact Financial",
+  "ticker": "TSX:IFC",
+  "sector": "Seguros y servicios financieros",
+  "en_universo": false,
+  "alias": [
+   "Intact Insurance"
+  ]
  },
  {
   "nombre": "Intertek",
@@ -567,6 +595,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Neinor Homes",
+  "ticker": "BME:HOME",
+  "sector": "Inmobiliario",
+  "en_universo": false
+ },
+ {
   "nombre": "Neste",
   "ticker": "OMXHEX:NESTE",
   "sector": "Petróleo y gas",
@@ -591,6 +625,12 @@
   "en_universo": false
  },
  {
+  "nombre": "PharmaMar",
+  "ticker": "BME:PHM",
+  "sector": "Salud y farmacia",
+  "en_universo": false
+ },
+ {
   "nombre": "PNC Financial Services",
   "ticker": "NYSE:PNC",
   "sector": "Banca",
@@ -603,10 +643,25 @@
   "en_universo": false
  },
  {
+  "nombre": "Prisa",
+  "ticker": "BME:PRS",
+  "sector": "Medios y entretenimiento",
+  "en_universo": false
+ },
+ {
   "nombre": "Prysmian",
   "ticker": "MIL:PRY",
   "sector": "Industria, defensa y aeroespacial",
   "en_universo": false
+ },
+ {
+  "nombre": "QBE Insurance",
+  "ticker": "ASX:QBE",
+  "sector": "Seguros y servicios financieros",
+  "en_universo": false,
+  "alias": [
+   "QBE"
+  ]
  },
  {
   "nombre": "Range Resources",
@@ -816,6 +871,12 @@
   "nombre": "Vertiv",
   "ticker": "NYSE:VRT",
   "sector": "Industria, defensa y aeroespacial",
+  "en_universo": false
+ },
+ {
+  "nombre": "Vestas",
+  "ticker": "OMXCOP:VWS",
+  "sector": "Eléctricas, renovables y redes",
   "en_universo": false
  },
  {

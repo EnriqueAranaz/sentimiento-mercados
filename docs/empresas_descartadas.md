@@ -53,3 +53,4 @@ Criterios generales de alta y descarte:
 | Fortune Minerals | TSX:FT | Microcotizada | 29/10/2026 |
 | Median Technologies | EURONEXT:ALMDT | Cotiza en mercado de crecimiento | 29/10/2026 |
 | Perrigo | NYSE:PRGO | Pequeña (menos de ~4.000 M) | 29/10/2026 |
+| LLYC | BME:LLYC | Cotiza en mercado de crecimiento | 30/10/2026 |

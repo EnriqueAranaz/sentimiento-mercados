@@ -386,7 +386,8 @@ Estos ejemplos de secciones anteriores ya no se aplican tal como están escritos
   - Un **hecho concreto** (decreto, ataques, resultados, una decisión de un gobierno, de un banco central o de una empresa, una negociación) que pueda explicar el movimiento **en el sentido del titular** → es causa y el titular es relevante. Ejemplos: "Solaria y Merlin aceleran en el Ibex con el nuevo decreto de centros de datos", "El petróleo crudo extiende sus ganancias mientras los ataques hutíes se intensifican", "El crudo cae un 1% mientras la diplomacia con Irán disipa los temores sobre la oferta".
   - Un **precio o nivel de otra variable**, o una **atención genérica** → acompañamiento, Precio sin causa si no hay otro nexo. Ejemplos: "Ligeras caídas en las Bolsas europeas con el petróleo imparable", "El Ibex pierde los 19.000 puntos con el petróleo por encima de los 116 dólares", "Europa apunta a la baja mientras la financiación de la IA concentra las miradas".
   - Un hecho que empuja **en sentido contrario** al movimiento equivale a "pese a" → Precio sin causa. Ejemplo: "El petróleo alcanza los 117 dólares mientras Trump mueve ficha para elevar la producción".
-- Siguen sin ser causa: "pese a", "a la espera de", "pendientes de", "con la mira en", "en una jornada de". Ejemplo: "El petróleo cede pese a la escalada militar" → Precio sin causa.
+- Siguen sin ser causa: "pese a", "a la espera de", "pendientes de", "con la mira en", "en una jornada de". Ejemplo: "El petróleo cede pese a la escalada militar" → la cesión no se anota; desde el 30/10 sí se anota el hecho
+  que sigue a "pese a" con su tono (ver *"A pesar de" / "pese a" + hecho* en las aclaraciones): Global · Petróleo → **1**.
 - **Temor o esperanza con nombre (v3.8).** Si tras "con/mientras" va un temor o una esperanza con nombre que cambia en el sentido del movimiento, es causa: "Wall Street anticipa caídas mientras crece el temor a un pinchazo en la burbuja de la IA", "El Brent toca los 116 dólares mientras se desvanece la esperanza de paz en Oriente Medio" → relevantes. La atención o la espera genérica no lo es: "mientras la OPI de Anthropic pone la atención en…", "dividida entre…", "mientras los operadores esperan…", "El crudo mira a los 110 dólares mientras…" → Precio sin causa.
 - **Empresa y Sector (v3.8).** La regla 11 e solo prohíbe anotar en la misma noticia una Empresa y el Sector al que pertenece esa empresa. Una Empresa y un Sector distinto pueden convivir. La empresa que en el titular solo es la causa y tendría tono 0 no se anota. Si el titular nombra un grupo ("los operadores de telecomunicaciones estadounidenses"), se anota ese Sector aunque se nombre también la empresa que lo causa.
 - **El objeto de acompañamiento no se anota (v3.7)**, aunque la noticia sea relevante por otra causa: en "…y con el petróleo a 116 dólares" eso es precio narrado del petróleo, no una afectación de Petróleo. Esto deja superado el ejemplo 8.1 n.º 3 en cuanto a la afectación de acompañamiento.
@@ -425,6 +426,12 @@ regionales de EE. UU. y pequeñas de menos de ~4.000 M. Léelo antes de clasific
   **Rumor / según fuentes**.
   - *El BCE pausará las alzas de tipos ante la tensión en la deuda* (resumen: "Diferentes miembros del Consejo de
     Gobierno apuntan a diciembre…") → Hecho · Mercado · Europa → **1**
+- **"A pesar de" / "pese a" + hecho.** El hecho se anota con su tono; el movimiento del precio no se anota (precio sin
+  causa), salvo que el titular le atribuya otra causa explícita.
+  - *Microsoft cae a pesar de batir previsiones con sus cuentas gracias al crecimiento de Azure* → Resultados · Hecho · Microsoft → **1**
+  - *El oro cae pese a la tensión en Oriente Medio* → la tensión sostiene el oro: Global · Materias primas → **1**; la caída no se anota
+  - *Lloyds cae pese a duplicar el beneficio trimestral: decepciona que no eleve sus previsiones* → la caída tiene otra
+    causa explícita: Mercado · Lloyds → **-1**
 - **"Pero" y "aunque".** Con fuerzas opuestas sobre el mismo objeto, el valor es **0** (regla 11 c), salvo que el
   titular las una con "pero" o "aunque": entonces manda lo que va detrás, con valor **±1** en su sentido. Vale para
   cualquier tema, también Resultados, aunque la cifra vaya en sentido contrario.

@@ -317,6 +317,8 @@ def construir() -> list[dict]:
             "mercado": e.get("mercado") or mercado_por_ticker(e["ticker"]),
             "origen": "Propuesta del agente, aprobada 26/10/2026 (2.ª tanda)"})
         ALIAS_EXTRA.setdefault(e["nombre"], e.get("alias", []))
+        if e.get("nota"):
+            NOTAS.setdefault(e["nombre"], e["nota"])
     # Aclaración v3 (b, c): Anthropic cotiza (OPV) y las grandes mundiales de Asia están en el universo.
     for nombre in ("Anthropic", "Samsung", "SK Hynix"):
         if nombre in empresas:
