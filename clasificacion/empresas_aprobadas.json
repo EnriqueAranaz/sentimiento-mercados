@@ -42,6 +42,12 @@
   "en_universo": false
  },
  {
+  "nombre": "AIG",
+  "ticker": "NYSE:AIG",
+  "sector": "Seguros y servicios financieros",
+  "en_universo": false
+ },
+ {
   "nombre": "Air Canada",
   "ticker": "TSX:AC",
   "sector": "Transporte y turismo",
@@ -69,6 +75,12 @@
   "nombre": "Alliance Resource Partners",
   "ticker": "NASDAQ:ARLP",
   "sector": "Materiales, química y minería",
+  "en_universo": false
+ },
+ {
+  "nombre": "Alliant Energy",
+  "ticker": "NASDAQ:LNT",
+  "sector": "Eléctricas, renovables y redes",
   "en_universo": false
  },
  {
@@ -157,6 +169,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Berkeley Energia",
+  "ticker": "BME:BKY",
+  "sector": "Materiales, química y minería",
+  "en_universo": false
+ },
+ {
   "nombre": "Betterware de México",
   "ticker": "NASDAQ:BWMX",
   "sector": "Consumo y distribución",
@@ -193,6 +211,12 @@
   "en_universo": false
  },
  {
+  "nombre": "C.H. Robinson",
+  "ticker": "NASDAQ:CHRW",
+  "sector": "Transporte y turismo",
+  "en_universo": false
+ },
+ {
   "nombre": "CACI",
   "ticker": "NYSE:CACI",
   "sector": "Industria, defensa y aeroespacial",
@@ -208,6 +232,18 @@
   "nombre": "CAF",
   "ticker": "BME:CAF",
   "sector": "Industria, defensa y aeroespacial",
+  "en_universo": false
+ },
+ {
+  "nombre": "Cameco",
+  "ticker": "TSX:CCO",
+  "sector": "Materiales, química y minería",
+  "en_universo": false
+ },
+ {
+  "nombre": "Canadian National Railway",
+  "ticker": "TSX:CNR",
+  "sector": "Transporte y turismo",
   "en_universo": false
  },
  {
@@ -256,6 +292,18 @@
   "nombre": "City Holding",
   "ticker": "NASDAQ:CHCO",
   "sector": "Banca",
+  "en_universo": false
+ },
+ {
+  "nombre": "Commerce Bancshares",
+  "ticker": "NASDAQ:CBSH",
+  "sector": "Banca",
+  "en_universo": false
+ },
+ {
+  "nombre": "Constellation Energy",
+  "ticker": "NASDAQ:CEG",
+  "sector": "Eléctricas, renovables y redes",
   "en_universo": false
  },
  {
@@ -343,6 +391,24 @@
   "en_universo": false
  },
  {
+  "nombre": "Everest Group",
+  "ticker": "NYSE:EG",
+  "sector": "Seguros y servicios financieros",
+  "en_universo": false
+ },
+ {
+  "nombre": "Exelon",
+  "ticker": "NASDAQ:EXC",
+  "sector": "Eléctricas, renovables y redes",
+  "en_universo": false
+ },
+ {
+  "nombre": "Ezentis",
+  "ticker": "BME:EZE",
+  "sector": "Construcción e infraestructuras",
+  "en_universo": false
+ },
+ {
   "nombre": "Faes Farma",
   "ticker": "BME:FAE",
   "sector": "Salud y farmacia",
@@ -403,9 +469,27 @@
   "en_universo": false
  },
  {
+  "nombre": "Gaming and Leisure Properties",
+  "ticker": "NASDAQ:GLPI",
+  "sector": "Inmobiliario",
+  "en_universo": false
+ },
+ {
+  "nombre": "GATX",
+  "ticker": "NYSE:GATX",
+  "sector": "Transporte y turismo",
+  "en_universo": false
+ },
+ {
   "nombre": "Global Dominion",
   "ticker": "BME:DOM",
   "sector": "Industria, defensa y aeroespacial",
+  "en_universo": false
+ },
+ {
+  "nombre": "Global Payments",
+  "ticker": "NYSE:GPN",
+  "sector": "Seguros y servicios financieros",
   "en_universo": false
  },
  {
@@ -451,6 +535,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Hyatt",
+  "ticker": "NYSE:H",
+  "sector": "Transporte y turismo",
+  "en_universo": false
+ },
+ {
   "nombre": "Iberpapel",
   "ticker": "BME:IBG",
   "sector": "Materiales, química y minería",
@@ -470,6 +560,12 @@
   "alias": [
    "Informa plc"
   ]
+ },
+ {
+  "nombre": "Inmobiliaria del Sur",
+  "ticker": "BME:ISUR",
+  "sector": "Inmobiliario",
+  "en_universo": false
  },
  {
   "nombre": "Inmocemento",
@@ -529,6 +625,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Libertas 7",
+  "ticker": "BME:LIB",
+  "sector": "Inmobiliario",
+  "en_universo": false
+ },
+ {
   "nombre": "Logan Energy",
   "ticker": "TSXV:LGN",
   "sector": "Petróleo y gas",
@@ -544,6 +646,18 @@
   "nombre": "Lottomatica",
   "ticker": "MIL:LTMC",
   "sector": "Medios y entretenimiento",
+  "en_universo": false
+ },
+ {
+  "nombre": "Lundin Gold",
+  "ticker": "TSX:LUG",
+  "sector": "Materiales, química y minería",
+  "en_universo": false
+ },
+ {
+  "nombre": "Lundin Mining",
+  "ticker": "TSX:LUN",
+  "sector": "Materiales, química y minería",
   "en_universo": false
  },
  {
@@ -580,6 +694,18 @@
   "nombre": "Medline",
   "ticker": "NASDAQ:MDLN",
   "sector": "Salud y farmacia",
+  "en_universo": false
+ },
+ {
+  "nombre": "Mohawk Industries",
+  "ticker": "NYSE:MHK",
+  "sector": "Construcción e infraestructuras",
+  "en_universo": false
+ },
+ {
+  "nombre": "Mondelez",
+  "ticker": "NASDAQ:MDLZ",
+  "sector": "Consumo y distribución",
   "en_universo": false
  },
  {
@@ -649,6 +775,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Prosegur Cash",
+  "ticker": "BME:CASH",
+  "sector": "Industria, defensa y aeroespacial",
+  "en_universo": false
+ },
+ {
   "nombre": "Prysmian",
   "ticker": "MIL:PRY",
   "sector": "Industria, defensa y aeroespacial",
@@ -679,6 +811,12 @@
   ]
  },
  {
+  "nombre": "Reddit",
+  "ticker": "NYSE:RDDT",
+  "sector": "Tecnología",
+  "en_universo": false
+ },
+ {
   "nombre": "Regeneron",
   "ticker": "NASDAQ:REGN",
   "sector": "Salud y farmacia",
@@ -703,9 +841,21 @@
   "en_universo": false
  },
  {
+  "nombre": "Ryanair",
+  "ticker": "EURONEXT:RYA",
+  "sector": "Transporte y turismo",
+  "en_universo": false
+ },
+ {
   "nombre": "S&P Global",
   "ticker": "NYSE:SPGI",
   "sector": "Seguros y servicios financieros",
+  "en_universo": false
+ },
+ {
+  "nombre": "Sandisk",
+  "ticker": "NASDAQ:SNDK",
+  "sector": "Semiconductores",
   "en_universo": false
  },
  {
@@ -733,6 +883,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Southern Company",
+  "ticker": "NYSE:SO",
+  "sector": "Eléctricas, renovables y redes",
+  "en_universo": false
+ },
+ {
   "nombre": "Spotify",
   "ticker": "NYSE:SPOT",
   "sector": "Medios y entretenimiento",
@@ -742,6 +898,12 @@
   "nombre": "Standard Chartered",
   "ticker": "LSE:STAN",
   "sector": "Banca",
+  "en_universo": false
+ },
+ {
+  "nombre": "Starbucks",
+  "ticker": "NASDAQ:SBUX",
+  "sector": "Consumo y distribución",
   "en_universo": false
  },
  {
@@ -788,6 +950,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Toronto-Dominion Bank",
+  "ticker": "TSX:TD",
+  "sector": "Banca",
+  "en_universo": false
+ },
+ {
   "nombre": "Touchmark Bancshares",
   "ticker": "OTC:TMAK",
   "sector": "Banca",
@@ -818,6 +986,12 @@
   "alias": [
    "Taiwan Semiconductor"
   ]
+ },
+ {
+  "nombre": "Tubacex",
+  "ticker": "BME:TUB",
+  "sector": "Materiales, química y minería",
+  "en_universo": false
  },
  {
   "nombre": "Técnicas Reunidas",
@@ -856,6 +1030,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Vail Resorts",
+  "ticker": "NYSE:MTN",
+  "sector": "Transporte y turismo",
+  "en_universo": false
+ },
+ {
   "nombre": "Valmet",
   "ticker": "OMXHEX:VALMT",
   "sector": "Industria, defensa y aeroespacial",
@@ -886,6 +1066,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Vistra",
+  "ticker": "NYSE:VST",
+  "sector": "Eléctricas, renovables y redes",
+  "en_universo": false
+ },
+ {
   "nombre": "Western Digital",
   "ticker": "NASDAQ:WDC",
   "sector": "Tecnología",
@@ -895,6 +1081,12 @@
   "nombre": "WEX",
   "ticker": "NYSE:WEX",
   "sector": "Seguros y servicios financieros",
+  "en_universo": false
+ },
+ {
+  "nombre": "Weyerhaeuser",
+  "ticker": "NYSE:WY",
+  "sector": "Materiales, química y minería",
   "en_universo": false
  },
  {

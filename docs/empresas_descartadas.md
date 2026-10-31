@@ -54,3 +54,4 @@ Criterios generales de alta y descarte:
 | Median Technologies | EURONEXT:ALMDT | Cotiza en mercado de crecimiento | 29/10/2026 |
 | Perrigo | NYSE:PRGO | Pequeña (menos de ~4.000 M) | 29/10/2026 |
 | LLYC | BME:LLYC | Cotiza en mercado de crecimiento | 30/10/2026 |
+| Algonquin Power & Utilities | TSX:AQN | Pequeña extranjera | 31/10/2026 |
