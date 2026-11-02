@@ -84,6 +84,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Alstom",
+  "ticker": "EURONEXT:ALO",
+  "sector": "Industria, defensa y aeroespacial",
+  "en_universo": false
+ },
+ {
   "nombre": "Amper",
   "ticker": "BME:AMP",
   "sector": "Telecomunicaciones",
@@ -141,6 +147,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Baker Hughes",
+  "ticker": "NASDAQ:BKR",
+  "sector": "Petróleo y gas",
+  "en_universo": false
+ },
+ {
   "nombre": "Bank of Hawaii",
   "ticker": "NYSE:BOH",
   "sector": "Banca",
@@ -149,6 +161,12 @@
  {
   "nombre": "Bank of Marin Bancorp",
   "ticker": "NASDAQ:BMRC",
+  "sector": "Banca",
+  "en_universo": false
+ },
+ {
+  "nombre": "Bank of Montreal",
+  "ticker": "TSX:BMO",
   "sector": "Banca",
   "en_universo": false
  },
@@ -391,6 +409,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Euronext",
+  "ticker": "EURONEXT:ENX",
+  "sector": "Seguros y servicios financieros",
+  "en_universo": false
+ },
+ {
   "nombre": "Everest Group",
   "ticker": "NYSE:EG",
   "sector": "Seguros y servicios financieros",
@@ -523,6 +547,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Hexagon",
+  "ticker": "OMXSTO:HEXA_B",
+  "sector": "Tecnología",
+  "en_universo": false
+ },
+ {
   "nombre": "High Liner Foods",
   "ticker": "TSX:HLF",
   "sector": "Consumo y distribución",
@@ -609,6 +639,12 @@
  {
   "nombre": "Jackson Financial",
   "ticker": "NYSE:JXN",
+  "sector": "Seguros y servicios financieros",
+  "en_universo": false
+ },
+ {
+  "nombre": "KKR",
+  "ticker": "NYSE:KKR",
   "sector": "Seguros y servicios financieros",
   "en_universo": false
  },
@@ -730,6 +766,18 @@
   "nombre": "Neste",
   "ticker": "OMXHEX:NESTE",
   "sector": "Petróleo y gas",
+  "en_universo": false
+ },
+ {
+  "nombre": "News Corp",
+  "ticker": "NASDAQ:NWSA",
+  "sector": "Medios y entretenimiento",
+  "en_universo": false
+ },
+ {
+  "nombre": "NN Group",
+  "ticker": "EURONEXT:NN",
+  "sector": "Seguros y servicios financieros",
   "en_universo": false
  },
  {
@@ -871,6 +919,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Skanska",
+  "ticker": "OMXSTO:SKA_B",
+  "sector": "Construcción e infraestructuras",
+  "en_universo": false
+ },
+ {
   "nombre": "Snowflake",
   "ticker": "NYSE:SNOW",
   "sector": "Tecnología",
@@ -904,6 +958,12 @@
   "nombre": "Starbucks",
   "ticker": "NASDAQ:SBUX",
   "sector": "Consumo y distribución",
+  "en_universo": false
+ },
+ {
+  "nombre": "Stora Enso",
+  "ticker": "OMXHEX:STEAV",
+  "sector": "Materiales, química y minería",
   "en_universo": false
  },
  {
@@ -1024,6 +1084,12 @@
   "en_universo": false
  },
  {
+  "nombre": "UPM-Kymmene",
+  "ticker": "OMXHEX:UPM",
+  "sector": "Materiales, química y minería",
+  "en_universo": false
+ },
+ {
   "nombre": "UPS",
   "ticker": "NYSE:UPS",
   "sector": "Transporte y turismo",
@@ -1093,6 +1159,12 @@
   "nombre": "XTEND AI Robotics",
   "ticker": "NYSE:XTND",
   "sector": "Industria, defensa y aeroespacial",
+  "en_universo": false
+ },
+ {
+  "nombre": "Zegona Communications",
+  "ticker": "LSE:ZEG",
+  "sector": "Telecomunicaciones",
   "en_universo": false
  },
  {
