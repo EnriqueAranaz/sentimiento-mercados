@@ -323,6 +323,11 @@ def construir() -> list[dict]:
     for nombre in ("Anthropic", "Samsung", "SK Hynix"):
         if nombre in empresas:
             empresas[nombre]["en_universo"] = True
+    # 03/11/2026: grandes que estaban fuera del universo y tienen muchas noticias.
+    for nombre in ("Intel", "Orange", "Carrefour", "Apollo Global Management", "Kering", "Brookfield", "Blackstone",
+                   "Lockheed Martin"):
+        if nombre in empresas:
+            empresas[nombre]["en_universo"] = True
     for e in empresas.values():
         alias = [e["nombre"], *ALIAS_EXTRA.get(e["nombre"], [])]
         e["alias"] = list({a.casefold(): a for a in reversed(alias)}.values())[::-1]  # sin repetidos por mayúsculas

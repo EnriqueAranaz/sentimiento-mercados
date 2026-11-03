@@ -17,6 +17,9 @@ Y comprueba las empresas propuestas pendientes de decisión:
 Y el tamaño de la base (plan gratuito: 500 MB):
 `.venv\Scripts\python.exe clasificacion\tamano_bd.py`
 
+Y las empresas con peores y mejores noticias de los últimos 5 días de mercado (lo mismo que la pestaña Alertas):
+`.venv\Scripts\python.exe clasificacion\alertas.py`
+
 Después muéstrame su informe: noticias clasificadas, pendientes que quedan, % de relevantes,
-reparto por origen, empresas nuevas propuestas y dudas, la línea final de `indice.py` (filas y publicadas) y la
-línea de `tamano_bd.py` (MB usados y %). Termina con un **aviso** visible con el número de empresas propuestas pendientes de decisión y de noticias afectadas (salida de `decidir_empresas.py --estado`), si hay alguna.
+reparto por origen, empresas nuevas propuestas y dudas, la línea final de `indice.py` (filas y publicadas), la
+línea de `tamano_bd.py` (MB usados y %) y las dos líneas de `alertas.py` (peores y mejores noticias). Termina con un **aviso** visible con el número de empresas propuestas pendientes de decisión y de noticias afectadas (salida de `decidir_empresas.py --estado`), si hay alguna.

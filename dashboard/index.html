@@ -175,6 +175,7 @@
     <button id="tab-indice" role="tab" type="button" aria-selected="true">Índice</button>
     <button id="tab-sectores" role="tab" type="button" aria-selected="false">Sectores</button>
     <button id="tab-detalle" role="tab" type="button" aria-selected="false">Detalle</button>
+    <button id="tab-alertas" role="tab" type="button" aria-selected="false">Alertas</button>
     <button id="tab-descartes" role="tab" type="button" aria-selected="false">Descartes y cobertura</button>
   </nav>
 
@@ -349,6 +350,30 @@
     </section>
   </div>
 
+  <!-- ============ ALERTAS ============ -->
+  <div class="sm-page" id="alertas" hidden>
+    <div class="sm-ctrl">
+      <div class="sm-orden" role="group" aria-label="Periodo" data-grupo="periodo">
+        <span>Periodo</span>
+        <button type="button" data-periodo="5" aria-pressed="true">Últimos 5 días</button>
+        <button type="button" data-periodo="20" aria-pressed="false">Últimos 20 días</button>
+        <button type="button" data-periodo="todo" aria-pressed="false">Todo desde el 22/10</button>
+      </div>
+      <label class="chk"><input type="checkbox" id="al-fuera"> Incluir empresas fuera del universo</label>
+    </div>
+    <section class="sm-card">
+      <h2>Empresas con peores noticias</h2>
+      <p class="sm-note">Ordenadas por titulares muy negativos (−2) y después por la suma del tono. Hechos = cifras y analistas;
+        narrativa = opinión, rumor y mercado (castigo en bolsa). Pulsa una fila para ver su detalle.</p>
+      <div class="sm-scroll alto"><table class="sm-t" id="al-peores"><thead></thead><tbody></tbody></table></div>
+    </section>
+    <section class="sm-card">
+      <h2>Empresas con mejores noticias</h2>
+      <p class="sm-note">Ordenadas por titulares muy positivos (+2) y después por la suma del tono.</p>
+      <div class="sm-scroll alto"><table class="sm-t" id="al-mejores"><thead></thead><tbody></tbody></table></div>
+    </section>
+  </div>
+
   <!-- ============ DESCARTES Y COBERTURA ============ -->
   <div class="sm-page" id="descartes" hidden>
     <div class="sm-tiles" id="dc-tiles"></div>
@@ -471,7 +496,7 @@
   const semanaEnCurso = () => { const u = estado.datos.ultimo; return new Date(u + 'T12:00:00Z').getUTCDay() === 5 ? null : lunes(u); };
 
   // ---------- Estado y navegación ----------
-  const VISTAS = ['indice', 'sectores', 'detalle', 'descartes'];
+  const VISTAS = ['indice', 'sectores', 'detalle', 'alertas', 'descartes'];
   const leerVista = () => { try { return localStorage.getItem(CLAVE_VISTA) === 'semanal' ? 'semanal' : 'diario'; } catch (e) { return 'diario'; } };
   const estado = { vista: 'indice', sel: 'todo', orden: 'peor', periodo: '5', fuera: false, alcance: 'general',
     ordenSect: 'narrativa', vistaIx: leerVista(), agr: null, datos: null };
@@ -1023,6 +1048,54 @@
     textoEje(svg.append('text').attr('x', W - m.r).attr('y', hTono + 22).attr('text-anchor', 'end').text(`noticias por ${unidad}`));
   }
 
+  // ---------- Pantalla: ALERTAS ----------
+  const MAX_ALERTAS = 15;
+  $('al-fuera').addEventListener('change', (e) => { estado.fuera = e.target.checked; dibujar(); });
+  function pantallaAlertas() {
+    $('al-fuera').checked = estado.fuera;
+    const porEmpresa = d3.group(delPeriodo(estado.fuera).filter((a) => a.ambito === 'Empresa'), (a) => a.objeto);
+    const filas = [...porEmpresa].map(([o, afs]) => ({
+      o, afs, sector: afs[0].sector, s: stats(afs), suma: d3.sum(afs, (a) => a.valor),
+      m2: afs.filter((a) => a.valor === -2).length, m1: afs.filter((a) => a.valor === -1).length,
+      p2: afs.filter((a) => a.valor === 2).length, p1: afs.filter((a) => a.valor === 1).length,
+    }));
+    const peores = filas.filter((f) => f.suma < 0).sort((a, b) => b.m2 - a.m2 || a.suma - b.suma).slice(0, MAX_ALERTAS);
+    const mejores = filas.filter((f) => f.suma > 0).sort((a, b) => b.p2 - a.p2 || b.suma - a.suma).slice(0, MAX_ALERTAS);
+    tablaAlertas($('al-peores'), peores, true);
+    tablaAlertas($('al-mejores'), mejores, false);
+  }
+  function tablaAlertas(tabla, filas, negativas) {
+    const [fuerte, leve] = negativas ? ['−2', '−1'] : ['+2', '+1'];
+    const cab = el('tr');
+    for (const [t, cls] of [['Empresa'], ['Sector'], ['Titulares', 'num'], [fuerte, 'num'], [leve, 'num'], ['Tono medio', 'num'],
+      ['Hechos', 'num'], ['Narrativa', 'num'], [negativas ? 'Peores titulares' : 'Mejores titulares']]) cab.append(el('th', t, cls));
+    tabla.tHead.replaceChildren(cab);
+    if (!filas.length) {
+      const tr = el('tr'); const td = el('td', 'Ninguna empresa en el periodo.'); td.colSpan = 9; tr.append(td);
+      tabla.tBodies[0].replaceChildren(tr); return;
+    }
+    const linea = (x) => (x.n ? `${conSigno(x.media)} (${x.n})` : '—');
+    tabla.tBodies[0].replaceChildren(...filas.map((f) => {
+      const tr = el('tr', null, 'clic');
+      tr.addEventListener('click', (e) => { if (!e.target.closest('a')) ir('detalle', 'e:' + f.o); });
+      const tits = el('td');
+      const vistos = new Set();
+      [...f.afs].sort((a, b) => (negativas ? a.valor - b.valor : b.valor - a.valor) || b.dia_mercado.localeCompare(a.dia_mercado))
+        .filter((a) => !vistos.has(a.articulo_id) && vistos.add(a.articulo_id)).slice(0, 3)
+        .forEach((a, i) => {
+          if (i) tits.append(el('br'));
+          tits.append(el('span', `${diaCorto(a.dia_mercado)} ${a.valor > 0 ? '+' + a.valor : a.valor < 0 ? '−' + Math.abs(a.valor) : '0'} `, signo(a.valor)));
+          if (a.url && /^https?:\/\//.test(a.url)) {
+            const link = el('a', a.titulo); link.href = a.url; link.target = '_blank'; link.rel = 'noopener'; tits.append(link);
+          } else tits.append(document.createTextNode(a.titulo));
+        });
+      tr.append(el('td', f.o), el('td', f.sector || '—'), el('td', fmtInt.format(f.s.noticias), 'num'),
+        el('td', fmtInt.format(negativas ? f.m2 : f.p2), 'num'), el('td', fmtInt.format(negativas ? f.m1 : f.p1), 'num'),
+        el('td', conSigno(f.s.media), 'num ' + signo(f.s.media)), el('td', linea(f.s.hech), 'num'), el('td', linea(f.s.narr), 'num'), tits);
+      return tr;
+    }));
+  }
+
   // ---------- Pantalla: DESCARTES Y COBERTURA ----------
   ['dc-f-dia', 'dc-f-fuente', 'dc-f-motivo'].forEach((id) => $(id).addEventListener('change', () => tablaNoRel()));
   function pantallaDescartes() {
@@ -1142,7 +1215,7 @@
     document.querySelectorAll('[data-grupo="agr"] button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.agr === agrupa())));
     document.querySelectorAll('.sm-orden[aria-label="Ordenar"] button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.orden === estado.orden)));
     if (!estado.datos) return;
-    ({ indice: pantallaIndice, sectores: pantallaSectores, detalle, descartes: pantallaDescartes })[estado.vista]();
+    ({ indice: pantallaIndice, sectores: pantallaSectores, detalle, alertas: pantallaAlertas, descartes: pantallaDescartes })[estado.vista]();
   }
   for (const v of VISTAS) $('tab-' + v).addEventListener('click', () => ir(v));
   window.addEventListener('resize', () => { clearTimeout(window.__rz); window.__rz = setTimeout(dibujar, 150); });
