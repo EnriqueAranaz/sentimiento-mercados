@@ -60,3 +60,4 @@ Criterios generales de alta y descarte:
 | Insight Enterprises | NASDAQ:NSIT | Pequeña (menos de ~4.000 M) | 03/11/2026 |
 | Iveco Group | MIL:IVG | Comprada por Tata Motors (India) | 03/11/2026 |
 | Teva Pharmaceutical | NYSE:TEVA | Fuera de alcance (Israel) | 03/11/2026 |
+| CVR Energy | NYSE:CVI | Pequeña (menos de ~4.000 M) | 04/11/2026 |
