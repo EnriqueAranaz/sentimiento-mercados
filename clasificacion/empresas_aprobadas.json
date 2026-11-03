@@ -66,6 +66,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Albemarle",
+  "ticker": "NYSE:ALB",
+  "sector": "Materiales, química y minería",
+  "en_universo": false
+ },
+ {
   "nombre": "Alfa Laval",
   "ticker": "OMXSTO:ALFA",
   "sector": "Industria, defensa y aeroespacial",
@@ -108,6 +114,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Archer-Daniels-Midland",
+  "ticker": "NYSE:ADM",
+  "sector": "Consumo y distribución",
+  "en_universo": false
+ },
+ {
   "nombre": "Ares Capital",
   "ticker": "NASDAQ:ARCC",
   "sector": "Seguros y servicios financieros",
@@ -123,9 +135,27 @@
   ]
  },
  {
+  "nombre": "Arthur J. Gallagher",
+  "ticker": "NYSE:AJG",
+  "sector": "Seguros y servicios financieros",
+  "en_universo": false
+ },
+ {
   "nombre": "Assa Abloy",
   "ticker": "OMXSTO:ASSA_B",
   "sector": "Industria, defensa y aeroespacial",
+  "en_universo": false
+ },
+ {
+  "nombre": "Associated British Foods",
+  "ticker": "LSE:ABF",
+  "sector": "Consumo y distribución",
+  "en_universo": false
+ },
+ {
+  "nombre": "Autoliv",
+  "ticker": "NYSE:ALV",
+  "sector": "Automóvil",
   "en_universo": false
  },
  {
@@ -201,6 +231,18 @@
  {
   "nombre": "Biogen",
   "ticker": "NASDAQ:BIIB",
+  "sector": "Salud y farmacia",
+  "en_universo": false
+ },
+ {
+  "nombre": "BioMarin Pharmaceutical",
+  "ticker": "NASDAQ:BMRN",
+  "sector": "Salud y farmacia",
+  "en_universo": false
+ },
+ {
+  "nombre": "bioMérieux",
+  "ticker": "EURONEXT:BIM",
   "sector": "Salud y farmacia",
   "en_universo": false
  },
@@ -286,6 +328,12 @@
   ]
  },
  {
+  "nombre": "Chubb",
+  "ticker": "NYSE:CB",
+  "sector": "Seguros y servicios financieros",
+  "en_universo": false
+ },
+ {
   "nombre": "CIE Automotive",
   "ticker": "BME:CIE",
   "sector": "Automóvil",
@@ -313,6 +361,24 @@
   "en_universo": false
  },
  {
+  "nombre": "Clorox",
+  "ticker": "NYSE:CLX",
+  "sector": "Consumo y distribución",
+  "en_universo": false
+ },
+ {
+  "nombre": "Coca-Cola Europacific Partners",
+  "ticker": "NASDAQ:CCEP",
+  "sector": "Consumo y distribución",
+  "en_universo": false
+ },
+ {
+  "nombre": "Coloplast",
+  "ticker": "OMXCOP:COLO_B",
+  "sector": "Salud y farmacia",
+  "en_universo": false
+ },
+ {
   "nombre": "Commerce Bancshares",
   "ticker": "NASDAQ:CBSH",
   "sector": "Banca",
@@ -328,6 +394,12 @@
   "nombre": "Crédit Agricole",
   "ticker": "EURONEXT:ACA",
   "sector": "Banca",
+  "en_universo": false
+ },
+ {
+  "nombre": "D.R. Horton",
+  "ticker": "NYSE:DHI",
+  "sector": "Construcción e infraestructuras",
   "en_universo": false
  },
  {
@@ -361,6 +433,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Donaldson",
+  "ticker": "NYSE:DCI",
+  "sector": "Industria, defensa y aeroespacial",
+  "en_universo": false
+ },
+ {
   "nombre": "DTE Energy",
   "ticker": "NYSE:DTE",
   "sector": "Eléctricas, renovables y redes",
@@ -376,6 +454,12 @@
   "nombre": "easyJet",
   "ticker": "LSE:EZJ",
   "sector": "Transporte y turismo",
+  "en_universo": false
+ },
+ {
+  "nombre": "EchoStar",
+  "ticker": "NASDAQ:SATS",
+  "sector": "Telecomunicaciones",
   "en_universo": false
  },
  {
@@ -433,6 +517,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Fabrinet",
+  "ticker": "NYSE:FN",
+  "sector": "Tecnología",
+  "en_universo": false
+ },
+ {
   "nombre": "Faes Farma",
   "ticker": "BME:FAE",
   "sector": "Salud y farmacia",
@@ -487,6 +577,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Fox Corporation",
+  "ticker": "NASDAQ:FOXA",
+  "sector": "Medios y entretenimiento",
+  "en_universo": false
+ },
+ {
   "nombre": "Freedom Holding",
   "ticker": "NASDAQ:FRHC",
   "sector": "Seguros y servicios financieros",
@@ -529,6 +625,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Halliburton",
+  "ticker": "NYSE:HAL",
+  "sector": "Petróleo y gas",
+  "en_universo": false
+ },
+ {
   "nombre": "HeartBeam",
   "ticker": "NASDAQ:BEAT",
   "sector": "Salud y farmacia",
@@ -538,6 +640,12 @@
   "nombre": "Heineken",
   "ticker": "EURONEXT:HEIA",
   "sector": "Consumo y distribución",
+  "en_universo": false
+ },
+ {
+  "nombre": "Hellenic Telecommunications (OTE)",
+  "ticker": "ATHEX:HTO",
+  "sector": "Telecomunicaciones",
   "en_universo": false
  },
  {
@@ -577,6 +685,12 @@
   "en_universo": false
  },
  {
+  "nombre": "IDEXX Laboratories",
+  "ticker": "NASDAQ:IDXX",
+  "sector": "Salud y farmacia",
+  "en_universo": false
+ },
+ {
   "nombre": "IMI",
   "ticker": "LSE:IMI",
   "sector": "Industria, defensa y aeroespacial",
@@ -613,6 +727,18 @@
   ]
  },
  {
+  "nombre": "Intermediate Capital Group",
+  "ticker": "LSE:ICG",
+  "sector": "Seguros y servicios financieros",
+  "en_universo": false
+ },
+ {
+  "nombre": "International Paper",
+  "ticker": "NYSE:IP",
+  "sector": "Materiales, química y minería",
+  "en_universo": false
+ },
+ {
   "nombre": "Intertek",
   "ticker": "LSE:ITRK",
   "sector": "Industria, defensa y aeroespacial",
@@ -622,6 +748,12 @@
   "nombre": "Intrepid Potash",
   "ticker": "NYSE:IPI",
   "sector": "Materiales, química y minería",
+  "en_universo": false
+ },
+ {
+  "nombre": "IONOS Group",
+  "ticker": "XETR:IOS",
+  "sector": "Tecnología",
   "en_universo": false
  },
  {
@@ -661,6 +793,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Lennar",
+  "ticker": "NYSE:LEN",
+  "sector": "Construcción e infraestructuras",
+  "en_universo": false
+ },
+ {
   "nombre": "Libertas 7",
   "ticker": "BME:LIB",
   "sector": "Inmobiliario",
@@ -682,6 +820,18 @@
   "nombre": "Lottomatica",
   "ticker": "MIL:LTMC",
   "sector": "Medios y entretenimiento",
+  "en_universo": false
+ },
+ {
+  "nombre": "Lululemon",
+  "ticker": "NASDAQ:LULU",
+  "sector": "Lujo, moda y cosmética",
+  "en_universo": false
+ },
+ {
+  "nombre": "Lumentum",
+  "ticker": "NASDAQ:LITE",
+  "sector": "Tecnología",
   "en_universo": false
  },
  {
@@ -715,9 +865,33 @@
   "en_universo": false
  },
  {
+  "nombre": "Macquarie Group",
+  "ticker": "ASX:MQG",
+  "sector": "Seguros y servicios financieros",
+  "en_universo": false
+ },
+ {
+  "nombre": "Marathon Petroleum",
+  "ticker": "NYSE:MPC",
+  "sector": "Petróleo y gas",
+  "en_universo": false
+ },
+ {
+  "nombre": "Marvell Technology",
+  "ticker": "NASDAQ:MRVL",
+  "sector": "Semiconductores",
+  "en_universo": false
+ },
+ {
   "nombre": "MasterBrand",
   "ticker": "NYSE:MBC",
   "sector": "Construcción e infraestructuras",
+  "en_universo": false
+ },
+ {
+  "nombre": "Match Group",
+  "ticker": "NASDAQ:MTCH",
+  "sector": "Tecnología",
   "en_universo": false
  },
  {
@@ -781,6 +955,18 @@
   "en_universo": false
  },
  {
+  "nombre": "NVR",
+  "ticker": "NYSE:NVR",
+  "sector": "Construcción e infraestructuras",
+  "en_universo": false
+ },
+ {
+  "nombre": "ON Semiconductor",
+  "ticker": "NASDAQ:ON",
+  "sector": "Semiconductores",
+  "en_universo": false
+ },
+ {
   "nombre": "Ovintiv",
   "ticker": "NYSE:OVV",
   "sector": "Petróleo y gas",
@@ -801,6 +987,12 @@
  {
   "nombre": "PharmaMar",
   "ticker": "BME:PHM",
+  "sector": "Salud y farmacia",
+  "en_universo": false
+ },
+ {
+  "nombre": "Philips",
+  "ticker": "EURONEXT:PHIA",
   "sector": "Salud y farmacia",
   "en_universo": false
  },
@@ -832,6 +1024,12 @@
   "nombre": "Prysmian",
   "ticker": "MIL:PRY",
   "sector": "Industria, defensa y aeroespacial",
+  "en_universo": false
+ },
+ {
+  "nombre": "Public Service Enterprise Group",
+  "ticker": "NYSE:PEG",
+  "sector": "Eléctricas, renovables y redes",
   "en_universo": false
  },
  {
@@ -910,6 +1108,12 @@
   "nombre": "Scienjoy",
   "ticker": "NASDAQ:SJ",
   "sector": "Medios y entretenimiento",
+  "en_universo": false
+ },
+ {
+  "nombre": "Shopify",
+  "ticker": "NASDAQ:SHOP",
+  "sector": "Tecnología",
   "en_universo": false
  },
  {
@@ -1069,6 +1273,12 @@
   "nombre": "UFP Industries",
   "ticker": "NASDAQ:UFPI",
   "sector": "Materiales, química y minería",
+  "en_universo": false
+ },
+ {
+  "nombre": "Uniper",
+  "ticker": "XETR:UN0",
+  "sector": "Eléctricas, renovables y redes",
   "en_universo": false
  },
  {

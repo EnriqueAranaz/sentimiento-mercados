@@ -55,3 +55,8 @@ Criterios generales de alta y descarte:
 | Perrigo | NYSE:PRGO | Pequeña (menos de ~4.000 M) | 29/10/2026 |
 | LLYC | BME:LLYC | Cotiza en mercado de crecimiento | 30/10/2026 |
 | Algonquin Power & Utilities | TSX:AQN | Pequeña extranjera | 31/10/2026 |
+| Hinge Health | NYSE:HNGE | Pequeña (menos de ~4.000 M) | 03/11/2026 |
+| Hiscox | LSE:HSX | Pequeña (menos de ~4.000 M) | 03/11/2026 |
+| Insight Enterprises | NASDAQ:NSIT | Pequeña (menos de ~4.000 M) | 03/11/2026 |
+| Iveco Group | MIL:IVG | Comprada por Tata Motors (India) | 03/11/2026 |
+| Teva Pharmaceutical | NYSE:TEVA | Fuera de alcance (Israel) | 03/11/2026 |
