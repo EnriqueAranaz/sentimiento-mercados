@@ -61,3 +61,6 @@ Criterios generales de alta y descarte:
 | Iveco Group | MIL:IVG | Comprada por Tata Motors (India) | 03/11/2026 |
 | Teva Pharmaceutical | NYSE:TEVA | Fuera de alcance (Israel) | 03/11/2026 |
 | CVR Energy | NYSE:CVI | Pequeña (menos de ~4.000 M) | 04/11/2026 |
+| Coupang | NYSE:CPNG | Negocio en Asia (Corea), aunque cotice en NYSE | 05/11/2026 |
+| Cipher Digital | NASDAQ:CIFR | Minería de bitcoin (cripto) | 05/11/2026 |
+| Greencoat Renewables | — | Pequeña extranjera | 05/11/2026 |

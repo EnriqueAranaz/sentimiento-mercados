@@ -42,6 +42,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Agnico Eagle Mines",
+  "ticker": "TSX:AEM",
+  "sector": "Materiales, química y minería",
+  "en_universo": false
+ },
+ {
   "nombre": "AIG",
   "ticker": "NYSE:AIG",
   "sector": "Seguros y servicios financieros",
@@ -90,6 +96,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Allstate",
+  "ticker": "NYSE:ALL",
+  "sector": "Seguros y servicios financieros",
+  "en_universo": false
+ },
+ {
   "nombre": "Alstom",
   "ticker": "EURONEXT:ALO",
   "sector": "Industria, defensa y aeroespacial",
@@ -114,6 +126,18 @@
   "en_universo": false
  },
  {
+  "nombre": "AppLovin",
+  "ticker": "NASDAQ:APP",
+  "sector": "Tecnología",
+  "en_universo": false
+ },
+ {
+  "nombre": "Aptiv",
+  "ticker": "NYSE:APTV",
+  "sector": "Automóvil",
+  "en_universo": false
+ },
+ {
   "nombre": "Archer-Daniels-Midland",
   "ticker": "NYSE:ADM",
   "sector": "Consumo y distribución",
@@ -123,6 +147,18 @@
   "nombre": "Ares Capital",
   "ticker": "NASDAQ:ARCC",
   "sector": "Seguros y servicios financieros",
+  "en_universo": false
+ },
+ {
+  "nombre": "Arista Networks",
+  "ticker": "NYSE:ANET",
+  "sector": "Tecnología",
+  "en_universo": false
+ },
+ {
+  "nombre": "Arm Holdings",
+  "ticker": "NASDAQ:ARM",
+  "sector": "Semiconductores",
   "en_universo": false
  },
  {
@@ -150,6 +186,12 @@
   "nombre": "Associated British Foods",
   "ticker": "LSE:ABF",
   "sector": "Consumo y distribución",
+  "en_universo": false
+ },
+ {
+  "nombre": "Astera Labs",
+  "ticker": "NASDAQ:ALAB",
+  "sector": "Semiconductores",
   "en_universo": false
  },
  {
@@ -201,6 +243,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Barry Callebaut",
+  "ticker": "SIX:BARN",
+  "sector": "Consumo y distribución",
+  "en_universo": false
+ },
+ {
   "nombre": "BE Semiconductor",
   "ticker": "EURONEXT:BESI",
   "sector": "Semiconductores",
@@ -244,6 +292,12 @@
   "nombre": "bioMérieux",
   "ticker": "EURONEXT:BIM",
   "sector": "Salud y farmacia",
+  "en_universo": false
+ },
+ {
+  "nombre": "Block",
+  "ticker": "NYSE:XYZ",
+  "sector": "Seguros y servicios financieros",
   "en_universo": false
  },
  {
@@ -319,6 +373,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Cenovus Energy",
+  "ticker": "TSX:CVE",
+  "sector": "Petróleo y gas",
+  "en_universo": false
+ },
+ {
   "nombre": "Cerebras",
   "ticker": "NASDAQ:CBRS",
   "sector": "Semiconductores",
@@ -326,6 +386,12 @@
   "alias": [
    "Cerebras Systems"
   ]
+ },
+ {
+  "nombre": "Chime Financial",
+  "ticker": "NASDAQ:CHYM",
+  "sector": "Seguros y servicios financieros",
+  "en_universo": false
  },
  {
   "nombre": "Chubb",
@@ -373,6 +439,18 @@
   "en_universo": false
  },
  {
+  "nombre": "Coca-Cola HBC",
+  "ticker": "LSE:CCH",
+  "sector": "Consumo y distribución",
+  "en_universo": false
+ },
+ {
+  "nombre": "Cognex",
+  "ticker": "NASDAQ:CGNX",
+  "sector": "Tecnología",
+  "en_universo": false
+ },
+ {
   "nombre": "Coloplast",
   "ticker": "OMXCOP:COLO_B",
   "sector": "Salud y farmacia",
@@ -385,8 +463,32 @@
   "en_universo": false
  },
  {
+  "nombre": "Constellation Brands",
+  "ticker": "NYSE:STZ",
+  "sector": "Consumo y distribución",
+  "en_universo": false
+ },
+ {
   "nombre": "Constellation Energy",
   "ticker": "NASDAQ:CEG",
+  "sector": "Eléctricas, renovables y redes",
+  "en_universo": false
+ },
+ {
+  "nombre": "ConvaTec",
+  "ticker": "LSE:CTEC",
+  "sector": "Salud y farmacia",
+  "en_universo": false
+ },
+ {
+  "nombre": "Corning",
+  "ticker": "NYSE:GLW",
+  "sector": "Tecnología",
+  "en_universo": false
+ },
+ {
+  "nombre": "Cox",
+  "ticker": "BME:COXG",
   "sector": "Eléctricas, renovables y redes",
   "en_universo": false
  },
@@ -433,6 +535,18 @@
   "en_universo": false
  },
  {
+  "nombre": "Digital Realty",
+  "ticker": "NYSE:DLR",
+  "sector": "Inmobiliario",
+  "en_universo": false
+ },
+ {
+  "nombre": "DigitalOcean",
+  "ticker": "NYSE:DOCN",
+  "sector": "Tecnología",
+  "en_universo": false
+ },
+ {
   "nombre": "Donaldson",
   "ticker": "NYSE:DCI",
   "sector": "Industria, defensa y aeroespacial",
@@ -442,6 +556,12 @@
   "nombre": "DTE Energy",
   "ticker": "NYSE:DTE",
   "sector": "Eléctricas, renovables y redes",
+  "en_universo": false
+ },
+ {
+  "nombre": "Duolingo",
+  "ticker": "NASDAQ:DUOL",
+  "sector": "Tecnología",
   "en_universo": false
  },
  {
@@ -463,6 +583,12 @@
   "en_universo": false
  },
  {
+  "nombre": "EDP",
+  "ticker": "ELI:EDP",
+  "sector": "Eléctricas, renovables y redes",
+  "en_universo": false
+ },
+ {
   "nombre": "Ence",
   "ticker": "BME:ENC",
   "sector": "Materiales, química y minería",
@@ -478,6 +604,12 @@
   "nombre": "EQT Corporation",
   "ticker": "NYSE:EQT",
   "sector": "Petróleo y gas",
+  "en_universo": false
+ },
+ {
+  "nombre": "Estée Lauder",
+  "ticker": "NYSE:EL",
+  "sector": "Lujo, moda y cosmética",
   "en_universo": false
  },
  {
@@ -532,6 +664,12 @@
   ]
  },
  {
+  "nombre": "Fair Isaac",
+  "ticker": "NYSE:FICO",
+  "sector": "Tecnología",
+  "en_universo": false
+ },
+ {
   "nombre": "FCC",
   "ticker": "BME:FCC",
   "sector": "Construcción e infraestructuras",
@@ -553,6 +691,12 @@
   ]
  },
  {
+  "nombre": "Fincantieri",
+  "ticker": "MIL:FCT",
+  "sector": "Industria, defensa y aeroespacial",
+  "en_universo": false
+ },
+ {
   "nombre": "Flutter Entertainment",
   "ticker": "NYSE:FLUT",
   "sector": "Medios y entretenimiento",
@@ -568,6 +712,12 @@
   "nombre": "Fortum",
   "ticker": "OMXHEX:FORTUM",
   "sector": "Eléctricas, renovables y redes",
+  "en_universo": false
+ },
+ {
+  "nombre": "Fortune Brands Innovations",
+  "ticker": "NYSE:FBIN",
+  "sector": "Construcción e infraestructuras",
   "en_universo": false
  },
  {
@@ -601,6 +751,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Gestamp",
+  "ticker": "BME:GEST",
+  "sector": "Automóvil",
+  "en_universo": false
+ },
+ {
   "nombre": "Global Dominion",
   "ticker": "BME:DOM",
   "sector": "Industria, defensa y aeroespacial",
@@ -610,6 +766,12 @@
   "nombre": "Global Payments",
   "ticker": "NYSE:GPN",
   "sector": "Seguros y servicios financieros",
+  "en_universo": false
+ },
+ {
+  "nombre": "Goodman Group",
+  "ticker": "ASX:GMG",
+  "sector": "Inmobiliario",
   "en_universo": false
  },
  {
@@ -667,9 +829,21 @@
   "en_universo": false
  },
  {
+  "nombre": "Hikma Pharmaceuticals",
+  "ticker": "LSE:HIK",
+  "sector": "Salud y farmacia",
+  "en_universo": false
+ },
+ {
   "nombre": "Hilton",
   "ticker": "NYSE:HLT",
   "sector": "Transporte y turismo",
+  "en_universo": false
+ },
+ {
+  "nombre": "HubSpot",
+  "ticker": "NYSE:HUBS",
+  "sector": "Tecnología",
   "en_universo": false
  },
  {
@@ -733,6 +907,12 @@
   "en_universo": false
  },
  {
+  "nombre": "International Flavors & Fragrances",
+  "ticker": "NYSE:IFF",
+  "sector": "Materiales, química y minería",
+  "en_universo": false
+ },
+ {
   "nombre": "International Paper",
   "ticker": "NYSE:IP",
   "sector": "Materiales, química y minería",
@@ -793,6 +973,18 @@
   "en_universo": false
  },
  {
+  "nombre": "Lam Research",
+  "ticker": "NASDAQ:LRCX",
+  "sector": "Semiconductores",
+  "en_universo": false
+ },
+ {
+  "nombre": "Legrand",
+  "ticker": "EURONEXT:LR",
+  "sector": "Industria, defensa y aeroespacial",
+  "en_universo": false
+ },
+ {
   "nombre": "Lennar",
   "ticker": "NYSE:LEN",
   "sector": "Construcción e infraestructuras",
@@ -801,6 +993,18 @@
  {
   "nombre": "Libertas 7",
   "ticker": "BME:LIB",
+  "sector": "Inmobiliario",
+  "en_universo": false
+ },
+ {
+  "nombre": "Lindt & Sprüngli",
+  "ticker": "SIX:LISN",
+  "sector": "Consumo y distribución",
+  "en_universo": false
+ },
+ {
+  "nombre": "Lineage",
+  "ticker": "NASDAQ:LINE",
   "sector": "Inmobiliario",
   "en_universo": false
  },
@@ -877,6 +1081,18 @@
   "en_universo": false
  },
  {
+  "nombre": "Marks & Spencer",
+  "ticker": "LSE:MKS",
+  "sector": "Consumo y distribución",
+  "en_universo": false
+ },
+ {
+  "nombre": "Marsh McLennan",
+  "ticker": "NYSE:MMC",
+  "sector": "Seguros y servicios financieros",
+  "en_universo": false
+ },
+ {
   "nombre": "Marvell Technology",
   "ticker": "NASDAQ:MRVL",
   "sector": "Semiconductores",
@@ -904,6 +1120,18 @@
   "nombre": "Medline",
   "ticker": "NASDAQ:MDLN",
   "sector": "Salud y farmacia",
+  "en_universo": false
+ },
+ {
+  "nombre": "Meliá Hotels International",
+  "ticker": "BME:MEL",
+  "sector": "Transporte y turismo",
+  "en_universo": false
+ },
+ {
+  "nombre": "MetLife",
+  "ticker": "NYSE:MET",
+  "sector": "Seguros y servicios financieros",
   "en_universo": false
  },
  {
@@ -946,6 +1174,18 @@
   "nombre": "News Corp",
   "ticker": "NASDAQ:NWSA",
   "sector": "Medios y entretenimiento",
+  "en_universo": false
+ },
+ {
+  "nombre": "Next",
+  "ticker": "LSE:NXT",
+  "sector": "Consumo y distribución",
+  "en_universo": false
+ },
+ {
+  "nombre": "NextDC",
+  "ticker": "ASX:NXT",
+  "sector": "Tecnología",
   "en_universo": false
  },
  {
@@ -1012,6 +1252,12 @@
   "nombre": "Prisa",
   "ticker": "BME:PRS",
   "sector": "Medios y entretenimiento",
+  "en_universo": false
+ },
+ {
+  "nombre": "Prosegur",
+  "ticker": "BME:PSG",
+  "sector": "Industria, defensa y aeroespacial",
   "en_universo": false
  },
  {
@@ -1105,9 +1351,21 @@
   "en_universo": false
  },
  {
+  "nombre": "Schroders",
+  "ticker": "LSE:SDR",
+  "sector": "Seguros y servicios financieros",
+  "en_universo": false
+ },
+ {
   "nombre": "Scienjoy",
   "ticker": "NASDAQ:SJ",
   "sector": "Medios y entretenimiento",
+  "en_universo": false
+ },
+ {
+  "nombre": "Sectra",
+  "ticker": "OMXSTO:SECT_B",
+  "sector": "Salud y farmacia",
   "en_universo": false
  },
  {
@@ -1180,6 +1438,18 @@
   "nombre": "Swedish Orphan Biovitrum",
   "ticker": "OMXSTO:SOBI",
   "sector": "Salud y farmacia",
+  "en_universo": false
+ },
+ {
+  "nombre": "Swiss Re",
+  "ticker": "SIX:SREN",
+  "sector": "Seguros y servicios financieros",
+  "en_universo": false
+ },
+ {
+  "nombre": "Syensqo",
+  "ticker": "EURONEXT:SYENS",
+  "sector": "Materiales, química y minería",
   "en_universo": false
  },
  {
