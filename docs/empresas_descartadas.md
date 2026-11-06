@@ -64,3 +64,5 @@ Criterios generales de alta y descarte:
 | Coupang | NYSE:CPNG | Negocio en Asia (Corea), aunque cotice en NYSE | 05/11/2026 |
 | Cipher Digital | NASDAQ:CIFR | Minería de bitcoin (cripto) | 05/11/2026 |
 | Greencoat Renewables | — | Pequeña extranjera | 05/11/2026 |
+| CEVASA | BME:CEV | Microcotizada (fixing) | 06/11/2026 |
+| Caris Life Sciences | NASDAQ:CAI | Pequeña (menos de ~4.000 M) | 06/11/2026 |

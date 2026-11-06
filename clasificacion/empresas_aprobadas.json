@@ -1,5 +1,11 @@
 [
  {
+  "nombre": "A.P. Moller-Maersk",
+  "ticker": "OMXCOP:MAERSK_B",
+  "sector": "Transporte y turismo",
+  "en_universo": false
+ },
+ {
   "nombre": "Abenójar Tungsten",
   "ticker": null,
   "sector": "Materiales, química y minería",
@@ -114,6 +120,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Analog Devices",
+  "ticker": "NASDAQ:ADI",
+  "sector": "Semiconductores",
+  "en_universo": false
+ },
+ {
   "nombre": "Anixa Biosciences",
   "ticker": "NASDAQ:ANIX",
   "sector": "Salud y farmacia",
@@ -195,6 +207,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Audax Renovables",
+  "ticker": "BME:ADX",
+  "sector": "Eléctricas, renovables y redes",
+  "en_universo": false
+ },
+ {
   "nombre": "Autoliv",
   "ticker": "NYSE:ALV",
   "sector": "Automóvil",
@@ -222,6 +240,18 @@
   "nombre": "Baker Hughes",
   "ticker": "NASDAQ:BKR",
   "sector": "Petróleo y gas",
+  "en_universo": false
+ },
+ {
+  "nombre": "Banca Monte dei Paschi di Siena",
+  "ticker": "MIL:BMPS",
+  "sector": "Banca",
+  "en_universo": false
+ },
+ {
+  "nombre": "Banco BPM",
+  "ticker": "MIL:BAMI",
+  "sector": "Banca",
   "en_universo": false
  },
  {
@@ -325,6 +355,12 @@
   "en_universo": false
  },
  {
+  "nombre": "BT Group",
+  "ticker": "LSE:BT.A",
+  "sector": "Telecomunicaciones",
+  "en_universo": false
+ },
+ {
   "nombre": "C.H. Robinson",
   "ticker": "NASDAQ:CHRW",
   "sector": "Transporte y turismo",
@@ -370,6 +406,12 @@
   "nombre": "Carlyle",
   "ticker": "NASDAQ:CG",
   "sector": "Seguros y servicios financieros",
+  "en_universo": false
+ },
+ {
+  "nombre": "CAVA Group",
+  "ticker": "NYSE:CAVA",
+  "sector": "Consumo y distribución",
   "en_universo": false
  },
  {
@@ -451,6 +493,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Coherent",
+  "ticker": "NYSE:COHR",
+  "sector": "Semiconductores",
+  "en_universo": false
+ },
+ {
   "nombre": "Coloplast",
   "ticker": "OMXCOP:COLO_B",
   "sector": "Salud y farmacia",
@@ -484,6 +532,12 @@
   "nombre": "Corning",
   "ticker": "NYSE:GLW",
   "sector": "Tecnología",
+  "en_universo": false
+ },
+ {
+  "nombre": "Corpay",
+  "ticker": "NYSE:CPAY",
+  "sector": "Seguros y servicios financieros",
   "en_universo": false
  },
  {
@@ -571,6 +625,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Dutch Bros",
+  "ticker": "NYSE:BROS",
+  "sector": "Consumo y distribución",
+  "en_universo": false
+ },
+ {
   "nombre": "easyJet",
   "ticker": "LSE:EZJ",
   "sector": "Transporte y turismo",
@@ -589,10 +649,22 @@
   "en_universo": false
  },
  {
+  "nombre": "Edwards Lifesciences",
+  "ticker": "NYSE:EW",
+  "sector": "Salud y farmacia",
+  "en_universo": false
+ },
+ {
   "nombre": "Ence",
   "ticker": "BME:ENC",
   "sector": "Materiales, química y minería",
   "en_universo": false
+ },
+ {
+  "nombre": "Engie",
+  "ticker": "EURONEXT:ENGI",
+  "sector": "Eléctricas, renovables y redes",
+  "en_universo": true
  },
  {
   "nombre": "EQT AB",
@@ -643,6 +715,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Expedia",
+  "ticker": "NASDAQ:EXPE",
+  "sector": "Transporte y turismo",
+  "en_universo": false
+ },
+ {
   "nombre": "Ezentis",
   "ticker": "BME:EZE",
   "sector": "Construcción e infraestructuras",
@@ -689,6 +767,18 @@
   "alias": [
    "FF EAI Robotics"
   ]
+ },
+ {
+  "nombre": "Fidelity National Information Services",
+  "ticker": "NYSE:FIS",
+  "sector": "Seguros y servicios financieros",
+  "en_universo": false
+ },
+ {
+  "nombre": "Figma",
+  "ticker": "NYSE:FIG",
+  "sector": "Tecnología",
+  "en_universo": false
  },
  {
   "nombre": "Fincantieri",
@@ -775,6 +865,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Grenergy",
+  "ticker": "BME:GRE",
+  "sector": "Eléctricas, renovables y redes",
+  "en_universo": false
+ },
+ {
   "nombre": "Grupo Empresarial San José",
   "ticker": "BME:GSJ",
   "sector": "Construcción e infraestructuras",
@@ -790,6 +886,12 @@
   "nombre": "Halliburton",
   "ticker": "NYSE:HAL",
   "sector": "Petróleo y gas",
+  "en_universo": false
+ },
+ {
+  "nombre": "HBX Group",
+  "ticker": "BME:HBX",
+  "sector": "Transporte y turismo",
   "en_universo": false
  },
  {
@@ -949,6 +1051,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Jack Henry & Associates",
+  "ticker": "NASDAQ:JKHY",
+  "sector": "Tecnología",
+  "en_universo": false
+ },
+ {
   "nombre": "Jackson Financial",
   "ticker": "NYSE:JXN",
   "sector": "Seguros y servicios financieros",
@@ -988,6 +1096,12 @@
   "nombre": "Lennar",
   "ticker": "NYSE:LEN",
   "sector": "Construcción e infraestructuras",
+  "en_universo": false
+ },
+ {
+  "nombre": "Leonardo",
+  "ticker": "MIL:LDO",
+  "sector": "Industria, defensa y aeroespacial",
   "en_universo": false
  },
  {
@@ -1111,6 +1225,12 @@
   "en_universo": false
  },
  {
+  "nombre": "McKesson",
+  "ticker": "NYSE:MCK",
+  "sector": "Salud y farmacia",
+  "en_universo": false
+ },
+ {
   "nombre": "Medifast",
   "ticker": "NYSE:MED",
   "sector": "Consumo y distribución",
@@ -1135,6 +1255,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Miquel y Costas",
+  "ticker": "BME:MCM",
+  "sector": "Materiales, química y minería",
+  "en_universo": false
+ },
+ {
   "nombre": "Mohawk Industries",
   "ticker": "NYSE:MHK",
   "sector": "Construcción e infraestructuras",
@@ -1144,6 +1270,18 @@
   "nombre": "Mondelez",
   "ticker": "NASDAQ:MDLZ",
   "sector": "Consumo y distribución",
+  "en_universo": false
+ },
+ {
+  "nombre": "Mosaic",
+  "ticker": "NYSE:MOS",
+  "sector": "Materiales, química y minería",
+  "en_universo": false
+ },
+ {
+  "nombre": "Motorola Solutions",
+  "ticker": "NYSE:MSI",
+  "sector": "Tecnología",
   "en_universo": false
  },
  {
