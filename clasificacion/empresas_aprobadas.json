@@ -17,6 +17,12 @@
   "mercado": "Europa"
  },
  {
+  "nombre": "Accenture",
+  "ticker": "NYSE:ACN",
+  "sector": "Tecnología",
+  "en_universo": false
+ },
+ {
   "nombre": "Acuity",
   "ticker": "NYSE:AYI",
   "sector": "Industria, defensa y aeroespacial",
@@ -32,6 +38,12 @@
   "nombre": "Admiral Group",
   "ticker": "LSE:ADM",
   "sector": "Seguros y servicios financieros",
+  "en_universo": false
+ },
+ {
+  "nombre": "Adolfo Domínguez",
+  "ticker": "BME:ADZ",
+  "sector": "Lujo, moda y cosmética",
   "en_universo": false
  },
  {
@@ -62,6 +74,12 @@
  {
   "nombre": "Air Canada",
   "ticker": "TSX:AC",
+  "sector": "Transporte y turismo",
+  "en_universo": false
+ },
+ {
+  "nombre": "Airbnb",
+  "ticker": "NASDAQ:ABNB",
   "sector": "Transporte y turismo",
   "en_universo": false
  },
@@ -129,6 +147,12 @@
   "nombre": "Anixa Biosciences",
   "ticker": "NASDAQ:ANIX",
   "sector": "Salud y farmacia",
+  "en_universo": false
+ },
+ {
+  "nombre": "Aon",
+  "ticker": "NYSE:AON",
+  "sector": "Seguros y servicios financieros",
   "en_universo": false
  },
  {
@@ -430,6 +454,12 @@
   ]
  },
  {
+  "nombre": "Charter Communications",
+  "ticker": "NASDAQ:CHTR",
+  "sector": "Telecomunicaciones",
+  "en_universo": false
+ },
+ {
   "nombre": "Chime Financial",
   "ticker": "NASDAQ:CHYM",
   "sector": "Seguros y servicios financieros",
@@ -586,6 +616,12 @@
   "nombre": "Delivery Hero",
   "ticker": "XETR:DHER",
   "sector": "Tecnología",
+  "en_universo": false
+ },
+ {
+  "nombre": "Digi Communications",
+  "ticker": "BVB:DIGI",
+  "sector": "Telecomunicaciones",
   "en_universo": false
  },
  {
@@ -886,6 +922,12 @@
   "nombre": "Halliburton",
   "ticker": "NYSE:HAL",
   "sector": "Petróleo y gas",
+  "en_universo": false
+ },
+ {
+  "nombre": "Halozyme Therapeutics",
+  "ticker": "NASDAQ:HALO",
+  "sector": "Salud y farmacia",
   "en_universo": false
  },
  {
@@ -1375,6 +1417,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Piraeus Bank",
+  "ticker": "ATHEX:TPEIR",
+  "sector": "Banca",
+  "en_universo": false
+ },
+ {
   "nombre": "PNC Financial Services",
   "ticker": "NYSE:PNC",
   "sector": "Banca",
@@ -1468,6 +1516,12 @@
   "nombre": "Robinhood",
   "ticker": "NASDAQ:HOOD",
   "sector": "Seguros y servicios financieros",
+  "en_universo": false
+ },
+ {
+  "nombre": "Royal Caribbean",
+  "ticker": "NYSE:RCL",
+  "sector": "Transporte y turismo",
   "en_universo": false
  },
  {
@@ -1602,6 +1656,12 @@
   "sector": "Tecnología",
   "en_universo": true,
   "mercado": "Otros"
+ },
+ {
+  "nombre": "Terreno Realty",
+  "ticker": "NYSE:TRNO",
+  "sector": "Inmobiliario",
+  "en_universo": false
  },
  {
   "nombre": "Textron",

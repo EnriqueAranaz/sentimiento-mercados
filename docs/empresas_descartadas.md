@@ -66,3 +66,10 @@ Criterios generales de alta y descarte:
 | Greencoat Renewables | — | Pequeña extranjera | 05/11/2026 |
 | CEVASA | BME:CEV | Microcotizada (fixing) | 06/11/2026 |
 | Caris Life Sciences | NASDAQ:CAI | Pequeña (menos de ~4.000 M) | 06/11/2026 |
+| Datavault AI | NASDAQ:DVLT | Microcotizada | 06/11/2026 |
+| Gold Reserve | TSXV:GRZ | Microcotizada | 06/11/2026 |
+| Tetragon Financial Group | EURONEXT:TFG | Pequeña (menos de ~4.000 M) | 06/11/2026 |
+| Extreme Networks | NASDAQ:EXTR | Pequeña (menos de ~4.000 M) | 06/11/2026 |
+| Under Armour | NYSE:UA | Pequeña (menos de ~4.000 M) | 06/11/2026 |
+| Firefly Aerospace | NASDAQ:FLY | Pequeña (menos de ~4.000 M) | 06/11/2026 |
+| Associated Banc-Corp | NYSE:ASB | Banco regional de EE. UU. | 06/11/2026 |
