@@ -325,7 +325,7 @@ def construir() -> list[dict]:
             empresas[nombre]["en_universo"] = True
     # 03/11/2026: grandes que estaban fuera del universo y tienen muchas noticias.
     for nombre in ("Intel", "Orange", "Carrefour", "Apollo Global Management", "Kering", "Brookfield", "Blackstone",
-                   "Lockheed Martin"):
+                   "Lockheed Martin", "Palo Alto Networks"):
         if nombre in empresas:
             empresas[nombre]["en_universo"] = True
     for e in empresas.values():

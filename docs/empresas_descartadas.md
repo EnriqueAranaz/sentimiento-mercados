@@ -73,3 +73,31 @@ Criterios generales de alta y descarte:
 | Under Armour | NYSE:UA | Pequeña (menos de ~4.000 M) | 06/11/2026 |
 | Firefly Aerospace | NASDAQ:FLY | Pequeña (menos de ~4.000 M) | 06/11/2026 |
 | Associated Banc-Corp | NYSE:ASB | Banco regional de EE. UU. | 06/11/2026 |
+| Carmila | EURONEXT:CARM | Pequeña (menos de ~4.000 M) | 08/11/2026 |
+| Organon | NYSE:OGN | Pequeña (menos de ~4.000 M) | 08/11/2026 |
+| Man Group | LSE:EMG | Pequeña (menos de ~4.000 M) | 08/11/2026 |
+| NextDecade | NASDAQ:NEXT | Pequeña (menos de ~4.000 M) | 08/11/2026 |
+| EverCommerce | NASDAQ:EVCM | Pequeña (menos de ~4.000 M) | 08/11/2026 |
+| Innodata | NASDAQ:INOD | Pequeña (menos de ~4.000 M) | 08/11/2026 |
+| Voyager Technologies | NYSE:VOYG | Pequeña (menos de ~4.000 M) | 08/11/2026 |
+| Mach Natural Resources | NYSE:MNR | Pequeña (menos de ~4.000 M) | 08/11/2026 |
+| Westshore Terminals | TSX:WTE | Pequeña (menos de ~4.000 M) | 08/11/2026 |
+| FIGS | NYSE:FIGS | Pequeña (menos de ~4.000 M) | 08/11/2026 |
+| Biglari Holdings | NYSE:BH | Pequeña (menos de ~4.000 M) | 08/11/2026 |
+| Pollard Banknote | TSX:PBL | Pequeña (menos de ~4.000 M) | 08/11/2026 |
+| AngioDynamics | NASDAQ:ANGO | Pequeña (menos de ~4.000 M) | 08/11/2026 |
+| Holley | NYSE:HLLY | Pequeña (menos de ~4.000 M) | 08/11/2026 |
+| Taiga Building Products | TSX:TBL | Pequeña (menos de ~4.000 M) | 08/11/2026 |
+| Runway Growth Finance | NASDAQ:RWAY | Pequeña (menos de ~4.000 M) | 08/11/2026 |
+| Big Rock Brewery | TSX:BR | Microcotizada | 08/11/2026 |
+| Avalon Holdings | AMEX:AWX | Microcotizada | 08/11/2026 |
+| Chicago Rivet & Machine | AMEX:CVR | Microcotizada | 08/11/2026 |
+| Quoin Pharmaceuticals | NASDAQ:QNRX | Microcotizada | 08/11/2026 |
+| TEN Holdings | NASDAQ:XHLD | Microcotizada | 08/11/2026 |
+| bioAffinity Technologies | NASDAQ:BIAF | Microcotizada | 08/11/2026 |
+| Karnalyte Resources | TSX:KRN | Microcotizada | 08/11/2026 |
+| Light AI | NEO:ALGO | Microcotizada | 08/11/2026 |
+| ZYUS Life Sciences | TSXV:ZYUS | Microcotizada | 08/11/2026 |
+| Soligenix | NASDAQ:SNGX | Microcotizada | 08/11/2026 |
+| YYForce | NASDAQ:YFOR | Microcotizada | 08/11/2026 |
+| FB Bancorp | NASDAQ:FBLA | Banco regional pequeño de EE. UU. | 08/11/2026 |

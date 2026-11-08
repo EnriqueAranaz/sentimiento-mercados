@@ -697,6 +697,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Energy Transfer",
+  "ticker": "NYSE:ET",
+  "sector": "Petróleo y gas",
+  "en_universo": false
+ },
+ {
   "nombre": "Engie",
   "ticker": "EURONEXT:ENGI",
   "sector": "Eléctricas, renovables y redes",
@@ -985,6 +991,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Hochtief",
+  "ticker": "XETR:HOT",
+  "sector": "Construcción e infraestructuras",
+  "en_universo": false
+ },
+ {
   "nombre": "HubSpot",
   "ticker": "NYSE:HUBS",
   "sector": "Tecnología",
@@ -1081,6 +1093,12 @@
   "en_universo": false
  },
  {
+  "nombre": "IonQ",
+  "ticker": "NYSE:IONQ",
+  "sector": "Tecnología",
+  "en_universo": false
+ },
+ {
   "nombre": "IQSTEL",
   "ticker": "NASDAQ:IQST",
   "sector": "Telecomunicaciones",
@@ -1102,6 +1120,12 @@
   "nombre": "Jackson Financial",
   "ticker": "NYSE:JXN",
   "sector": "Seguros y servicios financieros",
+  "en_universo": false
+ },
+ {
+  "nombre": "Karman",
+  "ticker": "NYSE:KRMN",
+  "sector": "Industria, defensa y aeroespacial",
   "en_universo": false
  },
  {
@@ -1249,6 +1273,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Martin Marietta Materials",
+  "ticker": "NYSE:MLM",
+  "sector": "Materiales, química y minería",
+  "en_universo": false
+ },
+ {
   "nombre": "Marvell Technology",
   "ticker": "NASDAQ:MRVL",
   "sector": "Semiconductores",
@@ -1303,6 +1333,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Modine",
+  "ticker": "NYSE:MOD",
+  "sector": "Industria, defensa y aeroespacial",
+  "en_universo": false
+ },
+ {
   "nombre": "Mohawk Industries",
   "ticker": "NYSE:MHK",
   "sector": "Construcción e infraestructuras",
@@ -1311,6 +1347,12 @@
  {
   "nombre": "Mondelez",
   "ticker": "NASDAQ:MDLZ",
+  "sector": "Consumo y distribución",
+  "en_universo": false
+ },
+ {
+  "nombre": "Monster Beverage",
+  "ticker": "NASDAQ:MNST",
   "sector": "Consumo y distribución",
   "en_universo": false
  },
@@ -1390,6 +1432,12 @@
   "nombre": "Ovintiv",
   "ticker": "NYSE:OVV",
   "sector": "Petróleo y gas",
+  "en_universo": false
+ },
+ {
+  "nombre": "Palo Alto Networks",
+  "ticker": "NASDAQ:PANW",
+  "sector": "Tecnología",
   "en_universo": false
  },
  {
@@ -1561,6 +1609,12 @@
   "en_universo": false
  },
  {
+  "nombre": "SEGRO",
+  "ticker": "LSE:SGRO",
+  "sector": "Inmobiliario",
+  "en_universo": false
+ },
+ {
   "nombre": "Shopify",
   "ticker": "NASDAQ:SHOP",
   "sector": "Tecnología",
@@ -1618,6 +1672,12 @@
   "nombre": "Stora Enso",
   "ticker": "OMXHEX:STEAV",
   "sector": "Materiales, química y minería",
+  "en_universo": false
+ },
+ {
+  "nombre": "Super Micro Computer",
+  "ticker": "NASDAQ:SMCI",
+  "sector": "Tecnología",
   "en_universo": false
  },
  {
