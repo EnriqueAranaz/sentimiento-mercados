@@ -101,3 +101,22 @@ Criterios generales de alta y descarte:
 | Soligenix | NASDAQ:SNGX | Microcotizada | 08/11/2026 |
 | YYForce | NASDAQ:YFOR | Microcotizada | 08/11/2026 |
 | FB Bancorp | NASDAQ:FBLA | Banco regional pequeño de EE. UU. | 08/11/2026 |
+| Codan | ASX:CDA | Pequeña (menos de ~4.000 M) | 09/11/2026 |
+| Titan America | NYSE:TTAM | Pequeña (menos de ~4.000 M) | 09/11/2026 |
+| Apple Hospitality REIT | NYSE:APLE | Pequeña (menos de ~4.000 M) | 09/11/2026 |
+| Openlane | NYSE:OPLN | Pequeña (menos de ~4.000 M) | 09/11/2026 |
+| Delek US Holdings | NYSE:DK | Pequeña (menos de ~4.000 M) | 09/11/2026 |
+| Alight | NYSE:ALIT | Pequeña (menos de ~4.000 M) | 09/11/2026 |
+| Sable Offshore | NYSE:SOC | Pequeña (menos de ~4.000 M) | 09/11/2026 |
+| Kestra Medical Technologies | NASDAQ:KMTS | Pequeña (menos de ~4.000 M) | 09/11/2026 |
+| Vir Biotechnology | NASDAQ:VIR | Pequeña (menos de ~4.000 M) | 09/11/2026 |
+| United States Antimony | AMEX:UAMY | Pequeña (menos de ~4.000 M) | 09/11/2026 |
+| SI-BONE | NASDAQ:SIBN | Pequeña (menos de ~4.000 M) | 09/11/2026 |
+| The Children's Place | NASDAQ:PLCE | Microcotizada | 09/11/2026 |
+| Zura Bio | NASDAQ:ZURA | Microcotizada | 09/11/2026 |
+| Realbotix | TSXV:XBOT | Microcotizada | 09/11/2026 |
+| Sypris Solutions | NASDAQ:SYPR | Microcotizada | 09/11/2026 |
+| Innovative Eyewear | NASDAQ:LUCY | Microcotizada | 09/11/2026 |
+| Ternium | NYSE:TX | Negocio en Latam (México y Argentina), aunque cotice en NYSE | 09/11/2026 |
+| Onterris | NYSE:ONT | Tamaño no verificado; sin interés | 09/11/2026 |
+| Greenfire Resources | NYSE:GFR | Pequeña (menos de ~4.000 M) | 09/11/2026 |

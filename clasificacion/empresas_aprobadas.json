@@ -126,6 +126,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Almirall",
+  "ticker": "BME:ALM",
+  "sector": "Salud y farmacia",
+  "en_universo": false
+ },
+ {
   "nombre": "Alstom",
   "ticker": "EURONEXT:ALO",
   "sector": "Industria, defensa y aeroespacial",
@@ -195,6 +201,12 @@
   "nombre": "Arm Holdings",
   "ticker": "NASDAQ:ARM",
   "sector": "Semiconductores",
+  "en_universo": false
+ },
+ {
+  "nombre": "Arrow Electronics",
+  "ticker": "NYSE:ARW",
+  "sector": "Tecnología",
   "en_universo": false
  },
  {
@@ -475,6 +487,12 @@
   "nombre": "CIE Automotive",
   "ticker": "BME:CIE",
   "sector": "Automóvil",
+  "en_universo": false
+ },
+ {
+  "nombre": "Cincinnati Financial",
+  "ticker": "NASDAQ:CINF",
+  "sector": "Seguros y servicios financieros",
   "en_universo": false
  },
  {
@@ -865,6 +883,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Franklin Resources",
+  "ticker": "NYSE:BEN",
+  "sector": "Seguros y servicios financieros",
+  "en_universo": false
+ },
+ {
   "nombre": "Freedom Holding",
   "ticker": "NASDAQ:FRHC",
   "sector": "Seguros y servicios financieros",
@@ -889,6 +913,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Getinge",
+  "ticker": "OMXSTO:GETI_B",
+  "sector": "Salud y farmacia",
+  "en_universo": false
+ },
+ {
   "nombre": "Global Dominion",
   "ticker": "BME:DOM",
   "sector": "Industria, defensa y aeroespacial",
@@ -904,6 +934,12 @@
   "nombre": "Goodman Group",
   "ticker": "ASX:GMG",
   "sector": "Inmobiliario",
+  "en_universo": false
+ },
+ {
+  "nombre": "Goodyear",
+  "ticker": "NASDAQ:GT",
+  "sector": "Automóvil",
   "en_universo": false
  },
  {
@@ -1126,6 +1162,12 @@
   "nombre": "Karman",
   "ticker": "NYSE:KRMN",
   "sector": "Industria, defensa y aeroespacial",
+  "en_universo": false
+ },
+ {
+  "nombre": "Keysight Technologies",
+  "ticker": "NYSE:KEYS",
+  "sector": "Tecnología",
   "en_universo": false
  },
  {
@@ -1573,6 +1615,12 @@
   "en_universo": false
  },
  {
+  "nombre": "RPM International",
+  "ticker": "NYSE:RPM",
+  "sector": "Materiales, química y minería",
+  "en_universo": false
+ },
+ {
   "nombre": "Ryanair",
   "ticker": "EURONEXT:RYA",
   "sector": "Transporte y turismo",
@@ -1675,6 +1723,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Strathcona Resources",
+  "ticker": "TSX:SCR",
+  "sector": "Petróleo y gas",
+  "en_universo": false
+ },
+ {
   "nombre": "Super Micro Computer",
   "ticker": "NASDAQ:SMCI",
   "sector": "Tecnología",
@@ -1705,9 +1759,27 @@
   "en_universo": false
  },
  {
+  "nombre": "Take-Two Interactive",
+  "ticker": "NASDAQ:TTWO",
+  "sector": "Medios y entretenimiento",
+  "en_universo": false
+ },
+ {
+  "nombre": "Telus",
+  "ticker": "TSX:T",
+  "sector": "Telecomunicaciones",
+  "en_universo": false
+ },
+ {
   "nombre": "Tempus AI",
   "ticker": "NASDAQ:TEM",
   "sector": "Salud y farmacia",
+  "en_universo": false
+ },
+ {
+  "nombre": "Tenaris",
+  "ticker": "MIL:TEN",
+  "sector": "Petróleo y gas",
   "en_universo": false
  },
  {
@@ -1727,6 +1799,12 @@
   "nombre": "Textron",
   "ticker": "NYSE:TXT",
   "sector": "Industria, defensa y aeroespacial",
+  "en_universo": false
+ },
+ {
+  "nombre": "The Trade Desk",
+  "ticker": "NASDAQ:TTD",
+  "sector": "Tecnología",
   "en_universo": false
  },
  {
@@ -1783,6 +1861,12 @@
   "nombre": "Tubacex",
   "ticker": "BME:TUB",
   "sector": "Materiales, química y minería",
+  "en_universo": false
+ },
+ {
+  "nombre": "Tyson Foods",
+  "ticker": "NYSE:TSN",
+  "sector": "Consumo y distribución",
   "en_universo": false
  },
  {
@@ -1891,6 +1975,12 @@
   "nombre": "Weyerhaeuser",
   "ticker": "NYSE:WY",
   "sector": "Materiales, química y minería",
+  "en_universo": false
+ },
+ {
+  "nombre": "Whitbread",
+  "ticker": "LSE:WTB",
+  "sector": "Transporte y turismo",
   "en_universo": false
  },
  {
