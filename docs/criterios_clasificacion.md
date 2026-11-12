@@ -394,6 +394,7 @@ Estos ejemplos de secciones anteriores ya no se aplican tal como están escritos
 - Ejemplos con causa (relevantes): "Los bonos dan un respiro, pero el 5% de EE. UU. y la deuda francesa mantienen la alerta"; "La tecnología china se desploma: ¿una señal de alerta para las bolsas mundiales?" (opinión sobre Global · Mercados; la caída de la tecnología china en sí no se anota).
 - Análisis técnico incluye también divergencias y rotaciones entre sectores o mercados ("¿Rotación o antesala de una venta generalizada?", "La extrema divergencia entre tecnología y finanzas…"). Si el titular no tiene vocabulario técnico (soporte, resistencia, directriz, sesgo, sobrevendido, patrón, divergencia, rotación, señales alcistas/bajistas) ni causa, va a Precio sin causa.
 - Afectaciones de Empresa: solo si la empresa está nombrada en el titular o en el resumen. Los símbolos de TradingView sirven para detectar, nunca generan una afectación por sí solos. Si el titular nombra un grupo ("los operadores de telecomunicaciones estadounidenses"), se anota el Sector.
+- **Producto inequívoco = empresa nombrada (12/11/2026).** Si el titular o el resumen nombran un producto o una marca conocida que solo puede ser de una empresa cotizada, se anota esa empresa como si estuviera nombrada: GTA VI / NBA 2K → Take-Two; Cybertruck → Tesla; Gemini → Alphabet; Ozempic / Wegovy → Novo Nordisk; Zepbound / Mounjaro → Eli Lilly; iPhone → Apple; Starship → SpaceX; Neutron → Rocket Lab. Se aplican las reglas de tono habituales (por ejemplo, muertes en la fábrica que hace el iPhone → Apple **-2**). Si el producto es genérico o compartido ("los chips de IA", "un fármaco contra la obesidad"), no basta. Un titular que solo identifica a la empresa por su símbolo de TradingView, sin nombre ni producto, sigue siendo **Sin objeto identificable**.
 - El ejemplo de la regla 10 d con "pese a" ("Los rendimientos del Tesoro repuntan pese a las menores apuestas de subida de tipos") se ha sustituido por uno con nexo causal, porque ese titular ahora es Precio sin causa.
 
 ## 14. v3.9 Empresas descartadas (prevalece sobre todo lo anterior)
@@ -432,6 +433,10 @@ regionales de EE. UU. y pequeñas de menos de ~4.000 M. Léelo antes de clasific
   - *El oro cae pese a la tensión en Oriente Medio* → la tensión sostiene el oro: Global · Materias primas → **1**; la caída no se anota
   - *Lloyds cae pese a duplicar el beneficio trimestral: decepciona que no eleve sus previsiones* → la caída tiene otra
     causa explícita: Mercado · Lloyds → **-1**
+  - **Entre dos hechos del mismo objeto** (12/11/2026): es la regla del "pero" al revés. Manda la oración principal,
+    con tope **±1**, aunque por sí sola valiera ±2.
+    - *Vodafone eleva previsiones pese a registrar pérdidas de 3.597 millones por ajustes contables* → Vodafone → **1**
+    - *Digi entra en pérdidas operativas hasta septiembre pese a elevar sus ingresos un 15%* → Digi → **-1**
 - **"Pero" y "aunque".** Con fuerzas opuestas sobre el mismo objeto, el valor es **0** (regla 11 c), salvo que el
   titular las una con "pero" o "aunque": entonces manda lo que va detrás, con valor **±1** en su sentido. Vale para
   cualquier tema, también Resultados, aunque la cifra vaya en sentido contrario.
@@ -478,6 +483,9 @@ regionales de EE. UU. y pequeñas de menos de ~4.000 M. Léelo antes de clasific
   - **Pérdidas.** Pérdidas sin comparación con el periodo anterior → **-1**. Paso explícito de beneficio a pérdidas
     ("entra en pérdidas", "pasa a números rojos") → **-2**.
     - *Iberpapel pierde 6,4 millones hasta septiembre por los costes energéticos* → Empresa · Iberpapel → **-1**
+  - **Vuelta a beneficios** (12/11/2026). Es el reverso de "entra en pérdidas": paso explícito de pérdidas a
+    beneficio ("vuelve a beneficios", "sale de pérdidas", "regresa a los números negros") → **2**.
+    - *Telefónica vuelve a beneficios con 464 millones hasta septiembre* → Empresa · Telefónica → **2**
 - **En Recomendación / análisis manda la cifra del potencial** o de la revisión del precio objetivo, con el mismo umbral
   que en Resultados: potencial ≥ +20 % → **2**; positivo menor → **1**; ≤ −20 % → **-2**; negativo menor → **-1**. Sin
   cifra: **±1** según la recomendación (comprar / sobreponderar o vender / infraponderar), **0** si es neutral o mantener.
@@ -486,6 +494,9 @@ regionales de EE. UU. y pequeñas de menos de ~4.000 M. Léelo antes de clasific
   - Un descuento o una infravaloración que el analista califica de injustificado cuenta como potencial.
   - Las métricas automáticas de valoración (GF Value de GuruFocus y similares) no son un potencial de analista.
   - Con un "pero" se mantiene el tope de ±1 (regla del "pero").
+  - **Una rebaja o una mejora explícita de la recomendación manda sobre la cifra** (12/11/2026): rebaja → **-1**,
+    mejora → **1**, aunque el potencial que se cite sea alto o negativo.
+    - *Rheinmetall pierde la recomendación de compra: el potencial del 42% ya no basta* → Rheinmetall → **-1**
   - *BofA corona a CaixaBank y Santander… con un potencial de hasta el 27%* → CaixaBank → **1** · Santander → **1**
   - *BofA ve un descuento injustificado del 40% en Puig y mantiene comprar* → Empresa · Puig → **2**
   - *Goldman recorta un 25% su objetivo del Kospi, pero todavía ve un potencial cercano al 60%* → Mercado · Corea → **1**
@@ -499,7 +510,9 @@ regionales de EE. UU. y pequeñas de menos de ~4.000 M. Léelo antes de clasific
   inversor ajeno relevante (un fondo activista, una empresa del sector, un inversor de referencia), compre acciones o
   tome una participación es una señal muy positiva: **+2**. Que las venda: **-2**. No entran las recompras de la propia
   empresa (Corporativo, con su valor habitual) ni las notificaciones rutinarias de fondos índice al cruzar un umbral
-  (BlackRock con el 1 %): estas no se anotan (contraparte pasiva).
+  (BlackRock con el 1 %): estas no se anotan (contraparte pasiva). Tampoco entran los fondos que arbitran una fusión
+  u opa ya anunciada (no es una apuesta por la empresa): **0** (12/11/2026).
+  - *Capula, cuarto mayor 'hedge fund' de Europa, se lanza a arbitrar la fusión de Cirsa* → Empresa · Cirsa → **0**
   - *Botín compra acciones de Santander por 3,1 millones de euros* → Empresa · Santander → **2**
   - *Datos clave: Air Liquide SA informa una participación de Elliott…* → Empresa · Air Liquide → **2**
 - **Protagonistas y contrapartes pasivas.** Los protagonistas de una operación (comprador, vendedor, la empresa que
@@ -508,6 +521,14 @@ regionales de EE. UU. y pequeñas de menos de ~4.000 M. Léelo antes de clasific
   - *Intertek aprueba el acuerdo con EQT* → Intertek → **1** · EQT AB (compradora) → **0**
   - No se anotan: Crédit Agricole como inquilina de Merlin, Alphabet en el PPA de Fortum, BlackRock como accionista
     que se notifica.
+- **Acuerdos y contratos sin cifra** (12/11/2026). Por defecto **0** (informativo). **1** solo si el titular lo valora
+  ("estratégico", "récord", "histórico", "gran contrato") o si es un contrato con un cliente de peso que el titular
+  nombra. Con cifra, se valora por la cifra en su contexto.
+  - *Quantinuum amplía su colaboración con…* → **0** · *Navantia se alía con la noruega Kongsberg para…* (cliente de
+    peso nombrado) → Kongsberg → **1**
+- **Resultados de una filial que cotiza aparte** (12/11/2026). Si la filial no está en la tabla y el titular la nombra
+  junto con la matriz (Telefônica Brasil → Telefónica), se anota la matriz con tope **±1**: no es el resultado del grupo.
+  - *Telefônica Brasil aumenta un 30,1% interanual su beneficio neto en el tercer trimestre* → Telefónica → **1**
 - **Cobro de dividendos.** Las noticias sobre fechas o trámites para cobrar un dividendo ya anunciado no son
   relevantes: **Agenda / convocatoria** si solo dan la fecha, **Finanzas personales** si explican qué hacer para
   cobrarlo. El anuncio de un dividendo nuevo, o de un cambio en el dividendo, sí es relevante.

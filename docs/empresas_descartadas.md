@@ -120,3 +120,61 @@ Criterios generales de alta y descarte:
 | Ternium | NYSE:TX | Negocio en Latam (México y Argentina), aunque cotice en NYSE | 09/11/2026 |
 | Onterris | NYSE:ONT | Tamaño no verificado; sin interés | 09/11/2026 |
 | Greenfire Resources | NYSE:GFR | Pequeña (menos de ~4.000 M) | 09/11/2026 |
+| Via Transportation | NYSE:VIA | Pequeña (menos de ~4.000 M) | 12/11/2026 |
+| Cactus | NYSE:WHD | Pequeña (menos de ~4.000 M) | 12/11/2026 |
+| Resideo Technologies | NYSE:REZI | Pequeña (menos de ~4.000 M) | 12/11/2026 |
+| StubHub | NYSE:STUB | Pequeña (menos de ~4.000 M) | 12/11/2026 |
+| ITV | LSE:ITV | Pequeña (menos de ~4.000 M) | 12/11/2026 |
+| Digi International | NASDAQ:DGII | Pequeña (menos de ~4.000 M) | 12/11/2026 |
+| Energy Vault | NYSE:NRGV | Pequeña (menos de ~4.000 M) | 12/11/2026 |
+| Diodes | NASDAQ:DIOD | Pequeña (menos de ~4.000 M) | 12/11/2026 |
+| Burford Capital | NYSE:BUR | Pequeña (menos de ~4.000 M) | 12/11/2026 |
+| Kyivstar Group | NASDAQ:KYIV | Pequeña (menos de ~4.000 M) | 12/11/2026 |
+| Capri Holdings | NYSE:CPRI | Pequeña (menos de ~4.000 M) | 12/11/2026 |
+| B&M European Value Retail | LSE:BME | Pequeña (menos de ~4.000 M) | 12/11/2026 |
+| IWG | LSE:IWG | Pequeña (menos de ~4.000 M) | 12/11/2026 |
+| Savills | LSE:SVS | Pequeña (menos de ~4.000 M) | 12/11/2026 |
+| WEBTOON Entertainment | NASDAQ:WBTN | Pequeña (menos de ~4.000 M) | 12/11/2026 |
+| ArcBest | NASDAQ:ARCB | Pequeña (menos de ~4.000 M) | 12/11/2026 |
+| Grocery Outlet | NASDAQ:GO | Pequeña (menos de ~4.000 M) | 12/11/2026 |
+| Sally Beauty | NYSE:SBH | Pequeña (menos de ~4.000 M) | 12/11/2026 |
+| Teekay Tankers | NYSE:TNK | Pequeña (menos de ~4.000 M) | 12/11/2026 |
+| Lumexa Imaging | NASDAQ:LMRI | Pequeña (menos de ~4.000 M) | 12/11/2026 |
+| Lithium Americas | NYSE:LAC | Pequeña (menos de ~4.000 M) | 12/11/2026 |
+| Atalaya Mining | LSE:ATYM | Pequeña (menos de ~4.000 M) | 12/11/2026 |
+| Avio | MIL:AVIO | Pequeña (menos de ~4.000 M) | 12/11/2026 |
+| Vesuvius | LSE:VSVS | Pequeña (menos de ~4.000 M) | 12/11/2026 |
+| Meren Energy | TSX:MER | Pequeña (menos de ~4.000 M) | 12/11/2026 |
+| CorMedix | NASDAQ:CRMD | Pequeña (menos de ~4.000 M) | 12/11/2026 |
+| EVgo | NASDAQ:EVGO | Pequeña (menos de ~4.000 M) | 12/11/2026 |
+| loanDepot | NYSE:LDI | Pequeña (menos de ~4.000 M) | 12/11/2026 |
+| NGL Energy Partners | NYSE:NGL | Pequeña (menos de ~4.000 M) | 12/11/2026 |
+| Ballard Power Systems | NASDAQ:BLDP | Pequeña (menos de ~4.000 M) | 12/11/2026 |
+| Mutares | XETR:MUX | Pequeña (menos de ~4.000 M) | 12/11/2026 |
+| Valneva | EURONEXT:VLA | Microcotizada | 12/11/2026 |
+| B&G Foods | NYSE:BGS | Microcotizada | 12/11/2026 |
+| Carlsmed | NASDAQ:CARL | Microcotizada | 12/11/2026 |
+| Agilyx | OSL:AGLX | Microcotizada | 12/11/2026 |
+| Repay Holdings | NASDAQ:RPAY | Microcotizada | 12/11/2026 |
+| Senseonics | NASDAQ:SENS | Microcotizada | 12/11/2026 |
+| Surrozen | NASDAQ:SRZN | Microcotizada | 12/11/2026 |
+| Douglas Elliman | NYSE:DOUG | Microcotizada | 12/11/2026 |
+| American Rebel | NASDAQ:AREB | Microcotizada | 12/11/2026 |
+| BridgeBio Oncology Therapeutics | NASDAQ:BBOT | Microcotizada | 12/11/2026 |
+| Palisade Bio | NASDAQ:PALI | Microcotizada | 12/11/2026 |
+| Inovio Pharmaceuticals | NASDAQ:INO | Microcotizada | 12/11/2026 |
+| Exagen | NASDAQ:XGN | Microcotizada | 12/11/2026 |
+| SHF Holdings | NASDAQ:SHFS | Microcotizada | 12/11/2026 |
+| Rocket One | NASDAQ:RKTO | Microcotizada | 12/11/2026 |
+| Black Rock Coffee Bar | NASDAQ:BRCB | Microcotizada | 12/11/2026 |
+| Draganfly | NASDAQ:DPRO | Microcotizada | 12/11/2026 |
+| Eupraxia Pharmaceuticals | TSX:EPRX | Microcotizada | 12/11/2026 |
+| Gevo | NASDAQ:GEVO | Microcotizada | 12/11/2026 |
+| Satellogic | NASDAQ:SATL | Microcotizada | 12/11/2026 |
+| Spire Global | NYSE:SPIR | Microcotizada | 12/11/2026 |
+| iBio | NASDAQ:IBIO | Microcotizada | 12/11/2026 |
+| OptimizeRx | NASDAQ:OPRX | Microcotizada | 12/11/2026 |
+| BC Partners Lending | NASDAQ:BCIC | Microcotizada | 12/11/2026 |
+| AGI Inc | NYSE:AGBK | Microcotizada | 12/11/2026 |
+| Alibaba | NYSE:BABA | Negocio en Asia (China), aunque cotice en NYSE | 12/11/2026 |
+| Digi Spain | BME:DIGIS | Duplicado de Digi Communications (ya en la tabla) | 12/11/2026 |

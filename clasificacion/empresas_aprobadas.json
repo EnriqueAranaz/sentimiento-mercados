@@ -1,5 +1,11 @@
 [
  {
+  "nombre": "3i Group",
+  "ticker": "LSE:III",
+  "sector": "Seguros y servicios financieros",
+  "en_universo": false
+ },
+ {
   "nombre": "A.P. Moller-Maersk",
   "ticker": "OMXCOP:MAERSK_B",
   "sector": "Transporte y turismo",
@@ -15,6 +21,12 @@
    "Abenójar"
   ],
   "mercado": "Europa"
+ },
+ {
+  "nombre": "ABN Amro",
+  "ticker": "EURONEXT:ABN",
+  "sector": "Banca",
+  "en_universo": false
  },
  {
   "nombre": "Accenture",
@@ -60,6 +72,12 @@
   "en_universo": false
  },
  {
+  "nombre": "AGCO",
+  "ticker": "NYSE:AGCO",
+  "sector": "Industria, defensa y aeroespacial",
+  "en_universo": false
+ },
+ {
   "nombre": "Agnico Eagle Mines",
   "ticker": "TSX:AEM",
   "sector": "Materiales, química y minería",
@@ -87,6 +105,12 @@
   "nombre": "Airtificial",
   "ticker": "BME:AI",
   "sector": "Industria, defensa y aeroespacial",
+  "en_universo": false
+ },
+ {
+  "nombre": "AkzoNobel",
+  "ticker": "EURONEXT:AKZA",
+  "sector": "Materiales, química y minería",
   "en_universo": false
  },
  {
@@ -153,6 +177,12 @@
   "nombre": "Anixa Biosciences",
   "ticker": "NASDAQ:ANIX",
   "sector": "Salud y farmacia",
+  "en_universo": false
+ },
+ {
+  "nombre": "Antero Midstream",
+  "ticker": "NYSE:AM",
+  "sector": "Petróleo y gas",
   "en_universo": false
  },
  {
@@ -243,6 +273,12 @@
   "en_universo": false
  },
  {
+  "nombre": "AtkinsRéalis",
+  "ticker": "TSX:ATRL",
+  "sector": "Construcción e infraestructuras",
+  "en_universo": false
+ },
+ {
   "nombre": "Audax Renovables",
   "ticker": "BME:ADX",
   "sector": "Eléctricas, renovables y redes",
@@ -267,8 +303,20 @@
   "en_universo": false
  },
  {
+  "nombre": "Axalta",
+  "ticker": "NYSE:AXTA",
+  "sector": "Materiales, química y minería",
+  "en_universo": false
+ },
+ {
   "nombre": "Azkoyen",
   "ticker": "BME:AZK",
+  "sector": "Industria, defensa y aeroespacial",
+  "en_universo": false
+ },
+ {
+  "nombre": "BAE Systems",
+  "ticker": "LSE:BA.",
   "sector": "Industria, defensa y aeroespacial",
   "en_universo": false
  },
@@ -466,6 +514,12 @@
   ]
  },
  {
+  "nombre": "CGI",
+  "ticker": "NYSE:GIB",
+  "sector": "Tecnología",
+  "en_universo": false
+ },
+ {
   "nombre": "Charter Communications",
   "ticker": "NASDAQ:CHTR",
   "sector": "Telecomunicaciones",
@@ -514,6 +568,12 @@
   "nombre": "City Holding",
   "ticker": "NASDAQ:CHCO",
   "sector": "Banca",
+  "en_universo": false
+ },
+ {
+  "nombre": "Clarivate",
+  "ticker": "NYSE:CLVT",
+  "sector": "Tecnología",
   "en_universo": false
  },
  {
@@ -601,6 +661,18 @@
   "en_universo": false
  },
  {
+  "nombre": "CSX",
+  "ticker": "NASDAQ:CSX",
+  "sector": "Transporte y turismo",
+  "en_universo": false
+ },
+ {
+  "nombre": "D-Wave Quantum",
+  "ticker": "NYSE:QBTS",
+  "sector": "Tecnología",
+  "en_universo": false
+ },
+ {
   "nombre": "D.R. Horton",
   "ticker": "NYSE:DHI",
   "sector": "Construcción e infraestructuras",
@@ -628,6 +700,12 @@
   "nombre": "Datadog",
   "ticker": "NASDAQ:DDOG",
   "sector": "Tecnología",
+  "en_universo": false
+ },
+ {
+  "nombre": "DCC",
+  "ticker": "LSE:DCC",
+  "sector": "Petróleo y gas",
   "en_universo": false
  },
  {
@@ -709,8 +787,20 @@
   "en_universo": false
  },
  {
+  "nombre": "Elisa",
+  "ticker": "OMXHEX:ELISA",
+  "sector": "Telecomunicaciones",
+  "en_universo": false
+ },
+ {
   "nombre": "Ence",
   "ticker": "BME:ENC",
+  "sector": "Materiales, química y minería",
+  "en_universo": false
+ },
+ {
+  "nombre": "Endeavour Mining",
+  "ticker": "LSE:EDV",
   "sector": "Materiales, química y minería",
   "en_universo": false
  },
@@ -907,6 +997,12 @@
   "en_universo": false
  },
  {
+  "nombre": "GeneDx",
+  "ticker": "NASDAQ:WGS",
+  "sector": "Salud y farmacia",
+  "en_universo": false
+ },
+ {
   "nombre": "Gestamp",
   "ticker": "BME:GEST",
   "sector": "Automóvil",
@@ -1027,6 +1123,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Hims & Hers Health",
+  "ticker": "NYSE:HIMS",
+  "sector": "Salud y farmacia",
+  "en_universo": false
+ },
+ {
   "nombre": "Hochtief",
   "ticker": "XETR:HOT",
   "sector": "Construcción e infraestructuras",
@@ -1036,6 +1138,12 @@
   "nombre": "HubSpot",
   "ticker": "NYSE:HUBS",
   "sector": "Tecnología",
+  "en_universo": false
+ },
+ {
+  "nombre": "Hugo Boss",
+  "ticker": "XETR:BOSS",
+  "sector": "Lujo, moda y cosmética",
   "en_universo": false
  },
  {
@@ -1159,6 +1267,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Johnson Controls",
+  "ticker": "NYSE:JCI",
+  "sector": "Industria, defensa y aeroespacial",
+  "en_universo": false
+ },
+ {
   "nombre": "Karman",
   "ticker": "NYSE:KRMN",
   "sector": "Industria, defensa y aeroespacial",
@@ -1177,9 +1291,21 @@
   "en_universo": false
  },
  {
+  "nombre": "Kongsberg Gruppen",
+  "ticker": "OSL:KOG",
+  "sector": "Industria, defensa y aeroespacial",
+  "en_universo": false
+ },
+ {
   "nombre": "KPN",
   "ticker": "EURONEXT:KPN",
   "sector": "Telecomunicaciones",
+  "en_universo": false
+ },
+ {
+  "nombre": "Kratos Defense",
+  "ticker": "NASDAQ:KTOS",
+  "sector": "Industria, defensa y aeroespacial",
   "en_universo": false
  },
  {
@@ -1219,6 +1345,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Life360",
+  "ticker": "NASDAQ:LIF",
+  "sector": "Tecnología",
+  "en_universo": false
+ },
+ {
   "nombre": "Lindt & Sprüngli",
   "ticker": "SIX:LISN",
   "sector": "Consumo y distribución",
@@ -1228,6 +1360,12 @@
   "nombre": "Lineage",
   "ticker": "NASDAQ:LINE",
   "sector": "Inmobiliario",
+  "en_universo": false
+ },
+ {
+  "nombre": "Loews",
+  "ticker": "NYSE:L",
+  "sector": "Seguros y servicios financieros",
   "en_universo": false
  },
  {
@@ -1339,6 +1477,12 @@
   "en_universo": false
  },
  {
+  "nombre": "McCormick",
+  "ticker": "NYSE:MKC",
+  "sector": "Consumo y distribución",
+  "en_universo": false
+ },
+ {
   "nombre": "McKesson",
   "ticker": "NYSE:MCK",
   "sector": "Salud y farmacia",
@@ -1360,6 +1504,12 @@
   "nombre": "Meliá Hotels International",
   "ticker": "BME:MEL",
   "sector": "Transporte y turismo",
+  "en_universo": false
+ },
+ {
+  "nombre": "Mercury Systems",
+  "ticker": "NASDAQ:MRCY",
+  "sector": "Industria, defensa y aeroespacial",
   "en_universo": false
  },
  {
@@ -1417,6 +1567,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Munters",
+  "ticker": "OMXSTO:MTRS",
+  "sector": "Industria, defensa y aeroespacial",
+  "en_universo": false
+ },
+ {
   "nombre": "Nebius",
   "ticker": "NASDAQ:NBIS",
   "sector": "Tecnología",
@@ -1453,6 +1609,24 @@
   "en_universo": false
  },
  {
+  "nombre": "NextEra Energy",
+  "ticker": "NYSE:NEE",
+  "sector": "Eléctricas, renovables y redes",
+  "en_universo": false
+ },
+ {
+  "nombre": "Nextil",
+  "ticker": "BME:NXT",
+  "sector": "Lujo, moda y cosmética",
+  "en_universo": false
+ },
+ {
+  "nombre": "NKT",
+  "ticker": "OMXCOP:NKT",
+  "sector": "Industria, defensa y aeroespacial",
+  "en_universo": false
+ },
+ {
   "nombre": "NN Group",
   "ticker": "EURONEXT:NN",
   "sector": "Seguros y servicios financieros",
@@ -1465,8 +1639,20 @@
   "en_universo": false
  },
  {
+  "nombre": "On Holding",
+  "ticker": "NYSE:ONON",
+  "sector": "Lujo, moda y cosmética",
+  "en_universo": false
+ },
+ {
   "nombre": "ON Semiconductor",
   "ticker": "NASDAQ:ON",
+  "sector": "Semiconductores",
+  "en_universo": false
+ },
+ {
+  "nombre": "Onto Innovation",
+  "ticker": "NYSE:ONTO",
   "sector": "Semiconductores",
   "en_universo": false
  },
@@ -1531,6 +1717,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Prologis",
+  "ticker": "NYSE:PLD",
+  "sector": "Inmobiliario",
+  "en_universo": false
+ },
+ {
   "nombre": "Prosegur",
   "ticker": "BME:PSG",
   "sector": "Industria, defensa y aeroespacial",
@@ -1562,6 +1754,18 @@
   "alias": [
    "QBE"
   ]
+ },
+ {
+  "nombre": "Qualys",
+  "ticker": "NASDAQ:QLYS",
+  "sector": "Tecnología",
+  "en_universo": false
+ },
+ {
+  "nombre": "Quantinuum",
+  "ticker": "NASDAQ:QNT",
+  "sector": "Tecnología",
+  "en_universo": false
  },
  {
   "nombre": "Range Resources",
@@ -1603,9 +1807,21 @@
   "en_universo": false
  },
  {
+  "nombre": "Rigetti Computing",
+  "ticker": "NASDAQ:RGTI",
+  "sector": "Tecnología",
+  "en_universo": false
+ },
+ {
   "nombre": "Robinhood",
   "ticker": "NASDAQ:HOOD",
   "sector": "Seguros y servicios financieros",
+  "en_universo": false
+ },
+ {
+  "nombre": "Rocket Lab",
+  "ticker": "NASDAQ:RKLB",
+  "sector": "Industria, defensa y aeroespacial",
   "en_universo": false
  },
  {
@@ -1687,6 +1903,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Somnigroup International",
+  "ticker": "NYSE:SGI",
+  "sector": "Consumo y distribución",
+  "en_universo": false
+ },
+ {
   "nombre": "Sonae",
   "ticker": "ELI:SON",
   "sector": "Consumo y distribución",
@@ -1765,6 +1987,24 @@
   "en_universo": false
  },
  {
+  "nombre": "Taylor Wimpey",
+  "ticker": "LSE:TW.",
+  "sector": "Inmobiliario",
+  "en_universo": false
+ },
+ {
+  "nombre": "TD SYNNEX",
+  "ticker": "NYSE:SNX",
+  "sector": "Tecnología",
+  "en_universo": false
+ },
+ {
+  "nombre": "TechnipFMC",
+  "ticker": "NYSE:FTI",
+  "sector": "Petróleo y gas",
+  "en_universo": false
+ },
+ {
   "nombre": "Telus",
   "ticker": "TSX:T",
   "sector": "Telecomunicaciones",
@@ -1796,8 +2036,20 @@
   "en_universo": false
  },
  {
+  "nombre": "Tetra Tech",
+  "ticker": "NASDAQ:TTEK",
+  "sector": "Construcción e infraestructuras",
+  "en_universo": false
+ },
+ {
   "nombre": "Textron",
   "ticker": "NYSE:TXT",
+  "sector": "Industria, defensa y aeroespacial",
+  "en_universo": false
+ },
+ {
+  "nombre": "Thales",
+  "ticker": "EURONEXT:HO",
   "sector": "Industria, defensa y aeroespacial",
   "en_universo": false
  },
@@ -1805,6 +2057,12 @@
   "nombre": "The Trade Desk",
   "ticker": "NASDAQ:TTD",
   "sector": "Tecnología",
+  "en_universo": false
+ },
+ {
+  "nombre": "Thomson Reuters",
+  "ticker": "NYSE:TRI",
+  "sector": "Medios y entretenimiento",
   "en_universo": false
  },
  {
@@ -1936,6 +2194,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Verisk Analytics",
+  "ticker": "NASDAQ:VRSK",
+  "sector": "Seguros y servicios financieros",
+  "en_universo": false
+ },
+ {
   "nombre": "Vertiv",
   "ticker": "NYSE:VRT",
   "sector": "Industria, defensa y aeroespacial",
@@ -1957,6 +2221,18 @@
   "nombre": "Vistra",
   "ticker": "NYSE:VST",
   "sector": "Eléctricas, renovables y redes",
+  "en_universo": false
+ },
+ {
+  "nombre": "Vocento",
+  "ticker": "BME:VOC",
+  "sector": "Medios y entretenimiento",
+  "en_universo": false
+ },
+ {
+  "nombre": "Vodafone",
+  "ticker": "LSE:VOD",
+  "sector": "Telecomunicaciones",
   "en_universo": false
  },
  {
@@ -1998,6 +2274,12 @@
  {
   "nombre": "ZenaTech",
   "ticker": "NASDAQ:ZENA",
+  "sector": "Tecnología",
+  "en_universo": false
+ },
+ {
+  "nombre": "Zeta Global",
+  "ticker": "NYSE:ZETA",
   "sector": "Tecnología",
   "en_universo": false
  }
