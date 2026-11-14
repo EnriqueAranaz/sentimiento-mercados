@@ -389,7 +389,7 @@ Estos ejemplos de secciones anteriores ya no se aplican tal como están escritos
 - Siguen sin ser causa: "pese a", "a la espera de", "pendientes de", "con la mira en", "en una jornada de". Ejemplo: "El petróleo cede pese a la escalada militar" → la cesión no se anota; desde el 30/10 sí se anota el hecho
   que sigue a "pese a" con su tono (ver *"A pesar de" / "pese a" + hecho* en las aclaraciones): Global · Petróleo → **1**.
 - **Temor o esperanza con nombre (v3.8).** Si tras "con/mientras" va un temor o una esperanza con nombre que cambia en el sentido del movimiento, es causa: "Wall Street anticipa caídas mientras crece el temor a un pinchazo en la burbuja de la IA", "El Brent toca los 116 dólares mientras se desvanece la esperanza de paz en Oriente Medio" → relevantes. La atención o la espera genérica no lo es: "mientras la OPI de Anthropic pone la atención en…", "dividida entre…", "mientras los operadores esperan…", "El crudo mira a los 110 dólares mientras…" → Precio sin causa.
-- **Empresa y Sector (v3.8).** La regla 11 e solo prohíbe anotar en la misma noticia una Empresa y el Sector al que pertenece esa empresa. Una Empresa y un Sector distinto pueden convivir. La empresa que en el titular solo es la causa y tendría tono 0 no se anota. Si el titular nombra un grupo ("los operadores de telecomunicaciones estadounidenses"), se anota ese Sector aunque se nombre también la empresa que lo causa.
+- **Empresa y Sector (v3.8).** La regla 11 e solo prohíbe anotar en la misma noticia una Empresa y el Sector al que pertenece esa empresa. Una Empresa y un Sector distinto pueden convivir. La empresa que en el titular solo es la causa y tendría tono 0 no se anota. Pero si lo que le pasa a la empresa causante tiene tono por sí mismo (la salida de su CEO "sacude" al sector, "dudas con…", "terremoto en…"), se anota con ese tono además del mercado o sector afectado (14/11/2026): *El S&P 500 y el Nasdaq caen tras salida del CEO de Nvidia, que sacude al sector de la IA* → EE. UU. **-1** · Sector Tecnología **-1** · Nvidia **-1** (Nvidia es Semiconductores, puede convivir con Tecnología). Si el titular nombra un grupo ("los operadores de telecomunicaciones estadounidenses"), se anota ese Sector aunque se nombre también la empresa que lo causa.
 - **El objeto de acompañamiento no se anota (v3.7)**, aunque la noticia sea relevante por otra causa: en "…y con el petróleo a 116 dólares" eso es precio narrado del petróleo, no una afectación de Petróleo. Esto deja superado el ejemplo 8.1 n.º 3 en cuanto a la afectación de acompañamiento.
 - Ejemplos con causa (relevantes): "Los bonos dan un respiro, pero el 5% de EE. UU. y la deuda francesa mantienen la alerta"; "La tecnología china se desploma: ¿una señal de alerta para las bolsas mundiales?" (opinión sobre Global · Mercados; la caída de la tecnología china en sí no se anota).
 - Análisis técnico incluye también divergencias y rotaciones entre sectores o mercados ("¿Rotación o antesala de una venta generalizada?", "La extrema divergencia entre tecnología y finanzas…"). Si el titular no tiene vocabulario técnico (soporte, resistencia, directriz, sesgo, sobrevendido, patrón, divergencia, rotación, señales alcistas/bajistas) ni causa, va a Precio sin causa.
@@ -480,6 +480,9 @@ regionales de EE. UU. y pequeñas de menos de ~4.000 M. Léelo antes de clasific
   prevalece sobre el verbo del titular, salvo un "pero" o un "aunque" (punto anterior). La regla 10 f ("mismo dato,
   distinto verbo") queda para los datos macro.
   - *Aena dispara un 12% su beneficio aupada por el récord de tráfico y el alza de las tasas* → Empresa · Aena → **1**
+  - **El beneficio manda sobre los ingresos** (14/11/2026). Si el titular da ingresos y beneficio en sentidos
+    opuestos sin "pero", no es resultado mixto: manda la cifra del beneficio.
+    - *Audax eleva los ingresos hasta 1.470 millones y recorta un 38% el beneficio* → Empresa · Audax Renovables → **-2**
   - **Pérdidas.** Pérdidas sin comparación con el periodo anterior → **-1**. Paso explícito de beneficio a pérdidas
     ("entra en pérdidas", "pasa a números rojos") → **-2**.
     - *Iberpapel pierde 6,4 millones hasta septiembre por los costes energéticos* → Empresa · Iberpapel → **-1**
@@ -497,6 +500,9 @@ regionales de EE. UU. y pequeñas de menos de ~4.000 M. Léelo antes de clasific
   - **Una rebaja o una mejora explícita de la recomendación manda sobre la cifra** (12/11/2026): rebaja → **-1**,
     mejora → **1**, aunque el potencial que se cite sea alto o negativo.
     - *Rheinmetall pierde la recomendación de compra: el potencial del 42% ya no basta* → Rheinmetall → **-1**
+  - **Revisión del objetivo en contra del potencial** (14/11/2026): si el precio objetivo baja pero el potencial sigue
+    siendo positivo (o al revés), tope **±1** en el sentido del potencial. Si van en el mismo sentido, la cifra completa.
+    - *NVIDIA Corporation: precio objetivo a 12 meses baja a $309.21; potencial subida del 78%* → Nvidia → **1**
   - *BofA corona a CaixaBank y Santander… con un potencial de hasta el 27%* → CaixaBank → **1** · Santander → **1**
   - *BofA ve un descuento injustificado del 40% en Puig y mantiene comprar* → Empresa · Puig → **2**
   - *Goldman recorta un 25% su objetivo del Kospi, pero todavía ve un potencial cercano al 60%* → Mercado · Corea → **1**

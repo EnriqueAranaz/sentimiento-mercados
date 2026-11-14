@@ -178,3 +178,58 @@ Criterios generales de alta y descarte:
 | AGI Inc | NYSE:AGBK | Microcotizada | 12/11/2026 |
 | Alibaba | NYSE:BABA | Negocio en Asia (China), aunque cotice en NYSE | 12/11/2026 |
 | Digi Spain | BME:DIGIS | Duplicado de Digi Communications (ya en la tabla) | 12/11/2026 |
+| Gulfport Energy | NYSE:GPOR | Pequeña (menos de ~4.000 M) | 14/11/2026 |
+| Ashland | NYSE:ASH | Pequeña (menos de ~4.000 M) | 14/11/2026 |
+| NGEx Minerals | TSX:NGEX | Pequeña (menos de ~4.000 M) | 14/11/2026 |
+| CG Oncology | NASDAQ:CGON | Pequeña (menos de ~4.000 M) | 14/11/2026 |
+| Denali Therapeutics | NASDAQ:DNLI | Pequeña (menos de ~4.000 M) | 14/11/2026 |
+| Mobico Group | LSE:MCG | Pequeña (menos de ~4.000 M) | 14/11/2026 |
+| Fnac Darty | EURONEXT:FNAC | Pequeña (menos de ~4.000 M) | 14/11/2026 |
+| Altri | ELI:ALTR | Pequeña (menos de ~4.000 M) | 14/11/2026 |
+| BW LPG | OSL:BWLPG | Pequeña (menos de ~4.000 M) | 14/11/2026 |
+| Okeanis Eco Tankers | NYSE:ECO | Pequeña (menos de ~4.000 M) | 14/11/2026 |
+| Uniti Group | NASDAQ:UNIT | Pequeña (menos de ~4.000 M) | 14/11/2026 |
+| Cogent Communications | NASDAQ:CCOI | Pequeña (menos de ~4.000 M) | 14/11/2026 |
+| Papa John's | NASDAQ:PZZA | Pequeña (menos de ~4.000 M) | 14/11/2026 |
+| Driven Brands | NASDAQ:DRVN | Pequeña (menos de ~4.000 M) | 14/11/2026 |
+| Agios Pharmaceuticals | NASDAQ:AGIO | Pequeña (menos de ~4.000 M) | 14/11/2026 |
+| Alphatec Holdings | NASDAQ:ATEC | Pequeña (menos de ~4.000 M) | 14/11/2026 |
+| Ardent Health | NYSE:ARDT | Pequeña (menos de ~4.000 M) | 14/11/2026 |
+| Beam Therapeutics | NASDAQ:BEAM | Pequeña (menos de ~4.000 M) | 14/11/2026 |
+| BioCryst Pharmaceuticals | NASDAQ:BCRX | Pequeña (menos de ~4.000 M) | 14/11/2026 |
+| Evommune | NYSE:EVMN | Pequeña (menos de ~4.000 M) | 14/11/2026 |
+| Alumis | NASDAQ:ALMS | Pequeña (menos de ~4.000 M) | 14/11/2026 |
+| Heartflow | NASDAQ:HTFL | Pequeña (menos de ~4.000 M) | 14/11/2026 |
+| Immatics | NASDAQ:IMTX | Pequeña (menos de ~4.000 M) | 14/11/2026 |
+| Novocure | NASDAQ:NVCR | Pequeña (menos de ~4.000 M) | 14/11/2026 |
+| AbCellera Biologics | NASDAQ:ABCL | Pequeña (menos de ~4.000 M) | 14/11/2026 |
+| Cullinan Therapeutics | NASDAQ:CGEM | Pequeña (menos de ~4.000 M) | 14/11/2026 |
+| GH Research | NASDAQ:GHRS | Pequeña (menos de ~4.000 M) | 14/11/2026 |
+| Crescent Biopharma | NASDAQ:CBIO | Pequeña (menos de ~4.000 M) | 14/11/2026 |
+| EyePoint | NASDAQ:EYPT | Pequeña (menos de ~4.000 M) | 14/11/2026 |
+| SS Innovations International | NASDAQ:SSII | Pequeña (menos de ~4.000 M) | 14/11/2026 |
+| GO Residential REIT | TSX:GO.U | Pequeña (menos de ~4.000 M) | 14/11/2026 |
+| AEVEX | NYSE:AVEX | Pequeña (menos de ~4.000 M) | 14/11/2026 |
+| Forgent Power Solutions | NYSE:FPS | Pequeña (menos de ~4.000 M) | 14/11/2026 |
+| FuelCell Energy | NASDAQ:FCEL | Pequeña (menos de ~4.000 M) | 14/11/2026 |
+| Stamper Oil & Gas | TSXV:STMP | Microcotizada | 14/11/2026 |
+| American Shared Hospital Services | AMEX:AMS | Microcotizada | 14/11/2026 |
+| Presurance Holdings | NASDAQ:PRHI | Microcotizada | 14/11/2026 |
+| Candel Therapeutics | NASDAQ:CADL | Microcotizada | 14/11/2026 |
+| Horizon Technology Finance | NASDAQ:HRZN | Microcotizada | 14/11/2026 |
+| Angel Studios | NYSE:ANGX | Microcotizada | 14/11/2026 |
+| Fractyl Health | NASDAQ:GUTS | Microcotizada | 14/11/2026 |
+| KinderCare Learning | NYSE:KLC | Microcotizada | 14/11/2026 |
+| LifeMD | NASDAQ:LFMD | Microcotizada | 14/11/2026 |
+| Intellinetics | AMEX:INLX | Microcotizada | 14/11/2026 |
+| Toppoint Holdings | AMEX:TOPP | Microcotizada | 14/11/2026 |
+| Blue Chip Capital Group | OTC:BCCG | Microcotizada | 14/11/2026 |
+| Kapsch TrafficCom | VIE:KTCG | Microcotizada | 14/11/2026 |
+| Eurobattery Minerals | NGM:BAT | Microcotizada | 14/11/2026 |
+| Avalo Therapeutics | NASDAQ:AVTX | Microcotizada | 14/11/2026 |
+| BioAge Labs | NASDAQ:BIOA | Microcotizada | 14/11/2026 |
+| Context Therapeutics | NASDAQ:CNTX | Microcotizada | 14/11/2026 |
+| Larimar Therapeutics | NASDAQ:LRMR | Microcotizada | 14/11/2026 |
+| PepGen | NASDAQ:PEPG | Microcotizada | 14/11/2026 |
+| Hannun | BME:HNN | Cotiza en mercado de crecimiento | 14/11/2026 |
+| CNB Financial | NASDAQ:CCNE | Banco regional pequeño de EE. UU. | 14/11/2026 |
