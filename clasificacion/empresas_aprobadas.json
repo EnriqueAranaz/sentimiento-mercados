@@ -421,6 +421,12 @@
   "en_universo": false
  },
  {
+  "nombre": "BHP",
+  "ticker": "ASX:BHP",
+  "sector": "Materiales, química y minería",
+  "en_universo": false
+ },
+ {
   "nombre": "Bio-Rad Laboratories",
   "ticker": "NYSE:BIO",
   "sector": "Salud y farmacia",
@@ -484,6 +490,18 @@
   "nombre": "Burberry",
   "ticker": "LSE:BRBY",
   "sector": "Lujo, moda y cosmética",
+  "en_universo": false
+ },
+ {
+  "nombre": "Bureau Veritas",
+  "ticker": "EURONEXT:BVI",
+  "sector": "Industria, defensa y aeroespacial",
+  "en_universo": false
+ },
+ {
+  "nombre": "Burlington Stores",
+  "ticker": "NYSE:BURL",
+  "sector": "Consumo y distribución",
   "en_universo": false
  },
  {
@@ -673,6 +691,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Consolidated Edison",
+  "ticker": "NYSE:ED",
+  "sector": "Eléctricas, renovables y redes",
+  "en_universo": false
+ },
+ {
   "nombre": "Constellation Brands",
   "ticker": "NYSE:STZ",
   "sector": "Consumo y distribución",
@@ -771,6 +795,12 @@
  {
   "nombre": "Delivery Hero",
   "ticker": "XETR:DHER",
+  "sector": "Tecnología",
+  "en_universo": false
+ },
+ {
+  "nombre": "Dell Technologies",
+  "ticker": "NYSE:DELL",
   "sector": "Tecnología",
   "en_universo": false
  },
@@ -1033,6 +1063,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Flex",
+  "ticker": "NASDAQ:FLEX",
+  "sector": "Tecnología",
+  "en_universo": false
+ },
+ {
   "nombre": "Flutter Entertainment",
   "ticker": "NYSE:FLUT",
   "sector": "Medios y entretenimiento",
@@ -1213,6 +1249,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Hewlett Packard Enterprise",
+  "ticker": "NYSE:HPE",
+  "sector": "Tecnología",
+  "en_universo": false
+ },
+ {
   "nombre": "Hexagon",
   "ticker": "OMXSTO:HEXA_B",
   "sector": "Tecnología",
@@ -1276,6 +1318,12 @@
   "nombre": "IDEXX Laboratories",
   "ticker": "NASDAQ:IDXX",
   "sector": "Salud y farmacia",
+  "en_universo": false
+ },
+ {
+  "nombre": "IG Group",
+  "ticker": "LSE:IGG",
+  "sector": "Seguros y servicios financieros",
   "en_universo": false
  },
  {
@@ -1699,6 +1747,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Montebalito",
+  "ticker": "BME:MTB",
+  "sector": "Inmobiliario",
+  "en_universo": false
+ },
+ {
   "nombre": "Mosaic",
   "ticker": "NYSE:MOS",
   "sector": "Materiales, química y minería",
@@ -1720,6 +1774,12 @@
   "nombre": "Munters",
   "ticker": "OMXSTO:MTRS",
   "sector": "Industria, defensa y aeroespacial",
+  "en_universo": false
+ },
+ {
+  "nombre": "Natera",
+  "ticker": "NASDAQ:NTRA",
+  "sector": "Salud y farmacia",
   "en_universo": false
  },
  {
@@ -1780,6 +1840,12 @@
   "nombre": "NN Group",
   "ticker": "EURONEXT:NN",
   "sector": "Seguros y servicios financieros",
+  "en_universo": false
+ },
+ {
+  "nombre": "NRG Energy",
+  "ticker": "NYSE:NRG",
+  "sector": "Eléctricas, renovables y redes",
   "en_universo": false
  },
  {
@@ -1852,6 +1918,12 @@
   "nombre": "Philips",
   "ticker": "EURONEXT:PHIA",
   "sector": "Salud y farmacia",
+  "en_universo": false
+ },
+ {
+  "nombre": "Phillips 66",
+  "ticker": "NYSE:PSX",
+  "sector": "Petróleo y gas",
   "en_universo": false
  },
  {
@@ -2050,6 +2122,12 @@
   "nombre": "SEGRO",
   "ticker": "LSE:SGRO",
   "sector": "Inmobiliario",
+  "en_universo": false
+ },
+ {
+  "nombre": "Semtech",
+  "ticker": "NASDAQ:SMTC",
+  "sector": "Semiconductores",
   "en_universo": false
  },
  {
@@ -2431,6 +2509,18 @@
   "nombre": "Vodafone",
   "ticker": "LSE:VOD",
   "sector": "Telecomunicaciones",
+  "en_universo": false
+ },
+ {
+  "nombre": "W.W. Grainger",
+  "ticker": "NYSE:GWW",
+  "sector": "Industria, defensa y aeroespacial",
+  "en_universo": false
+ },
+ {
+  "nombre": "WEC Energy Group",
+  "ticker": "NYSE:WEC",
+  "sector": "Eléctricas, renovables y redes",
   "en_universo": false
  },
  {

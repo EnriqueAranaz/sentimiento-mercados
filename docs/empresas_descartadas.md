@@ -233,3 +233,29 @@ Criterios generales de alta y descarte:
 | PepGen | NASDAQ:PEPG | Microcotizada | 14/11/2026 |
 | Hannun | BME:HNN | Cotiza en mercado de crecimiento | 14/11/2026 |
 | CNB Financial | NASDAQ:CCNE | Banco regional pequeño de EE. UU. | 14/11/2026 |
+| Amylyx Pharmaceuticals | NASDAQ:AMLX | Pequeña (menos de ~4.000 M) | 16/11/2026 |
+| Dave | NASDAQ:DAVE | Pequeña (menos de ~4.000 M) | 16/11/2026 |
+| Empire State Realty Trust | NYSE:ESRT | Pequeña (menos de ~4.000 M) | 16/11/2026 |
+| Evotec | XETR:EVT | Pequeña (menos de ~4.000 M) | 16/11/2026 |
+| ImmunityBio | NASDAQ:IBRX | Pequeña (menos de ~4.000 M) | 16/11/2026 |
+| Iovance Biotherapeutics | NASDAQ:IOVA | Pequeña (menos de ~4.000 M) | 16/11/2026 |
+| IQM Quantum Computers | OMXHEX:IQMX | Pequeña (menos de ~4.000 M) | 16/11/2026 |
+| Kennametal | NYSE:KMT | Pequeña (menos de ~4.000 M) | 16/11/2026 |
+| Mueller Water Products | NYSE:MWA | Pequeña (menos de ~4.000 M) | 16/11/2026 |
+| Pursuit Attractions and Hospitality | NYSE:PRSU | Pequeña (menos de ~4.000 M) | 16/11/2026 |
+| Shoals Technologies | NASDAQ:SHLS | Pequeña (menos de ~4.000 M) | 16/11/2026 |
+| Sinch | OMXSTO:SINCH | Pequeña (menos de ~4.000 M) | 16/11/2026 |
+| Target Hospitality | NASDAQ:TH | Pequeña (menos de ~4.000 M) | 16/11/2026 |
+| Trump Media & Technology Group | NASDAQ:DJT | Pequeña (menos de ~4.000 M) | 16/11/2026 |
+| Wizz Air | LSE:WIZZ | Pequeña (menos de ~4.000 M) | 16/11/2026 |
+| Compass Therapeutics | NASDAQ:CMPX | Microcotizada | 16/11/2026 |
+| Edgemode | OTC:EDGM | Microcotizada | 16/11/2026 |
+| Fireweed Metals | TSXV:FWZ | Microcotizada | 16/11/2026 |
+| FreeCast | NASDAQ:CAST | Microcotizada | 16/11/2026 |
+| InflaRx | NASDAQ:IFRX | Microcotizada | 16/11/2026 |
+| Keros Therapeutics | NASDAQ:KROS | Microcotizada | 16/11/2026 |
+| Morguard Real Estate Investment Trust | TSX:MRT.UN | Microcotizada | 16/11/2026 |
+| Millicom | NASDAQ:TIGO | Negocio en Latam, aunque cotice en Nasdaq | 16/11/2026 |
+| Pony AI | NASDAQ:PONY | Negocio en Asia (China), aunque cotice en EE. UU. | 16/11/2026 |
+| Tuya | NYSE:TUYA | Negocio en Asia (China), aunque cotice en EE. UU. | 16/11/2026 |
+| Tompkins Financial | AMEX:TMP | Banco regional pequeño de EE. UU. | 16/11/2026 |

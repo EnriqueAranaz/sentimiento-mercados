@@ -276,6 +276,11 @@
       <div class="sm-mapa" id="sm-mapa"></div>
     </section>
     <section class="sm-sec">
+      <h2>Empresas por bolsa</h2>
+      <p class="sm-note">Lo que se dice de las empresas del universo de cada bolsa, todas juntas (no del índice como objeto). Pulsa una para ver el ranking de sus empresas.</p>
+      <div class="sm-mapa peq" id="sm-mapa-bolsas"></div>
+    </section>
+    <section class="sm-sec">
       <h2>Mercados y global</h2>
       <p class="sm-note">Índices o regiones, y lo que afecta a todos los mercados (Global · Mercados y Economía).</p>
       <div class="sm-mapa peq" id="sm-mapa-mg"></div>
@@ -321,7 +326,7 @@
         <p class="sm-note">Pulsa una fila para verla en detalle. «Pocos datos» = menos de 10 afectaciones.</p>
         <div class="sm-scroll">
           <table class="sm-t" id="sm-rank">
-            <thead><tr><th>Nombre</th><th class="num">Noticias</th><th class="num">Afectaciones</th><th class="num">Tono medio</th><th class="num">% negativas</th></tr></thead>
+            <thead><tr><th>Nombre</th><th class="num">Noticias</th><th class="num">Tono medio</th><th class="num">% positivas</th><th class="num">% negativas</th></tr></thead>
             <tbody></tbody>
           </table>
         </div>
@@ -331,7 +336,7 @@
       <h2>Por origen</h2>
       <p class="sm-note">Del objeto y periodo seleccionados. Narrativa = Opinión + Rumor + Mercado; hechos = Hecho + Analista.</p>
       <table class="sm-t" id="dt-origen">
-        <thead><tr><th>Origen</th><th class="num">Noticias</th><th class="num">Afectaciones</th><th class="num">Tono medio</th><th class="num">% negativas</th></tr></thead>
+        <thead><tr><th>Origen</th><th class="num">Noticias</th><th class="num">Tono medio</th><th class="num">% positivas</th><th class="num">% negativas</th></tr></thead>
         <tbody></tbody>
       </table>
     </section>
@@ -545,7 +550,7 @@
     };
     const desde = `dia_mercado=gte.${FECHA_INICIO}`;
     const [afect, arts, noRel, cob, vIndice, indice] = await Promise.all([
-      leer(`v_afectaciones?select=id,articulo_id,dia_mercado,fuente,titulo,ambito,objeto,sector,en_universo,valor,origen&${desde}&order=id.asc`),
+      leer(`v_afectaciones?select=id,articulo_id,dia_mercado,fuente,titulo,ambito,objeto,sector,ticker,en_universo,valor,origen&${desde}&order=id.asc`),
       leer(`articulos?select=id,url&publicado_en=gte.${FECHA_INICIO}T00:00:00Z&order=id.asc`),
       leer(`v_no_relevantes?select=articulo_id,dia_mercado,publicado_en,fuente,titulo,motivo_no_relevante&${desde}&order=publicado_en.desc`),
       leer(`v_cobertura?select=dia_mercado,fuente,n_articulos,n_clasificados,n_relevantes,n_no_relevantes&${desde}&order=dia.asc`),
@@ -579,10 +584,19 @@
     const dias = new Set(diasPeriodo());
     return estado.datos.afect.filter((a) => dias.has(a.dia_mercado) && (incluirFuera || enUniverso(a)));
   }
-  // Clave de objeto: todo · s:sector · e:empresa · m:mercado · g:global
+  // Bolsa de una empresa por el prefijo del ticker. En el universo, BME = Ibex 35 y XETR = DAX 40.
+  const BOLSAS = ['Ibex 35', 'DAX', 'Resto de Europa', 'EE. UU.'];
+  const EUROPA = new Set(['EURONEXT', 'LSE', 'SIX', 'MIL', 'OMXSTO', 'OMXHEX', 'OMXCOP', 'OSL', 'VIE', 'ELI', 'BVB', 'ATHEX', 'NGM']);
+  function bolsa(a) {
+    const p = (a.ticker || '').split(':')[0];
+    return p === 'BME' ? 'Ibex 35' : p === 'XETR' ? 'DAX' : (p === 'NYSE' || p === 'NASDAQ' || p === 'AMEX') ? 'EE. UU.'
+      : EUROPA.has(p) ? 'Resto de Europa' : null;
+  }
+  // Clave de objeto: todo · s:sector · e:empresa · m:mercado · g:global · b:bolsa (empresas de esa bolsa)
   function coincide(a, clave) {
     if (clave === 'todo') return !esMateria(a);
     const t = clave.slice(0, 2), o = clave.slice(2);
+    if (t === 'b:') return a.ambito === 'Empresa' && bolsa(a) === o;
     if (t === 's:') return a.sector === o;
     if (t === 'e:') return a.ambito === 'Empresa' && a.objeto === o;
     if (t === 'm:') return a.ambito === 'Mercado' && a.objeto === o;
@@ -597,10 +611,12 @@
       pct_pos: afs.length ? Math.round((100 * vs.filter((v) => v > 0).length) / afs.length) : null,
       narr: lin(NARRATIVA), hech: lin(HECHOS), pocos: afs.length < MIN_COLOR };
   }
+  const nombreBolsa = (o) => ({ 'Ibex 35': 'Empresas del Ibex 35', DAX: 'Empresas del DAX', 'EE. UU.': 'Empresas de EE. UU.',
+    'Resto de Europa': 'Empresas del resto de Europa' })[o] || 'Empresas · ' + o;
   function nombreClave(clave) {
     if (clave === 'todo') return 'Todo';
     const o = clave.slice(2);
-    return { 's:': o, 'e:': o, 'm:': 'Mercado · ' + o, 'g:': 'Global · ' + o }[clave.slice(0, 2)] || o;
+    return { 's:': o, 'e:': o, 'm:': 'Mercado · ' + o, 'g:': 'Global · ' + o, 'b:': nombreBolsa(o) }[clave.slice(0, 2)] || o;
   }
   function tinte(m) {
     const panel = token('--color-panel');
@@ -918,6 +934,7 @@
     const afs = delPeriodo(false), dias = diasPeriodo();
     const t = (clave, nombre) => tarjeta(clave, nombre, afs.filter((a) => coincide(a, clave)), dias);
     $('sm-mapa').replaceChildren(...ordenar(SECTORES.map((s) => t('s:' + s, s))));
+    $('sm-mapa-bolsas').replaceChildren(...BOLSAS.map((o) => t('b:' + o, nombreBolsa(o))));
     const objetos = (ambito, filtro) => [...new Set(afs.filter((a) => a.ambito === ambito && filtro(a)).map((a) => a.objeto))];
     $('sm-mapa-mg').replaceChildren(...ordenar([
       ...objetos('Mercado', () => true).map((o) => t('m:' + o, o)),
@@ -959,24 +976,26 @@
     selEmpresa.value = sel.startsWith('e:') ? sel.slice(2) : '';
     // Ranking
     let claves, titulo;
-    if (sector) { claves = [...new Set(base.filter((a) => a.ambito === 'Empresa' && a.sector === sector).map((a) => 'e:' + a.objeto))]; titulo = 'Empresas de ' + sector; }
+    if (sel.startsWith('b:')) { claves = [...new Set(base.filter((a) => coincide(a, sel)).map((a) => 'e:' + a.objeto))]; titulo = nombreBolsa(sel.slice(2)); }
+    else if (sector) { claves = [...new Set(base.filter((a) => a.ambito === 'Empresa' && a.sector === sector).map((a) => 'e:' + a.objeto))]; titulo = 'Empresas de ' + sector; }
     else { claves = SECTORES.map((x) => 's:' + x); titulo = 'Por sector'; }
     const filas = claves.map((k) => ({ k, s: stats(base.filter((a) => coincide(a, k))) })).filter((f) => f.s.afect);
-    filas.sort((a, b) => a.s.pocos - b.s.pocos || b.s.noticias - a.s.noticias || a.k.localeCompare(b.k, 'es'));
+    filas.sort((a, b) => a.s.pocos - b.s.pocos || b.s.media - a.s.media || b.s.noticias - a.s.noticias || a.k.localeCompare(b.k, 'es'));
     $('sm-rank-titulo').textContent = titulo;
     rank.tBodies[0].replaceChildren(...filas.map(({ k, s: r }) => {
       const tr = el('tr', null, 'clic' + (r.pocos ? ' gris' : '')); tr.dataset.key = k;
       const n = el('td', nombreClave(k)); if (r.pocos) n.append(el('span', 'pocos datos', 'etq'));
-      tr.append(n, el('td', fmtInt.format(r.noticias), 'num'), el('td', fmtInt.format(r.afect), 'num'),
-        el('td', conSigno(r.media), 'num ' + (r.pocos ? '' : signo(r.media))), el('td', r.pct_neg + ' %', 'num'));
+      tr.append(n, el('td', fmtInt.format(r.noticias), 'num'),
+        el('td', conSigno(r.media), 'num ' + (r.pocos ? '' : signo(r.media))), el('td', r.pct_pos + ' %', 'num'), el('td', r.pct_neg + ' %', 'num'));
       if (k === sel) tr.style.fontWeight = 'var(--fw-medium)';
       return tr;
     }));
     // Por origen
     const fila = (nom, xs, cls) => {
       const r = stats(xs), tr = el('tr', null, cls || '');
-      tr.append(el('td', nom), el('td', fmtInt.format(r.noticias), 'num'), el('td', fmtInt.format(r.afect), 'num'),
-        el('td', r.media == null ? '—' : conSigno(r.media), 'num ' + signo(r.media)), el('td', r.pct_neg == null ? '—' : r.pct_neg + ' %', 'num'));
+      tr.append(el('td', nom), el('td', fmtInt.format(r.noticias), 'num'),
+        el('td', r.media == null ? '—' : conSigno(r.media), 'num ' + signo(r.media)),
+        el('td', r.pct_pos == null ? '—' : r.pct_pos + ' %', 'num'), el('td', r.pct_neg == null ? '—' : r.pct_neg + ' %', 'num'));
       return tr;
     };
     $('dt-origen').tBodies[0].replaceChildren(...ORIGENES.map((o) => fila(corto(o), afs.filter((a) => a.origen === o))),

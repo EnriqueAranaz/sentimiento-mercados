@@ -455,6 +455,8 @@ regionales de EE. UU. y pequeñas de menos de ~4.000 M. Léelo antes de clasific
   - **b) Lo que va detrás no tiene dirección** ("mirará a", "estará pendiente de", "a la espera de"): es atención, no
     una fuerza opuesta. El tono sale solo de la primera parte (si es una cifra de resultados, manda la cifra).
     - *Rovi prepara un trimestre sólido, pero la bolsa mirará a su guía de 2027* → Empresa · Rovi → **1**
+    - "Mantiene" (ventas, previsiones…) tampoco tiene dirección: *Reig Jofre gana un 46% menos hasta septiembre pero
+      mantiene sus ventas en 241 millones* → Empresa · Reig Jofre → **-2** (manda la cifra del beneficio)
   - **c) El tope de ±1 se mantiene** aunque lo que va detrás sea muy grande por sí solo.
     - *Meta bate previsiones con el impulso de Muse, pero deberá pagar 25.000 millones por Cambridge Analytica* →
       Empresa · Meta → **-1**
@@ -493,6 +495,11 @@ regionales de EE. UU. y pequeñas de menos de ~4.000 M. Léelo antes de clasific
   que en Resultados: potencial ≥ +20 % → **2**; positivo menor → **1**; ≤ −20 % → **-2**; negativo menor → **-1**. Sin
   cifra: **±1** según la recomendación (comprar / sobreponderar o vender / infraponderar), **0** si es neutral o mantener.
   Si el titular junta además otro hecho en el mismo sentido, la cifra manda igual. Precisiones:
+  - **Sin cifra pero con señal doble o intensificador** (14/11/2026): **±2** si el titular junta una revisión del
+    objetivo y la recomendación en el mismo sentido ("eleva el precio objetivo y reitera comprar"), o si usa un
+    intensificador claro ("espaldarazo", "apuesta fuerte", "dispara su objetivo", "recorta con fuerza"). Con una sola
+    señal y sin intensificador, sigue en ±1.
+    - *Espaldarazo de Bankinter a Santander y BBVA: eleva el precio objetivo y reitera 'comprar'* → Santander → **2** · BBVA → **2**
   - "Hasta X %" sin atribución clara a cada objeto = sin cifra (±1 por la recomendación).
   - Un descuento o una infravaloración que el analista califica de injustificado cuenta como potencial.
   - Las métricas automáticas de valoración (GF Value de GuruFocus y similares) no son un potencial de analista.
@@ -512,6 +519,11 @@ regionales de EE. UU. y pequeñas de menos de ~4.000 M. Léelo antes de clasific
 - **Advertencias o sanciones con muertes.** Si una advertencia de un regulador, una demanda o un problema de producto
   menciona fallecimientos, es un hecho grave: **-2**, aunque no sea una multa ni una retirada.
   - *La FDA emite una advertencia sobre las camas Medline tras dos fallecimientos y 16 lesiones graves* → Empresa · Medline → **-2**
+- **Rechazo regulatorio de un fármaco propio** (16/11/2026). Que la FDA, la EMA u otro regulador rechace aprobar un
+  fármaco o producto sanitario de la empresa es un hecho grave: **-2**, aunque el verbo no tenga intensificador.
+  - *La FDA de EEUU rechaza aprobar el medicamento contra el cáncer de pulmón de Summit Therapeutics* → Empresa · Summit Therapeutics → **-2**
+- **Precios al consumo de alimentos** (fruta, verdura, la cesta de la compra) no son Materias primas: si no hay un dato
+  de inflación de un país, la noticia es **Otros**.
 - **Compras y ventas de acciones de directivos o de inversores relevantes.** Que un directivo de la compañía, o un
   inversor ajeno relevante (un fondo activista, una empresa del sector, un inversor de referencia), compre acciones o
   tome una participación es una señal muy positiva: **+2**. Que las venda: **-2**. No entran las recompras de la propia
