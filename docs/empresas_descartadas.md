@@ -259,3 +259,21 @@ Criterios generales de alta y descarte:
 | Pony AI | NASDAQ:PONY | Negocio en Asia (China), aunque cotice en EE. UU. | 16/11/2026 |
 | Tuya | NYSE:TUYA | Negocio en Asia (China), aunque cotice en EE. UU. | 16/11/2026 |
 | Tompkins Financial | AMEX:TMP | Banco regional pequeño de EE. UU. | 16/11/2026 |
+| NCR Atleos | NYSE:NATL | Pequeña (menos de ~4.000 M) | 17/11/2026 |
+| Centuri Holdings | NYSE:CTRI | Pequeña (menos de ~4.000 M) | 17/11/2026 |
+| Guardian Pharmacy Services | NYSE:GRDN | Pequeña (menos de ~4.000 M) | 17/11/2026 |
+| Infleqtion | NYSE:INFQ | Pequeña (menos de ~4.000 M) | 17/11/2026 |
+| Princes Group | LSE:PRN | Pequeña (menos de ~4.000 M) | 17/11/2026 |
+| NewPrinces | MIL:NWL | Pequeña (menos de ~4.000 M) | 17/11/2026 |
+| Fubo | NYSE:FUBO | Pequeña (menos de ~4.000 M) | 17/11/2026 |
+| LuxExperience | NYSE:LUXE | Pequeña (menos de ~4.000 M) | 17/11/2026 |
+| Red Cat Holdings | NASDAQ:RCAT | Pequeña (menos de ~4.000 M) | 17/11/2026 |
+| Paratus Energy Services | OSL:PLSV | Pequeña (menos de ~4.000 M) | 17/11/2026 |
+| Zinzino | OMXSTO:ZZ_B | Pequeña (menos de ~4.000 M) | 17/11/2026 |
+| accesso Technology Group | LSE:ACSO | Microcotizada | 17/11/2026 |
+| ACG Metals | LSE:ACG | Microcotizada | 17/11/2026 |
+| MindMaze Therapeutics | SIX:MMTX | Microcotizada | 17/11/2026 |
+| Aytu BioPharma | NASDAQ:AYTU | Microcotizada | 17/11/2026 |
+| Kyntra Bio | NASDAQ:KYNB | Microcotizada | 17/11/2026 |
+| INVE Technologies | NASDAQ:INVE | Microcotizada | 17/11/2026 |
+| Ameris Bancorp | NYSE:ABCB | Banco regional de EE. UU. | 17/11/2026 |

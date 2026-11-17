@@ -387,6 +387,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Barrick Mining",
+  "ticker": "NYSE:B",
+  "sector": "Materiales, química y minería",
+  "en_universo": false
+ },
+ {
   "nombre": "Barry Callebaut",
   "ticker": "SIX:BARN",
   "sector": "Consumo y distribución",
@@ -895,6 +901,12 @@
   "en_universo": false
  },
  {
+  "nombre": "EMCOR Group",
+  "ticker": "NYSE:EME",
+  "sector": "Construcción e infraestructuras",
+  "en_universo": false
+ },
+ {
   "nombre": "Ence",
   "ticker": "BME:ENC",
   "sector": "Materiales, química y minería",
@@ -1072,6 +1084,12 @@
   "nombre": "Flutter Entertainment",
   "ticker": "NYSE:FLUT",
   "sector": "Medios y entretenimiento",
+  "en_universo": false
+ },
+ {
+  "nombre": "Ford",
+  "ticker": "NYSE:F",
+  "sector": "Automóvil",
   "en_universo": false
  },
  {
@@ -1330,6 +1348,12 @@
   "nombre": "IMI",
   "ticker": "LSE:IMI",
   "sector": "Industria, defensa y aeroespacial",
+  "en_universo": false
+ },
+ {
+  "nombre": "Imperial Brands",
+  "ticker": "LSE:IMB",
+  "sector": "Consumo y distribución",
   "en_universo": false
  },
  {
@@ -1867,6 +1891,12 @@
   "en_universo": false
  },
  {
+  "nombre": "OHLA",
+  "ticker": "BME:OHLA",
+  "sector": "Construcción e infraestructuras",
+  "en_universo": false
+ },
+ {
   "nombre": "On Holding",
   "ticker": "NYSE:ONON",
   "sector": "Lujo, moda y cosmética",
@@ -1903,6 +1933,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Penske Automotive Group",
+  "ticker": "NYSE:PAG",
+  "sector": "Automóvil",
+  "en_universo": false
+ },
+ {
   "nombre": "Peoples Bancorp",
   "ticker": "NASDAQ:PEBO",
   "sector": "Banca",
@@ -1936,6 +1972,12 @@
   "nombre": "PNC Financial Services",
   "ticker": "NYSE:PNC",
   "sector": "Banca",
+  "en_universo": false
+ },
+ {
+  "nombre": "Pool Corporation",
+  "ticker": "NASDAQ:POOL",
+  "sector": "Consumo y distribución",
   "en_universo": false
  },
  {
@@ -2485,6 +2527,12 @@
   "nombre": "Vestas",
   "ticker": "OMXCOP:VWS",
   "sector": "Eléctricas, renovables y redes",
+  "en_universo": false
+ },
+ {
+  "nombre": "VF Corporation",
+  "ticker": "NYSE:VFC",
+  "sector": "Lujo, moda y cosmética",
   "en_universo": false
  },
  {
