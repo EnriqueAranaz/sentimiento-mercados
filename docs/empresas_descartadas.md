@@ -277,3 +277,11 @@ Criterios generales de alta y descarte:
 | Kyntra Bio | NASDAQ:KYNB | Microcotizada | 17/11/2026 |
 | INVE Technologies | NASDAQ:INVE | Microcotizada | 17/11/2026 |
 | Ameris Bancorp | NYSE:ABCB | Banco regional de EE. UU. | 17/11/2026 |
+| Energizer | NYSE:ENR | Pequeña (menos de ~4.000 M) | 18/11/2026 |
+| BrightSpire Capital | NYSE:BRSP | Pequeña (menos de ~4.000 M) | 18/11/2026 |
+| Bally's | NYSE:BALY | Pequeña (menos de ~4.000 M) | 18/11/2026 |
+| Capricor Therapeutics | NASDAQ:CAPR | Microcotizada | 18/11/2026 |
+| MapLight Therapeutics | NASDAQ:MPLT | Microcotizada | 18/11/2026 |
+| Innate Pharma | EURONEXT:IPH | Microcotizada | 18/11/2026 |
+| JD.com | NASDAQ:JD | Negocio en Asia (China), aunque cotice en Nasdaq | 18/11/2026 |
+| Bitdeer Technologies | NASDAQ:BTDR | Minería de bitcoin (cripto) | 18/11/2026 |

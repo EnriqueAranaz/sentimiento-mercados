@@ -475,6 +475,12 @@
   "en_universo": false
  },
  {
+  "nombre": "BNY Mellon",
+  "ticker": "NYSE:BK",
+  "sector": "Seguros y servicios financieros",
+  "en_universo": false
+ },
+ {
   "nombre": "Boston Omaha",
   "ticker": "NYSE:BOC",
   "sector": "Medios y entretenimiento",
@@ -584,6 +590,12 @@
   "alias": [
    "Cerebras Systems"
   ]
+ },
+ {
+  "nombre": "CF Industries",
+  "ticker": "NYSE:CF",
+  "sector": "Materiales, química y minería",
+  "en_universo": false
  },
  {
   "nombre": "CGI",
@@ -1000,6 +1012,12 @@
   "nombre": "Expedia",
   "ticker": "NASDAQ:EXPE",
   "sector": "Transporte y turismo",
+  "en_universo": false
+ },
+ {
+  "nombre": "Experian",
+  "ticker": "LSE:EXPN",
+  "sector": "Seguros y servicios financieros",
   "en_universo": false
  },
  {
@@ -1423,6 +1441,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Intuit",
+  "ticker": "NASDAQ:INTU",
+  "sector": "Tecnología",
+  "en_universo": false
+ },
+ {
   "nombre": "IONOS Group",
   "ticker": "XETR:IOS",
   "sector": "Tecnología",
@@ -1558,6 +1582,12 @@
   "nombre": "Libertas 7",
   "ticker": "BME:LIB",
   "sector": "Inmobiliario",
+  "en_universo": false
+ },
+ {
+  "nombre": "Liberty Global",
+  "ticker": "NASDAQ:LBTYA",
+  "sector": "Telecomunicaciones",
   "en_universo": false
  },
  {
@@ -2227,6 +2257,12 @@
   "en_universo": false
  },
  {
+  "nombre": "SSE",
+  "ticker": "LSE:SSE",
+  "sector": "Eléctricas, renovables y redes",
+  "en_universo": false
+ },
+ {
   "nombre": "Standard Chartered",
   "ticker": "LSE:STAN",
   "sector": "Banca",
@@ -2387,6 +2423,12 @@
   "nombre": "Tikehau Capital",
   "ticker": "EURONEXT:TKO",
   "sector": "Seguros y servicios financieros",
+  "en_universo": false
+ },
+ {
+  "nombre": "TJX",
+  "ticker": "NYSE:TJX",
+  "sector": "Lujo, moda y cosmética",
   "en_universo": false
  },
  {

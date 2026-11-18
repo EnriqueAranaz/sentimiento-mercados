@@ -482,6 +482,9 @@ regionales de EE. UU. y pequeñas de menos de ~4.000 M. Léelo antes de clasific
   prevalece sobre el verbo del titular, salvo un "pero" o un "aunque" (punto anterior). La regla 10 f ("mismo dato,
   distinto verbo") queda para los datos macro.
   - *Aena dispara un 12% su beneficio aupada por el récord de tráfico y el alza de las tasas* → Empresa · Aena → **1**
+  - **El umbral vale también para los ingresos** (18/11/2026): ingresos o ventas +20 % o más → **2**; −20 % o peor →
+    **-2** (por debajo, ±1). Vale para los ingresos de la empresa o de un negocio o producto suyo nombrado.
+    - *Datos clave: Los ingresos de Azure suben un 48%, se ofrecen 60,000 bajas voluntarias y caen las acciones* → Empresa · Microsoft → **2**
   - **El beneficio manda sobre los ingresos** (14/11/2026). Si el titular da ingresos y beneficio en sentidos
     opuestos sin "pero", no es resultado mixto: manda la cifra del beneficio.
     - *Audax eleva los ingresos hasta 1.470 millones y recorta un 38% el beneficio* → Empresa · Audax Renovables → **-2**
@@ -531,8 +534,14 @@ regionales de EE. UU. y pequeñas de menos de ~4.000 M. Léelo antes de clasific
   (BlackRock con el 1 %): estas no se anotan (contraparte pasiva). Tampoco entran los fondos que arbitran una fusión
   u opa ya anunciada (no es una apuesta por la empresa): **0** (12/11/2026).
   - *Capula, cuarto mayor 'hedge fund' de Europa, se lanza a arbitrar la fusión de Cirsa* → Empresa · Cirsa → **0**
+- **Posiciones cortas** (18/11/2026). Que los fondos tomen posiciones cortas en una empresa es **-1**; si el titular lo
+  presenta como un ataque o con intensificador ("pasan al ataque", "atacan", "acorralan", "se ceban"), **-2**.
+  - *Los hedge asoman en Merlin tras un rebote del 4,4% en cinco sesiones* → Empresa · Merlin Properties → **-1**
+  - *Los hedge pasan al ataque en Colonial con la vista en Francia* → Empresa · Colonial → **-2**
   - *Botín compra acciones de Santander por 3,1 millones de euros* → Empresa · Santander → **2**
   - *Datos clave: Air Liquide SA informa una participación de Elliott…* → Empresa · Air Liquide → **2**
+  - Vale aunque el titular trate de lo que ganó el inversor con la venta (18/11/2026): *María del Pino gana 445
+    millones a través de su holding gracias a la venta de acciones de Ferrovial* → Empresa · Ferrovial → **-2**
 - **Protagonistas y contrapartes pasivas.** Los protagonistas de una operación (comprador, vendedor, la empresa que
   anuncia) se anotan aunque su tono sea 0. Las contrapartes pasivas (inquilino, cliente o socio de un contrato,
   accionista que se notifica, empresa que solo es la causa) no se anotan.
