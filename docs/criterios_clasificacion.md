@@ -485,6 +485,11 @@ regionales de EE. UU. y pequeñas de menos de ~4.000 M. Léelo antes de clasific
   - **El umbral vale también para los ingresos** (18/11/2026): ingresos o ventas +20 % o más → **2**; −20 % o peor →
     **-2** (por debajo, ±1). Vale para los ingresos de la empresa o de un negocio o producto suyo nombrado.
     - *Datos clave: Los ingresos de Azure suben un 48%, se ofrecen 60,000 bajas voluntarias y caen las acciones* → Empresa · Microsoft → **2**
+  - **Cifra de resultados ≥ ±20 % frente a una señal contraria menor** (19/11/2026). Si el titular junta, sin "pero",
+    una cifra de beneficio o ingresos que supera el umbral y una señal en contra más débil (la empresa modera sus
+    expectativas, un analista recorta el objetivo), manda la cifra con tope **±1**. No es 0 por fuerzas opuestas.
+    - *Datos clave: Los ingresos de Cloudflare suben un 39%; … la empresa modera las expectativas de superar previsiones* → Empresa · Cloudflare → **1**
+    - *Datos clave: La ganancia neta de StoneX sube un 72%; Jefferies recorta el precio objetivo a $53* → Empresa · StoneX → **1**
   - **El beneficio manda sobre los ingresos** (14/11/2026). Si el titular da ingresos y beneficio en sentidos
     opuestos sin "pero", no es resultado mixto: manda la cifra del beneficio.
     - *Audax eleva los ingresos hasta 1.470 millones y recorta un 38% el beneficio* → Empresa · Audax Renovables → **-2**
@@ -503,6 +508,9 @@ regionales de EE. UU. y pequeñas de menos de ~4.000 M. Léelo antes de clasific
     intensificador claro ("espaldarazo", "apuesta fuerte", "dispara su objetivo", "recorta con fuerza"). Con una sola
     señal y sin intensificador, sigue en ±1.
     - *Espaldarazo de Bankinter a Santander y BBVA: eleva el precio objetivo y reitera 'comprar'* → Santander → **2** · BBVA → **2**
+  - **Revisión casi nula** (19/11/2026): si el precio objetivo se revisa menos de un 1 % (en cualquier sentido),
+    cuenta como "mantiene": **0**, salvo que la recomendación cambie.
+    - *B of A Securities mantiene a Progressive en «compra» y recorta su precio objetivo de $262 a $261* → Empresa · Progressive → **0**
   - "Hasta X %" sin atribución clara a cada objeto = sin cifra (±1 por la recomendación).
   - Un descuento o una infravaloración que el analista califica de injustificado cuenta como potencial.
   - Las métricas automáticas de valoración (GF Value de GuruFocus y similares) no son un potencial de analista.
