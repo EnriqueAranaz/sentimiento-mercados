@@ -285,3 +285,22 @@ Criterios generales de alta y descarte:
 | Innate Pharma | EURONEXT:IPH | Microcotizada | 18/11/2026 |
 | JD.com | NASDAQ:JD | Negocio en Asia (China), aunque cotice en Nasdaq | 18/11/2026 |
 | Bitdeer Technologies | NASDAQ:BTDR | Minería de bitcoin (cripto) | 18/11/2026 |
+| MFE-MediaForEurope | MIL:MFEB | pequeña de menos de ~4.000 M | 19/11/2026 |
+| Harley-Davidson | NYSE:HOG | pequeña de menos de ~4.000 M | 19/11/2026 |
+| Inchcape | LSE:INCH | pequeña de menos de ~4.000 M | 19/11/2026 |
+| Johnson Matthey | LSE:JMAT | pequeña de menos de ~4.000 M | 19/11/2026 |
+| Rotork | LSE:ROR | pequeña de menos de ~4.000 M | 19/11/2026 |
+| BellRing Brands | NYSE:BRBR | pequeña de menos de ~4.000 M | 19/11/2026 |
+| Viridian Therapeutics | NASDAQ:VRDN | pequeña de menos de ~4.000 M | 19/11/2026 |
+| Phreesia | NYSE:PHR | pequeña de menos de ~4.000 M | 19/11/2026 |
+| Enovix | NASDAQ:ENVX | pequeña de menos de ~4.000 M | 19/11/2026 |
+| Dar Global | LSE:DAR | pequeña de menos de ~4.000 M | 19/11/2026 |
+| Boiron | EURONEXT:BOI | pequeña de menos de ~4.000 M | 19/11/2026 |
+| EnQuest | LSE:ENQ | pequeña de menos de ~4.000 M | 19/11/2026 |
+| Codere Online | NASDAQ:CDRO | microcotizada | 19/11/2026 |
+| inTEST | AMEX:INTT | microcotizada | 19/11/2026 |
+| AI Era | OTC:AERA | microcotizada | 19/11/2026 |
+| NeOnc Technologies | NASDAQ:NTHI | microcotizada | 19/11/2026 |
+| Air Industries Group | AMEX:AIRI | microcotizada | 19/11/2026 |
+| Rimini Street | NASDAQ:RMNI | microcotizada | 19/11/2026 |
+| Steele Bancorp | OTC:STLE | banco regional de EE. UU. | 19/11/2026 |

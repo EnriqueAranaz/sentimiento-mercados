@@ -542,6 +542,9 @@ regionales de EE. UU. y pequeñas de menos de ~4.000 M. Léelo antes de clasific
   - *Datos clave: Air Liquide SA informa una participación de Elliott…* → Empresa · Air Liquide → **2**
   - Vale aunque el titular trate de lo que ganó el inversor con la venta (18/11/2026): *María del Pino gana 445
     millones a través de su holding gracias a la venta de acciones de Ferrovial* → Empresa · Ferrovial → **-2**
+  - También cuenta cuando quien compra o vende es una **persona muy relevante** aunque no sea directivo ni inversor de
+    referencia (un jefe de Estado o de Gobierno, un gran inversor conocido), sea cual sea la cantidad (19/11/2026):
+    *Trump compró acciones de Nvidia por hasta 265.000 dólares* → Empresa · Nvidia → **2**
 - **Protagonistas y contrapartes pasivas.** Los protagonistas de una operación (comprador, vendedor, la empresa que
   anuncia) se anotan aunque su tono sea 0. Las contrapartes pasivas (inquilino, cliente o socio de un contrato,
   accionista que se notifica, empresa que solo es la causa) no se anotan.

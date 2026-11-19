@@ -6,6 +6,12 @@
   "en_universo": false
  },
  {
+  "nombre": "A. O. Smith",
+  "ticker": "NYSE:AOS",
+  "sector": "Industria, defensa y aeroespacial",
+  "en_universo": false
+ },
+ {
   "nombre": "A.P. Moller-Maersk",
   "ticker": "OMXCOP:MAERSK_B",
   "sector": "Transporte y turismo",
@@ -71,6 +77,12 @@
   "en_universo": false
  },
  {
+  "nombre": "AECOM",
+  "ticker": "NYSE:ACM",
+  "sector": "Construcción e infraestructuras",
+  "en_universo": false
+ },
+ {
   "nombre": "Aedas Homes",
   "ticker": "BME:AEDAS",
   "sector": "Inmobiliario",
@@ -129,6 +141,12 @@
   "nombre": "Alantra",
   "ticker": "BME:ALNT",
   "sector": "Seguros y servicios financieros",
+  "en_universo": false
+ },
+ {
+  "nombre": "Alaska Air Group",
+  "ticker": "NYSE:ALK",
+  "sector": "Transporte y turismo",
   "en_universo": false
  },
  {
@@ -345,6 +363,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Babcock International",
+  "ticker": "LSE:BAB",
+  "sector": "Industria, defensa y aeroespacial",
+  "en_universo": false
+ },
+ {
   "nombre": "BAE Systems",
   "ticker": "LSE:BA.",
   "sector": "Industria, defensa y aeroespacial",
@@ -541,6 +565,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Cal-Maine Foods",
+  "ticker": "NASDAQ:CALM",
+  "sector": "Consumo y distribución",
+  "en_universo": false
+ },
+ {
   "nombre": "Cameco",
   "ticker": "TSX:CCO",
   "sector": "Materiales, química y minería",
@@ -628,6 +658,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Church & Dwight",
+  "ticker": "NYSE:CHD",
+  "sector": "Consumo y distribución",
+  "en_universo": false
+ },
+ {
   "nombre": "CIE Automotive",
   "ticker": "BME:CIE",
   "sector": "Automóvil",
@@ -670,6 +706,12 @@
   "nombre": "Clorox",
   "ticker": "NYSE:CLX",
   "sector": "Consumo y distribución",
+  "en_universo": false
+ },
+ {
+  "nombre": "Cloudflare",
+  "ticker": "NYSE:NET",
+  "sector": "Tecnología",
   "en_universo": false
  },
  {
@@ -820,6 +862,12 @@
   "nombre": "Dell Technologies",
   "ticker": "NYSE:DELL",
   "sector": "Tecnología",
+  "en_universo": false
+ },
+ {
+  "nombre": "DexCom",
+  "ticker": "NASDAQ:DXCM",
+  "sector": "Salud y farmacia",
   "en_universo": false
  },
  {
@@ -1015,6 +1063,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Expeditors International",
+  "ticker": "NYSE:EXPD",
+  "sector": "Transporte y turismo",
+  "en_universo": false
+ },
+ {
   "nombre": "Experian",
   "ticker": "LSE:EXPN",
   "sector": "Seguros y servicios financieros",
@@ -1162,6 +1216,12 @@
   "nombre": "Freedom Holding",
   "ticker": "NASDAQ:FRHC",
   "sector": "Seguros y servicios financieros",
+  "en_universo": false
+ },
+ {
+  "nombre": "Freeport-McMoRan",
+  "ticker": "NYSE:FCX",
+  "sector": "Materiales, química y minería",
   "en_universo": false
  },
  {
@@ -1396,6 +1456,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Insmed",
+  "ticker": "NASDAQ:INSM",
+  "sector": "Salud y farmacia",
+  "en_universo": false
+ },
+ {
   "nombre": "Intact Financial",
   "ticker": "TSX:IFC",
   "sector": "Seguros y servicios financieros",
@@ -1489,6 +1555,12 @@
   "en_universo": false
  },
  {
+  "nombre": "JD Sports Fashion",
+  "ticker": "LSE:JD.",
+  "sector": "Lujo, moda y cosmética",
+  "en_universo": false
+ },
+ {
   "nombre": "Johnson Controls",
   "ticker": "NYSE:JCI",
   "sector": "Industria, defensa y aeroespacial",
@@ -1521,6 +1593,12 @@
  {
   "nombre": "KKR",
   "ticker": "NYSE:KKR",
+  "sector": "Seguros y servicios financieros",
+  "en_universo": false
+ },
+ {
+  "nombre": "Klarna",
+  "ticker": "NYSE:KLAR",
   "sector": "Seguros y servicios financieros",
   "en_universo": false
  },
@@ -1630,6 +1708,12 @@
   "nombre": "Lottomatica",
   "ticker": "MIL:LTMC",
   "sector": "Medios y entretenimiento",
+  "en_universo": false
+ },
+ {
+  "nombre": "Lowe's",
+  "ticker": "NYSE:LOW",
+  "sector": "Consumo y distribución",
   "en_universo": false
  },
  {
@@ -1778,6 +1862,10 @@
  },
  {
   "nombre": "Modine",
+  "alias": [
+   "Modexus Solutions",
+   "Modexus"
+  ],
   "ticker": "NYSE:MOD",
   "sector": "Industria, defensa y aeroespacial",
   "en_universo": false
@@ -1792,6 +1880,12 @@
   "nombre": "Mondelez",
   "ticker": "NASDAQ:MDLZ",
   "sector": "Consumo y distribución",
+  "en_universo": false
+ },
+ {
+  "nombre": "MongoDB",
+  "ticker": "NASDAQ:MDB",
+  "sector": "Tecnología",
   "en_universo": false
  },
  {
@@ -1885,6 +1979,12 @@
   "en_universo": false
  },
  {
+  "nombre": "NiSource",
+  "ticker": "NYSE:NI",
+  "sector": "Eléctricas, renovables y redes",
+  "en_universo": false
+ },
+ {
   "nombre": "NKT",
   "ticker": "OMXCOP:NKT",
   "sector": "Industria, defensa y aeroespacial",
@@ -1912,6 +2012,12 @@
   "nombre": "NVR",
   "ticker": "NYSE:NVR",
   "sector": "Construcción e infraestructuras",
+  "en_universo": false
+ },
+ {
+  "nombre": "NXP Semiconductors",
+  "ticker": "NASDAQ:NXPI",
+  "sector": "Semiconductores",
   "en_universo": false
  },
  {
@@ -1953,6 +2059,12 @@
  {
   "nombre": "Palo Alto Networks",
   "ticker": "NASDAQ:PANW",
+  "sector": "Tecnología",
+  "en_universo": false
+ },
+ {
+  "nombre": "Paychex",
+  "ticker": "NASDAQ:PAYX",
   "sector": "Tecnología",
   "en_universo": false
  },
@@ -2011,6 +2123,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Portland General Electric",
+  "ticker": "NYSE:POR",
+  "sector": "Eléctricas, renovables y redes",
+  "en_universo": false
+ },
+ {
   "nombre": "Prim",
   "ticker": "BME:PRM",
   "sector": "Salud y farmacia",
@@ -2020,6 +2138,12 @@
   "nombre": "Prisa",
   "ticker": "BME:PRS",
   "sector": "Medios y entretenimiento",
+  "en_universo": false
+ },
+ {
+  "nombre": "Progressive",
+  "ticker": "NYSE:PGR",
+  "sector": "Seguros y servicios financieros",
   "en_universo": false
  },
  {
@@ -2071,6 +2195,12 @@
   "nombre": "Quantinuum",
   "ticker": "NASDAQ:QNT",
   "sector": "Tecnología",
+  "en_universo": false
+ },
+ {
+  "nombre": "Quebecor",
+  "ticker": "TSX:QBR.B",
+  "sector": "Telecomunicaciones",
   "en_universo": false
  },
  {
@@ -2137,8 +2267,20 @@
   "en_universo": false
  },
  {
+  "nombre": "Roblox",
+  "ticker": "NYSE:RBLX",
+  "sector": "Medios y entretenimiento",
+  "en_universo": false
+ },
+ {
   "nombre": "Rocket Lab",
   "ticker": "NASDAQ:RKLB",
+  "sector": "Industria, defensa y aeroespacial",
+  "en_universo": false
+ },
+ {
+  "nombre": "Rockwell Automation",
+  "ticker": "NYSE:ROK",
   "sector": "Industria, defensa y aeroespacial",
   "en_universo": false
  },
@@ -2275,6 +2417,12 @@
   "en_universo": false
  },
  {
+  "nombre": "StoneX",
+  "ticker": "NASDAQ:SNEX",
+  "sector": "Seguros y servicios financieros",
+  "en_universo": false
+ },
+ {
   "nombre": "Stora Enso",
   "ticker": "OMXHEX:STEAV",
   "sector": "Materiales, química y minería",
@@ -2326,6 +2474,12 @@
   "nombre": "Talgo",
   "ticker": "BME:TLGO",
   "sector": "Industria, defensa y aeroespacial",
+  "en_universo": false
+ },
+ {
+  "nombre": "Target",
+  "ticker": "NYSE:TGT",
+  "sector": "Consumo y distribución",
   "en_universo": false
  },
  {
@@ -2581,6 +2735,12 @@
   "nombre": "Vidrala",
   "ticker": "BME:VID",
   "sector": "Materiales, química y minería",
+  "en_universo": false
+ },
+ {
+  "nombre": "Viking Holdings",
+  "ticker": "NYSE:VIK",
+  "sector": "Transporte y turismo",
   "en_universo": false
  },
  {
