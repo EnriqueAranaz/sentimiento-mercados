@@ -9,8 +9,8 @@ agente clasificador según la sección 14 de `docs/criterios_clasificacion.md` (
 
 Criterios generales de alta y descarte:
 - **Se dan de alta** las grandes y medianas de EE. UU. y Europa, y **todas las españolas del Mercado Continuo**,
-  aunque sean pequeñas.
-- **Se descartan** las microcotizadas y las pequeñas extranjeras, los bancos regionales de EE. UU., las españolas de
+  aunque sean pequeñas, salvo las microcotizadas (20/11/2026).
+- **Se descartan** las microcotizadas (también las del Continuo) y las pequeñas extranjeras, los bancos regionales de EE. UU., las españolas de
   **BME Growth** o **Euronext Growth** (mercados de crecimiento) y las que no cotizan.
 - El criterio es el **tamaño**: se descartan los bancos regionales **pequeños** de EE. UU., no los bancos de EE. UU.
   medianos o grandes (U.S. Bancorp o PNC se dan de alta).
@@ -304,3 +304,26 @@ Criterios generales de alta y descarte:
 | Air Industries Group | AMEX:AIRI | microcotizada | 19/11/2026 |
 | Rimini Street | NASDAQ:RMNI | microcotizada | 19/11/2026 |
 | Steele Bancorp | OTC:STLE | banco regional de EE. UU. | 19/11/2026 |
+| Four Corners Property Trust | NYSE:FCPT | pequeña de menos de ~4.000 M | 20/11/2026 |
+| Mitie | LSE:MTO | pequeña de menos de ~4.000 M | 20/11/2026 |
+| Ingevity | NYSE:NGVT | pequeña de menos de ~4.000 M | 20/11/2026 |
+| GoodRx | NASDAQ:GDRX | pequeña de menos de ~4.000 M | 20/11/2026 |
+| MNTN | NYSE:MNTN | pequeña de menos de ~4.000 M | 20/11/2026 |
+| Oculis | NASDAQ:OCS | pequeña de menos de ~4.000 M | 20/11/2026 |
+| FMC | NYSE:FMC | pequeña de menos de ~4.000 M | 20/11/2026 |
+| Ayco Grupo Inmobiliario | BME:AYC | microcotizada | 20/11/2026 |
+| Liwe Española | BME:LIW | microcotizada | 20/11/2026 |
+| Wallbox | NYSE:WBX | microcotizada | 20/11/2026 |
+| Aardvark Therapeutics | NASDAQ:AARD | microcotizada | 20/11/2026 |
+| Anteris Technologies | NASDAQ:AVR | microcotizada | 20/11/2026 |
+| Better Home & Finance | NASDAQ:BETR | microcotizada | 20/11/2026 |
+| FrontView REIT | NYSE:FVR | microcotizada | 20/11/2026 |
+| Immunic | NASDAQ:IMUX | microcotizada | 20/11/2026 |
+| New Amsterdam Invest | EURONEXT:NAI | microcotizada | 20/11/2026 |
+| Nexxen International | NASDAQ:NEXN | fuera de alcance (Latam, Asia, Israel) | 20/11/2026 |
+| Futu Holdings | NASDAQ:FUTU | fuera de alcance (Latam, Asia, Israel) | 20/11/2026 |
+| BBB Foods | NYSE:TBBB | fuera de alcance (Latam, Asia, Israel) | 20/11/2026 |
+| Gorilla Technology | NASDAQ:GRRR | fuera de alcance (Latam, Asia, Israel) | 20/11/2026 |
+| Mechanics Bancorp | NASDAQ:MCHB | banco regional de EE. UU. | 20/11/2026 |
+| Everforth | NYSE:EFOR | sin verificar (empresa y tamaño desconocidos) | 20/11/2026 |
+| Holaluz | BME:HLZ | BME Growth | 20/11/2026 |

@@ -53,6 +53,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Accor",
+  "ticker": "EURONEXT:AC",
+  "sector": "Transporte y turismo",
+  "en_universo": false
+ },
+ {
   "nombre": "Acuity",
   "ticker": "NYSE:AYI",
   "sector": "Industria, defensa y aeroespacial",
@@ -108,6 +114,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Agree Realty",
+  "ticker": "NYSE:ADC",
+  "sector": "Inmobiliario",
+  "en_universo": false
+ },
+ {
   "nombre": "AIG",
   "ticker": "NYSE:AIG",
   "sector": "Seguros y servicios financieros",
@@ -153,6 +165,12 @@
   "nombre": "Albemarle",
   "ticker": "NYSE:ALB",
   "sector": "Materiales, química y minería",
+  "en_universo": false
+ },
+ {
+  "nombre": "Alcon",
+  "ticker": "SIX:ALC",
+  "sector": "Salud y farmacia",
   "en_universo": false
  },
  {
@@ -423,6 +441,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Bath & Body Works",
+  "ticker": "NYSE:BBWI",
+  "sector": "Lujo, moda y cosmética",
+  "en_universo": false
+ },
+ {
   "nombre": "BE Semiconductor",
   "ticker": "EURONEXT:BESI",
   "sector": "Semiconductores",
@@ -454,6 +478,12 @@
   "nombre": "BHP",
   "ticker": "ASX:BHP",
   "sector": "Materiales, química y minería",
+  "en_universo": false
+ },
+ {
+  "nombre": "BILL Holdings",
+  "ticker": "NYSE:BILL",
+  "sector": "Tecnología",
   "en_universo": false
  },
  {
@@ -670,6 +700,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Cigna",
+  "ticker": "NYSE:CI",
+  "sector": "Salud y farmacia",
+  "en_universo": false
+ },
+ {
   "nombre": "Cincinnati Financial",
   "ticker": "NASDAQ:CINF",
   "sector": "Seguros y servicios financieros",
@@ -766,6 +802,12 @@
   "nombre": "Constellation Energy",
   "ticker": "NASDAQ:CEG",
   "sector": "Eléctricas, renovables y redes",
+  "en_universo": false
+ },
+ {
+  "nombre": "Construction Partners",
+  "ticker": "NASDAQ:ROAD",
+  "sector": "Construcción e infraestructuras",
   "en_universo": false
  },
  {
@@ -955,6 +997,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Elastic",
+  "ticker": "NYSE:ESTC",
+  "sector": "Tecnología",
+  "en_universo": false
+ },
+ {
   "nombre": "Elisa",
   "ticker": "OMXHEX:ELISA",
   "sector": "Telecomunicaciones",
@@ -1006,6 +1054,18 @@
   "nombre": "EQT Corporation",
   "ticker": "NYSE:EQT",
   "sector": "Petróleo y gas",
+  "en_universo": false
+ },
+ {
+  "nombre": "Equity LifeStyle Properties",
+  "ticker": "NYSE:ELS",
+  "sector": "Inmobiliario",
+  "en_universo": false
+ },
+ {
+  "nombre": "Essential Properties Realty Trust",
+  "ticker": "NYSE:EPRT",
+  "sector": "Inmobiliario",
   "en_universo": false
  },
  {
@@ -1231,6 +1291,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Gap",
+  "ticker": "NYSE:GAP",
+  "sector": "Lujo, moda y cosmética",
+  "en_universo": false
+ },
+ {
   "nombre": "Garmin",
   "ticker": "NYSE:GRMN",
   "sector": "Tecnología",
@@ -1387,6 +1453,12 @@
   "en_universo": false
  },
  {
+  "nombre": "HP Inc.",
+  "ticker": "NYSE:HPQ",
+  "sector": "Tecnología",
+  "en_universo": false
+ },
+ {
   "nombre": "HubSpot",
   "ticker": "NYSE:HUBS",
   "sector": "Tecnología",
@@ -1513,6 +1585,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Investec",
+  "ticker": "LSE:INVP",
+  "sector": "Banca",
+  "en_universo": false
+ },
+ {
   "nombre": "IONOS Group",
   "ticker": "XETR:IOS",
   "sector": "Tecnología",
@@ -1569,6 +1647,12 @@
  {
   "nombre": "Karman",
   "ticker": "NYSE:KRMN",
+  "sector": "Industria, defensa y aeroespacial",
+  "en_universo": false
+ },
+ {
+  "nombre": "KBR",
+  "ticker": "NYSE:KBR",
   "sector": "Industria, defensa y aeroespacial",
   "en_universo": false
  },
@@ -2285,6 +2369,12 @@
   "en_universo": false
  },
  {
+  "nombre": "Ross Stores",
+  "ticker": "NASDAQ:ROST",
+  "sector": "Consumo y distribución",
+  "en_universo": false
+ },
+ {
   "nombre": "Royal Caribbean",
   "ticker": "NYSE:RCL",
   "sector": "Transporte y turismo",
@@ -2765,6 +2855,12 @@
   "nombre": "W.W. Grainger",
   "ticker": "NYSE:GWW",
   "sector": "Industria, defensa y aeroespacial",
+  "en_universo": false
+ },
+ {
+  "nombre": "Webull",
+  "ticker": "NASDAQ:BULL",
+  "sector": "Seguros y servicios financieros",
   "en_universo": false
  },
  {

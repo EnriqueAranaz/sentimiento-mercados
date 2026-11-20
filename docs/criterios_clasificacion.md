@@ -413,7 +413,8 @@ regionales de EE. UU. y pequeñas de menos de ~4.000 M. Léelo antes de clasific
   sin empresa_id. Si la noticia tiene otros objetos, anota esos.
 - **Españolas pequeñas (aclaración de la v3.9).** Las cotizadas españolas del **Mercado Continuo** se dan de alta
   aunque sean pequeñas. Las de **BME Growth** o **Euronext Growth** (mercados de crecimiento) se descartan. Al
-  proponer una española, indica en el comentario en qué mercado cotiza.
+  proponer una española, indica en el comentario en qué mercado cotiza. **Las microcotizadas del Continuo se
+  descartan** como cualquier otra microcotizada (20/11/2026; Ayco, Liwe).
 - **Empresa pendiente de alta (aclaración de la v3.9).** Una noticia que solo trata de una empresa propuesta y todavía
   no dada de alta: no relevante, motivo **Empresa pendiente de alta** (no "Otros", que se reserva para los descartes
   reales). `cargar.py` guarda el id de la noticia en la propuesta. Cuando se decide sobre la empresa
